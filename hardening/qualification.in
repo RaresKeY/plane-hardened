@@ -1,0 +1,4 @@
+-r ../apps/api/requirements/test.txt
+pip==26.3
+bandit==1.9.4
+ruff==0.17.5

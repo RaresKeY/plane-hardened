@@ -48,8 +48,10 @@ def _reset_auth_throttle_cache():
 
 
 @pytest.fixture
-def setup_instance(db):
+def setup_instance(db, monkeypatch):
     """Create and configure an instance for authentication tests"""
+    # Configuration gate only: mail tasks are mocked and the test backend is in-memory.
+    monkeypatch.setenv("EMAIL_HOST", "smtp.fixture.invalid")
     instance_id = uuid.uuid4() if not Instance.objects.exists() else Instance.objects.first().id
 
     # Create or update instance with all required fields

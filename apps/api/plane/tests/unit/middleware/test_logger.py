@@ -7,7 +7,7 @@ Unit tests for APITokenLogMiddleware.
 
 Covers the credential-hygiene guarantees of the external API request logger:
 - the raw API key is never persisted (a non-reversible hash is stored instead)
-- sensitive request headers are redacted before being logged
+- arbitrary headers are excluded before being queued
 """
 
 import hashlib
@@ -50,8 +50,8 @@ class TestAPITokenLogMiddleware:
         response = HttpResponse(b"{}")
         with patch("plane.middleware.logger.process_logs") as process_logs:
             middleware.process_request(request, response, request_body=b"")
-            assert process_logs.delay.called
-            return process_logs.delay.call_args.kwargs["log_data"]
+            assert process_logs.apply_async.called
+            return process_logs.apply_async.call_args.kwargs["kwargs"]["log_data"]
 
     def test_token_identifier_is_hashed_not_plaintext(self, middleware, request_factory):
         log_data = self._captured_log_data(middleware, request_factory)
@@ -65,15 +65,11 @@ class TestAPITokenLogMiddleware:
     def test_sensitive_headers_are_redacted(self, middleware, request_factory):
         log_data = self._captured_log_data(middleware, request_factory)
 
-        # None of the sensitive header values may appear in the logged headers.
-        assert self.API_KEY not in log_data["headers"]
-        assert self.AUTHORIZATION not in log_data["headers"]
-        assert self.COOKIE not in log_data["headers"]
-        assert "[REDACTED]" in log_data["headers"]
+        assert log_data["headers"] is None
 
     def test_no_log_without_api_key(self, middleware, request_factory):
         request = request_factory.get("/api/v1/workspaces/")
         request.user = AnonymousUser()
         with patch("plane.middleware.logger.process_logs") as process_logs:
             middleware.process_request(request, HttpResponse(b"{}"), request_body=b"")
-            assert not process_logs.delay.called
+            assert not process_logs.apply_async.called

@@ -16,6 +16,7 @@ from io import BytesIO, StringIO
 from typing import Any, Dict, List, Union
 
 from openpyxl import Workbook, load_workbook
+from plane.utils.xlsx import save_xlsx
 
 
 # Module imports
@@ -203,7 +204,7 @@ class XLSXFormatter(BaseFormatter):
         if not data:
             # Return empty workbook
             output = BytesIO()
-            wb.save(output)
+            save_xlsx(wb, output)
             output.seek(0)
             return output.getvalue()
 
@@ -226,7 +227,7 @@ class XLSXFormatter(BaseFormatter):
             ws.append(sanitize_csv_row([self._format_value(row.get(key, "")) for key in fieldnames]))
 
         output = BytesIO()
-        wb.save(output)
+        save_xlsx(wb, output)
         output.seek(0)
         return output.getvalue()
 

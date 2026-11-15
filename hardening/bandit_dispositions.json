@@ -1,0 +1,674 @@
+{
+  "schema": 1,
+  "reviewed": "2026-11-15",
+  "scanner": "bandit1.9.4",
+  "scope": "Exact findings and source bytes; not a rule/path/severity suppression. Re-review on change. Raw scanner output retained.",
+  "findings": [
+    {
+      "test_id": "B311",
+      "path": "apps/api/plane/api/serializers/project.py",
+      "line": 156,
+      "code_sha256": "717da84f2c9e323a137851f0b2d12486e115a4a08b525e94bcfce99b817c7a66",
+      "file_sha256": "b283218e8d102299830257230c56493c8c9c8c6b9b4f0a9d848e6a8d705b67da",
+      "disposition": "reviewed non-blocking in named context",
+      "reason": "Non-security randomness for visual labels/icons, sort order, synthetic/demo records, estimate identifiers or display-name fallbacks; not an authentication secret, permission or cryptographic decision."
+    },
+    {
+      "test_id": "B311",
+      "path": "apps/api/plane/api/serializers/project.py",
+      "line": 157,
+      "code_sha256": "3d900cd872cfee256b3b9b90e9987a8615d9f55001316f476c614b21b2f9c213",
+      "file_sha256": "b283218e8d102299830257230c56493c8c9c8c6b9b4f0a9d848e6a8d705b67da",
+      "disposition": "reviewed non-blocking in named context",
+      "reason": "Non-security randomness for visual labels/icons, sort order, synthetic/demo records, estimate identifiers or display-name fallbacks; not an authentication secret, permission or cryptographic decision."
+    },
+    {
+      "test_id": "B311",
+      "path": "apps/api/plane/app/views/estimate/base.py",
+      "line": 31,
+      "code_sha256": "43391533146ebc161fb43617899607d27f3afdf7ae8d32e594eaaf6fbde5eb96",
+      "file_sha256": "5fbaff8bea072705e540e9eeffdb40269266d855d5b54fd8f4ff1eb7b7188033",
+      "disposition": "reviewed non-blocking in named context",
+      "reason": "Non-security randomness for visual labels/icons, sort order, synthetic/demo records, estimate identifiers or display-name fallbacks; not an authentication secret, permission or cryptographic decision."
+    },
+    {
+      "test_id": "B311",
+      "path": "apps/api/plane/app/views/issue/label.py",
+      "line": 102,
+      "code_sha256": "c137e2775397edb206a5049071229f6af790e3308fc04ab15c576efcd5943684",
+      "file_sha256": "cbd748770ae2659c56cd7c1099ba9c38d277e5f08fc95d063cbb03260661ea05",
+      "disposition": "reviewed non-blocking in named context",
+      "reason": "Non-security randomness for visual labels/icons, sort order, synthetic/demo records, estimate identifiers or display-name fallbacks; not an authentication secret, permission or cryptographic decision."
+    },
+    {
+      "test_id": "B105",
+      "path": "apps/api/plane/app/views/webhook/base.py",
+      "line": 27,
+      "code_sha256": "d033fbe7942d1ff0f24aeaf68425f1023cb792a57ec3193caf7ef89abbbb9981",
+      "file_sha256": "3b514e7eb00f13d020e34bba1ff3ab12a1c9e908284c26d756d0f9d0f5f80282",
+      "disposition": "reviewed non-blocking in named context",
+      "reason": "Matched value is a configuration boolean, numeric error code, enabled/disabled flag or public OAuth endpoint; it is not a credential."
+    },
+    {
+      "test_id": "B105",
+      "path": "apps/api/plane/app/views/webhook/base.py",
+      "line": 120,
+      "code_sha256": "184d3d8b4567dcc5437abc6776da174018b51d2acd70189276b70f0ff1636d79",
+      "file_sha256": "3b514e7eb00f13d020e34bba1ff3ab12a1c9e908284c26d756d0f9d0f5f80282",
+      "disposition": "reviewed non-blocking in named context",
+      "reason": "Matched value is a configuration boolean, numeric error code, enabled/disabled flag or public OAuth endpoint; it is not a credential."
+    },
+    {
+      "test_id": "B105",
+      "path": "apps/api/plane/authentication/adapter/error.py",
+      "line": 13,
+      "code_sha256": "e90c8408ebcfe728b1c4135d33514a42ccb3bc306b9c4cbd05f5c33d0c519f62",
+      "file_sha256": "6c6e2933ab9bf39d41aadaa53da7d8118870ae3bbb91be8f06bbad3ffacdb243",
+      "disposition": "reviewed non-blocking in named context",
+      "reason": "Matched value is a configuration boolean, numeric error code, enabled/disabled flag or public OAuth endpoint; it is not a credential."
+    },
+    {
+      "test_id": "B105",
+      "path": "apps/api/plane/authentication/adapter/error.py",
+      "line": 16,
+      "code_sha256": "2a9ae7b22eda689c0991cfee6493303995cda2d653fb5810348f9a3c6df5ba47",
+      "file_sha256": "6c6e2933ab9bf39d41aadaa53da7d8118870ae3bbb91be8f06bbad3ffacdb243",
+      "disposition": "reviewed non-blocking in named context",
+      "reason": "Matched value is a configuration boolean, numeric error code, enabled/disabled flag or public OAuth endpoint; it is not a credential."
+    },
+    {
+      "test_id": "B105",
+      "path": "apps/api/plane/authentication/adapter/error.py",
+      "line": 17,
+      "code_sha256": "da46cbb9c71ba88227070cefd780d1fc8a3e77771f637e02ad14aefaba3f83b5",
+      "file_sha256": "6c6e2933ab9bf39d41aadaa53da7d8118870ae3bbb91be8f06bbad3ffacdb243",
+      "disposition": "reviewed non-blocking in named context",
+      "reason": "Matched value is a configuration boolean, numeric error code, enabled/disabled flag or public OAuth endpoint; it is not a credential."
+    },
+    {
+      "test_id": "B105",
+      "path": "apps/api/plane/authentication/adapter/error.py",
+      "line": 22,
+      "code_sha256": "b7fa8002cfc191aaf9ef2570af5ceefe6fa14c95d711d591edc1a01d3e2d3a9a",
+      "file_sha256": "6c6e2933ab9bf39d41aadaa53da7d8118870ae3bbb91be8f06bbad3ffacdb243",
+      "disposition": "reviewed non-blocking in named context",
+      "reason": "Matched value is a configuration boolean, numeric error code, enabled/disabled flag or public OAuth endpoint; it is not a credential."
+    },
+    {
+      "test_id": "B105",
+      "path": "apps/api/plane/authentication/adapter/error.py",
+      "line": 26,
+      "code_sha256": "ac0a445fd2eeadcc55f847b152a8e3cd32eea71391d74f429021778b7d76ae9a",
+      "file_sha256": "6c6e2933ab9bf39d41aadaa53da7d8118870ae3bbb91be8f06bbad3ffacdb243",
+      "disposition": "reviewed non-blocking in named context",
+      "reason": "Matched value is a configuration boolean, numeric error code, enabled/disabled flag or public OAuth endpoint; it is not a credential."
+    },
+    {
+      "test_id": "B105",
+      "path": "apps/api/plane/authentication/adapter/error.py",
+      "line": 30,
+      "code_sha256": "35863381cfaa653f01ba8721810bcb2203e14fd3d7695d423f9aec4aacbbfb54",
+      "file_sha256": "6c6e2933ab9bf39d41aadaa53da7d8118870ae3bbb91be8f06bbad3ffacdb243",
+      "disposition": "reviewed non-blocking in named context",
+      "reason": "Matched value is a configuration boolean, numeric error code, enabled/disabled flag or public OAuth endpoint; it is not a credential."
+    },
+    {
+      "test_id": "B105",
+      "path": "apps/api/plane/authentication/adapter/error.py",
+      "line": 54,
+      "code_sha256": "0094af1e27ecc6004ea5daff121014eb86a1b61c3b425cdb6096abe9fdd4e4ce",
+      "file_sha256": "6c6e2933ab9bf39d41aadaa53da7d8118870ae3bbb91be8f06bbad3ffacdb243",
+      "disposition": "reviewed non-blocking in named context",
+      "reason": "Matched value is a configuration boolean, numeric error code, enabled/disabled flag or public OAuth endpoint; it is not a credential."
+    },
+    {
+      "test_id": "B105",
+      "path": "apps/api/plane/authentication/adapter/error.py",
+      "line": 55,
+      "code_sha256": "6318a6ec44dc1b023f66e43fd7a9f36516e7ae9bc12d1a535b73ca4da5e340e5",
+      "file_sha256": "6c6e2933ab9bf39d41aadaa53da7d8118870ae3bbb91be8f06bbad3ffacdb243",
+      "disposition": "reviewed non-blocking in named context",
+      "reason": "Matched value is a configuration boolean, numeric error code, enabled/disabled flag or public OAuth endpoint; it is not a credential."
+    },
+    {
+      "test_id": "B105",
+      "path": "apps/api/plane/authentication/adapter/error.py",
+      "line": 57,
+      "code_sha256": "4d847c64e87d48ff877d8c86e0dd81980fd7019bca9f16b5092c3d5108061fa6",
+      "file_sha256": "6c6e2933ab9bf39d41aadaa53da7d8118870ae3bbb91be8f06bbad3ffacdb243",
+      "disposition": "reviewed non-blocking in named context",
+      "reason": "Matched value is a configuration boolean, numeric error code, enabled/disabled flag or public OAuth endpoint; it is not a credential."
+    },
+    {
+      "test_id": "B105",
+      "path": "apps/api/plane/authentication/adapter/error.py",
+      "line": 58,
+      "code_sha256": "a97fe35ac1f3fe78f3b647fe594427dd20667d767ccd52f1c9633bae9ff58e51",
+      "file_sha256": "6c6e2933ab9bf39d41aadaa53da7d8118870ae3bbb91be8f06bbad3ffacdb243",
+      "disposition": "reviewed non-blocking in named context",
+      "reason": "Matched value is a configuration boolean, numeric error code, enabled/disabled flag or public OAuth endpoint; it is not a credential."
+    },
+    {
+      "test_id": "B105",
+      "path": "apps/api/plane/authentication/adapter/error.py",
+      "line": 59,
+      "code_sha256": "e559a80d2ce9189ecb334cb6d2c83c26d1148c4c1eff0fa6af9f8013108bc862",
+      "file_sha256": "6c6e2933ab9bf39d41aadaa53da7d8118870ae3bbb91be8f06bbad3ffacdb243",
+      "disposition": "reviewed non-blocking in named context",
+      "reason": "Matched value is a configuration boolean, numeric error code, enabled/disabled flag or public OAuth endpoint; it is not a credential."
+    },
+    {
+      "test_id": "B105",
+      "path": "apps/api/plane/authentication/adapter/error.py",
+      "line": 61,
+      "code_sha256": "e2935edd369050c33c3aa6e82c7e9de5e789f7c7504a900e9f99146900d9647d",
+      "file_sha256": "6c6e2933ab9bf39d41aadaa53da7d8118870ae3bbb91be8f06bbad3ffacdb243",
+      "disposition": "reviewed non-blocking in named context",
+      "reason": "Matched value is a configuration boolean, numeric error code, enabled/disabled flag or public OAuth endpoint; it is not a credential."
+    },
+    {
+      "test_id": "B105",
+      "path": "apps/api/plane/authentication/adapter/error.py",
+      "line": 64,
+      "code_sha256": "517ce80587a1b3fc725c960d4738a5ee6239832117913a1a904f90807bf1ae48",
+      "file_sha256": "6c6e2933ab9bf39d41aadaa53da7d8118870ae3bbb91be8f06bbad3ffacdb243",
+      "disposition": "reviewed non-blocking in named context",
+      "reason": "Matched value is a configuration boolean, numeric error code, enabled/disabled flag or public OAuth endpoint; it is not a credential."
+    },
+    {
+      "test_id": "B105",
+      "path": "apps/api/plane/authentication/adapter/error.py",
+      "line": 66,
+      "code_sha256": "41ee1ebd68c70cfcdf5e3992a5b19d2beae33645804714d8cba7d45023042288",
+      "file_sha256": "6c6e2933ab9bf39d41aadaa53da7d8118870ae3bbb91be8f06bbad3ffacdb243",
+      "disposition": "reviewed non-blocking in named context",
+      "reason": "Matched value is a configuration boolean, numeric error code, enabled/disabled flag or public OAuth endpoint; it is not a credential."
+    },
+    {
+      "test_id": "B105",
+      "path": "apps/api/plane/authentication/adapter/error.py",
+      "line": 67,
+      "code_sha256": "c81f50348a6459fdd8ac68e9e5c73b03f75d7f20620df5c30190a9872452e350",
+      "file_sha256": "6c6e2933ab9bf39d41aadaa53da7d8118870ae3bbb91be8f06bbad3ffacdb243",
+      "disposition": "reviewed non-blocking in named context",
+      "reason": "Matched value is a configuration boolean, numeric error code, enabled/disabled flag or public OAuth endpoint; it is not a credential."
+    },
+    {
+      "test_id": "B105",
+      "path": "apps/api/plane/authentication/provider/credentials/email.py",
+      "line": 34,
+      "code_sha256": "26eff8f283e707aeecac457bf595d40ec8919275f522b5eab675f39ef38c202b",
+      "file_sha256": "178316ab1506e80018a72e9e497567c31574368f8f94dd345db4dcedf731d29b",
+      "disposition": "reviewed non-blocking in named context",
+      "reason": "Matched value is a configuration boolean, numeric error code, enabled/disabled flag or public OAuth endpoint; it is not a credential."
+    },
+    {
+      "test_id": "B105",
+      "path": "apps/api/plane/authentication/provider/credentials/email.py",
+      "line": 57,
+      "code_sha256": "581d593341a32d684b6b7a2f076c6fdf9e3c5317aee9b54394385a348e8317a1",
+      "file_sha256": "178316ab1506e80018a72e9e497567c31574368f8f94dd345db4dcedf731d29b",
+      "disposition": "reviewed non-blocking in named context",
+      "reason": "Matched value is a configuration boolean, numeric error code, enabled/disabled flag or public OAuth endpoint; it is not a credential."
+    },
+    {
+      "test_id": "B105",
+      "path": "apps/api/plane/authentication/provider/credentials/email.py",
+      "line": 93,
+      "code_sha256": "26d5aa93c149c86e65b7d1b2ffb457ff1b033d314ae71be99c36002180ee80e2",
+      "file_sha256": "178316ab1506e80018a72e9e497567c31574368f8f94dd345db4dcedf731d29b",
+      "disposition": "reviewed non-blocking in named context",
+      "reason": "Matched value is a configuration boolean, numeric error code, enabled/disabled flag or public OAuth endpoint; it is not a credential."
+    },
+    {
+      "test_id": "B105",
+      "path": "apps/api/plane/authentication/provider/credentials/magic_code.py",
+      "line": 137,
+      "code_sha256": "397122b7f7cffcdf64acf82de1e465e02dd917c4e9c4f98e116b33d5e2d2462b",
+      "file_sha256": "30c0459dcd4cc183b95735f946c605d38671589f9b78304df1a087f11c74f345",
+      "disposition": "reviewed non-blocking in named context",
+      "reason": "Matched value is a configuration boolean, numeric error code, enabled/disabled flag or public OAuth endpoint; it is not a credential."
+    },
+    {
+      "test_id": "B105",
+      "path": "apps/api/plane/authentication/provider/oauth/gitea.py",
+      "line": 172,
+      "code_sha256": "76f5fc10507939bbbe45c9b134b52f4266cfcac497f136c8bcf2ca9bc1529da8",
+      "file_sha256": "b4eef3021b83cb971a8b198bc97c776e3ab8b41a6ee93dd17c559af38dac4855",
+      "disposition": "reviewed non-blocking in named context",
+      "reason": "Matched value is a configuration boolean, numeric error code, enabled/disabled flag or public OAuth endpoint; it is not a credential."
+    },
+    {
+      "test_id": "B105",
+      "path": "apps/api/plane/authentication/provider/oauth/github.py",
+      "line": 24,
+      "code_sha256": "9a4b88a7ef8eb736873580971d2ad4096ac763b84865e8b452441bb1d7ed601d",
+      "file_sha256": "45840c681775c6621daa264c15c2424712c9aa0765a065ded779205202f63330",
+      "disposition": "reviewed non-blocking in named context",
+      "reason": "Matched value is a configuration boolean, numeric error code, enabled/disabled flag or public OAuth endpoint; it is not a credential."
+    },
+    {
+      "test_id": "B105",
+      "path": "apps/api/plane/authentication/provider/oauth/github.py",
+      "line": 183,
+      "code_sha256": "562bf69bb5f959a42ed5c71c4076e9232fb9273c68628c703afba092c6de2ab9",
+      "file_sha256": "45840c681775c6621daa264c15c2424712c9aa0765a065ded779205202f63330",
+      "disposition": "reviewed non-blocking in named context",
+      "reason": "Matched value is a configuration boolean, numeric error code, enabled/disabled flag or public OAuth endpoint; it is not a credential."
+    },
+    {
+      "test_id": "B105",
+      "path": "apps/api/plane/authentication/provider/oauth/gitlab.py",
+      "line": 128,
+      "code_sha256": "3422f3b042ec1435c6d95776f69ac9326c0fb841116b4c18aca7da5dd6abd1ff",
+      "file_sha256": "e080935f5a00946f3a00a23495921af2516d8d653f006e17b6fe2a6a2359d003",
+      "disposition": "reviewed non-blocking in named context",
+      "reason": "Matched value is a configuration boolean, numeric error code, enabled/disabled flag or public OAuth endpoint; it is not a credential."
+    },
+    {
+      "test_id": "B105",
+      "path": "apps/api/plane/authentication/provider/oauth/google.py",
+      "line": 22,
+      "code_sha256": "156926ef22fe1b42136317f18446329a6b4d21131cf363b150b374a20bde13f6",
+      "file_sha256": "451d3090e4f583312f8b536c6ff0b6336ec6028e5a03cac47fe1263de1e8603d",
+      "disposition": "reviewed non-blocking in named context",
+      "reason": "Matched value is a configuration boolean, numeric error code, enabled/disabled flag or public OAuth endpoint; it is not a credential."
+    },
+    {
+      "test_id": "B105",
+      "path": "apps/api/plane/authentication/provider/oauth/google.py",
+      "line": 120,
+      "code_sha256": "f49e626caff29b15bd9851d01be56e985fdba44e05b58d0850093fdf6b0d5661",
+      "file_sha256": "451d3090e4f583312f8b536c6ff0b6336ec6028e5a03cac47fe1263de1e8603d",
+      "disposition": "reviewed non-blocking in named context",
+      "reason": "Matched value is a configuration boolean, numeric error code, enabled/disabled flag or public OAuth endpoint; it is not a credential."
+    },
+    {
+      "test_id": "B311",
+      "path": "apps/api/plane/bgtasks/dummy_data_task.py",
+      "line": 52,
+      "code_sha256": "f1ec3f47c6a5fab0202e2e4a2581e8977ee4f0e777c2dbd82f3bb8d916a91210",
+      "file_sha256": "069de51e59f0507f259e0ec9cf12c27a0dc2f0126e12c527f025bbfcd2d001a7",
+      "disposition": "reviewed non-blocking in named context",
+      "reason": "Non-security randomness for visual labels/icons, sort order, synthetic/demo records, estimate identifiers or display-name fallbacks; not an authentication secret, permission or cryptographic decision."
+    },
+    {
+      "test_id": "B311",
+      "path": "apps/api/plane/bgtasks/dummy_data_task.py",
+      "line": 73,
+      "code_sha256": "11d511ba301b56211aebb0d7e558a578ac7fbe40eb6de64b1f7a9091a3180ac9",
+      "file_sha256": "069de51e59f0507f259e0ec9cf12c27a0dc2f0126e12c527f025bbfcd2d001a7",
+      "disposition": "reviewed non-blocking in named context",
+      "reason": "Non-security randomness for visual labels/icons, sort order, synthetic/demo records, estimate identifiers or display-name fallbacks; not an authentication secret, permission or cryptographic decision."
+    },
+    {
+      "test_id": "B311",
+      "path": "apps/api/plane/bgtasks/dummy_data_task.py",
+      "line": 138,
+      "code_sha256": "8dc3d2ab75f6c5003f49eb74d664bb1ed85214cfb426e503747e8b4cd6ff68cb",
+      "file_sha256": "069de51e59f0507f259e0ec9cf12c27a0dc2f0126e12c527f025bbfcd2d001a7",
+      "disposition": "reviewed non-blocking in named context",
+      "reason": "Non-security randomness for visual labels/icons, sort order, synthetic/demo records, estimate identifiers or display-name fallbacks; not an authentication secret, permission or cryptographic decision."
+    },
+    {
+      "test_id": "B311",
+      "path": "apps/api/plane/bgtasks/dummy_data_task.py",
+      "line": 156,
+      "code_sha256": "3114f3d8073ed4ea0bf13e169d3140ac9474ef0ab817144b87ca038dca40bdaa",
+      "file_sha256": "069de51e59f0507f259e0ec9cf12c27a0dc2f0126e12c527f025bbfcd2d001a7",
+      "disposition": "reviewed non-blocking in named context",
+      "reason": "Non-security randomness for visual labels/icons, sort order, synthetic/demo records, estimate identifiers or display-name fallbacks; not an authentication secret, permission or cryptographic decision."
+    },
+    {
+      "test_id": "B311",
+      "path": "apps/api/plane/bgtasks/dummy_data_task.py",
+      "line": 180,
+      "code_sha256": "52cb4ee10e5d5939637cd65a47e28f279fee78788467851633887c75a3adcf36",
+      "file_sha256": "069de51e59f0507f259e0ec9cf12c27a0dc2f0126e12c527f025bbfcd2d001a7",
+      "disposition": "reviewed non-blocking in named context",
+      "reason": "Non-security randomness for visual labels/icons, sort order, synthetic/demo records, estimate identifiers or display-name fallbacks; not an authentication secret, permission or cryptographic decision."
+    },
+    {
+      "test_id": "B311",
+      "path": "apps/api/plane/bgtasks/dummy_data_task.py",
+      "line": 197,
+      "code_sha256": "d90f22d78ff8d195dfbe90c27381336be7fdbb5667d22c1ba695bb44cb99eaf9",
+      "file_sha256": "069de51e59f0507f259e0ec9cf12c27a0dc2f0126e12c527f025bbfcd2d001a7",
+      "disposition": "reviewed non-blocking in named context",
+      "reason": "Non-security randomness for visual labels/icons, sort order, synthetic/demo records, estimate identifiers or display-name fallbacks; not an authentication secret, permission or cryptographic decision."
+    },
+    {
+      "test_id": "B311",
+      "path": "apps/api/plane/bgtasks/dummy_data_task.py",
+      "line": 210,
+      "code_sha256": "367d4af168b4361f507c7d3864bf5a0a3ca1c6c6cb97fea20441595b5e2988a4",
+      "file_sha256": "069de51e59f0507f259e0ec9cf12c27a0dc2f0126e12c527f025bbfcd2d001a7",
+      "disposition": "reviewed non-blocking in named context",
+      "reason": "Non-security randomness for visual labels/icons, sort order, synthetic/demo records, estimate identifiers or display-name fallbacks; not an authentication secret, permission or cryptographic decision."
+    },
+    {
+      "test_id": "B311",
+      "path": "apps/api/plane/bgtasks/dummy_data_task.py",
+      "line": 233,
+      "code_sha256": "a396c05970bf2f51d0c55afed2d88a932247002aedc05b34874b576216c3be99",
+      "file_sha256": "069de51e59f0507f259e0ec9cf12c27a0dc2f0126e12c527f025bbfcd2d001a7",
+      "disposition": "reviewed non-blocking in named context",
+      "reason": "Non-security randomness for visual labels/icons, sort order, synthetic/demo records, estimate identifiers or display-name fallbacks; not an authentication secret, permission or cryptographic decision."
+    },
+    {
+      "test_id": "B311",
+      "path": "apps/api/plane/bgtasks/dummy_data_task.py",
+      "line": 252,
+      "code_sha256": "4eaaa6c90e8247fc929e148258b6a71876f9b0bdbd0fa34e7638ff466f123c0a",
+      "file_sha256": "069de51e59f0507f259e0ec9cf12c27a0dc2f0126e12c527f025bbfcd2d001a7",
+      "disposition": "reviewed non-blocking in named context",
+      "reason": "Non-security randomness for visual labels/icons, sort order, synthetic/demo records, estimate identifiers or display-name fallbacks; not an authentication secret, permission or cryptographic decision."
+    },
+    {
+      "test_id": "B311",
+      "path": "apps/api/plane/bgtasks/dummy_data_task.py",
+      "line": 260,
+      "code_sha256": "e6b31d2fa534dcf2423aa796a9e87aa60483bbc696acd4b3f65024d16bd3723d",
+      "file_sha256": "069de51e59f0507f259e0ec9cf12c27a0dc2f0126e12c527f025bbfcd2d001a7",
+      "disposition": "reviewed non-blocking in named context",
+      "reason": "Non-security randomness for visual labels/icons, sort order, synthetic/demo records, estimate identifiers or display-name fallbacks; not an authentication secret, permission or cryptographic decision."
+    },
+    {
+      "test_id": "B311",
+      "path": "apps/api/plane/bgtasks/dummy_data_task.py",
+      "line": 260,
+      "code_sha256": "e6b31d2fa534dcf2423aa796a9e87aa60483bbc696acd4b3f65024d16bd3723d",
+      "file_sha256": "069de51e59f0507f259e0ec9cf12c27a0dc2f0126e12c527f025bbfcd2d001a7",
+      "disposition": "reviewed non-blocking in named context",
+      "reason": "Non-security randomness for visual labels/icons, sort order, synthetic/demo records, estimate identifiers or display-name fallbacks; not an authentication secret, permission or cryptographic decision."
+    },
+    {
+      "test_id": "B311",
+      "path": "apps/api/plane/bgtasks/dummy_data_task.py",
+      "line": 287,
+      "code_sha256": "2d3db0245b31a04d5799bde7181e207b2fa7fd66c22f1d0bae2d8da4c18e4dc7",
+      "file_sha256": "069de51e59f0507f259e0ec9cf12c27a0dc2f0126e12c527f025bbfcd2d001a7",
+      "disposition": "reviewed non-blocking in named context",
+      "reason": "Non-security randomness for visual labels/icons, sort order, synthetic/demo records, estimate identifiers or display-name fallbacks; not an authentication secret, permission or cryptographic decision."
+    },
+    {
+      "test_id": "B311",
+      "path": "apps/api/plane/bgtasks/dummy_data_task.py",
+      "line": 293,
+      "code_sha256": "9a349f7e9d85ef28346befe6072d6e330b36fb2d6bb457949456b6cca582ca38",
+      "file_sha256": "069de51e59f0507f259e0ec9cf12c27a0dc2f0126e12c527f025bbfcd2d001a7",
+      "disposition": "reviewed non-blocking in named context",
+      "reason": "Non-security randomness for visual labels/icons, sort order, synthetic/demo records, estimate identifiers or display-name fallbacks; not an authentication secret, permission or cryptographic decision."
+    },
+    {
+      "test_id": "B311",
+      "path": "apps/api/plane/bgtasks/dummy_data_task.py",
+      "line": 306,
+      "code_sha256": "566dfcd0d4f71534967138bff76a404e540c7569b5e515741397566644d4617f",
+      "file_sha256": "069de51e59f0507f259e0ec9cf12c27a0dc2f0126e12c527f025bbfcd2d001a7",
+      "disposition": "reviewed non-blocking in named context",
+      "reason": "Non-security randomness for visual labels/icons, sort order, synthetic/demo records, estimate identifiers or display-name fallbacks; not an authentication secret, permission or cryptographic decision."
+    },
+    {
+      "test_id": "B311",
+      "path": "apps/api/plane/bgtasks/dummy_data_task.py",
+      "line": 316,
+      "code_sha256": "9822402bb71accd6d09e1c0acc69ebceef9bec28971de6af7531adf55a7a9ad8",
+      "file_sha256": "069de51e59f0507f259e0ec9cf12c27a0dc2f0126e12c527f025bbfcd2d001a7",
+      "disposition": "reviewed non-blocking in named context",
+      "reason": "Non-security randomness for visual labels/icons, sort order, synthetic/demo records, estimate identifiers or display-name fallbacks; not an authentication secret, permission or cryptographic decision."
+    },
+    {
+      "test_id": "B311",
+      "path": "apps/api/plane/bgtasks/dummy_data_task.py",
+      "line": 317,
+      "code_sha256": "11a5222edb6a8c554bdd7a737ef7d2c16728c0d8b03806aee48bde1c254884d0",
+      "file_sha256": "069de51e59f0507f259e0ec9cf12c27a0dc2f0126e12c527f025bbfcd2d001a7",
+      "disposition": "reviewed non-blocking in named context",
+      "reason": "Non-security randomness for visual labels/icons, sort order, synthetic/demo records, estimate identifiers or display-name fallbacks; not an authentication secret, permission or cryptographic decision."
+    },
+    {
+      "test_id": "B311",
+      "path": "apps/api/plane/bgtasks/dummy_data_task.py",
+      "line": 321,
+      "code_sha256": "f93ed5082015210b8b0f0f37e40b1b379e52c043991675fbe93f97dc71f150d8",
+      "file_sha256": "069de51e59f0507f259e0ec9cf12c27a0dc2f0126e12c527f025bbfcd2d001a7",
+      "disposition": "reviewed non-blocking in named context",
+      "reason": "Non-security randomness for visual labels/icons, sort order, synthetic/demo records, estimate identifiers or display-name fallbacks; not an authentication secret, permission or cryptographic decision."
+    },
+    {
+      "test_id": "B311",
+      "path": "apps/api/plane/bgtasks/dummy_data_task.py",
+      "line": 366,
+      "code_sha256": "3c4195ee5826589d05eab4607692123c15e14f388163c7b0cd13aa1efcd2a352",
+      "file_sha256": "069de51e59f0507f259e0ec9cf12c27a0dc2f0126e12c527f025bbfcd2d001a7",
+      "disposition": "reviewed non-blocking in named context",
+      "reason": "Non-security randomness for visual labels/icons, sort order, synthetic/demo records, estimate identifiers or display-name fallbacks; not an authentication secret, permission or cryptographic decision."
+    },
+    {
+      "test_id": "B311",
+      "path": "apps/api/plane/bgtasks/dummy_data_task.py",
+      "line": 367,
+      "code_sha256": "df1a8cccfa09f8472b2a1f6b9572b348ecef2d9de9194cd477a943c110573bec",
+      "file_sha256": "069de51e59f0507f259e0ec9cf12c27a0dc2f0126e12c527f025bbfcd2d001a7",
+      "disposition": "reviewed non-blocking in named context",
+      "reason": "Non-security randomness for visual labels/icons, sort order, synthetic/demo records, estimate identifiers or display-name fallbacks; not an authentication secret, permission or cryptographic decision."
+    },
+    {
+      "test_id": "B311",
+      "path": "apps/api/plane/bgtasks/dummy_data_task.py",
+      "line": 386,
+      "code_sha256": "060b9ba257207248f76f3e24b0557b7363154cd311e764a4e5a3b4c83b204553",
+      "file_sha256": "069de51e59f0507f259e0ec9cf12c27a0dc2f0126e12c527f025bbfcd2d001a7",
+      "disposition": "reviewed non-blocking in named context",
+      "reason": "Non-security randomness for visual labels/icons, sort order, synthetic/demo records, estimate identifiers or display-name fallbacks; not an authentication secret, permission or cryptographic decision."
+    },
+    {
+      "test_id": "B311",
+      "path": "apps/api/plane/bgtasks/dummy_data_task.py",
+      "line": 394,
+      "code_sha256": "35663f1e07b0f6fbf5572dbe8d006f5a8393eaa853df73c7f6499c235c41305f",
+      "file_sha256": "069de51e59f0507f259e0ec9cf12c27a0dc2f0126e12c527f025bbfcd2d001a7",
+      "disposition": "reviewed non-blocking in named context",
+      "reason": "Non-security randomness for visual labels/icons, sort order, synthetic/demo records, estimate identifiers or display-name fallbacks; not an authentication secret, permission or cryptographic decision."
+    },
+    {
+      "test_id": "B311",
+      "path": "apps/api/plane/bgtasks/dummy_data_task.py",
+      "line": 402,
+      "code_sha256": "859feb2b4092f075d96d671c1d5c74119766e8dfa8a22e31ab72c02765490872",
+      "file_sha256": "069de51e59f0507f259e0ec9cf12c27a0dc2f0126e12c527f025bbfcd2d001a7",
+      "disposition": "reviewed non-blocking in named context",
+      "reason": "Non-security randomness for visual labels/icons, sort order, synthetic/demo records, estimate identifiers or display-name fallbacks; not an authentication secret, permission or cryptographic decision."
+    },
+    {
+      "test_id": "B311",
+      "path": "apps/api/plane/bgtasks/dummy_data_task.py",
+      "line": 402,
+      "code_sha256": "859feb2b4092f075d96d671c1d5c74119766e8dfa8a22e31ab72c02765490872",
+      "file_sha256": "069de51e59f0507f259e0ec9cf12c27a0dc2f0126e12c527f025bbfcd2d001a7",
+      "disposition": "reviewed non-blocking in named context",
+      "reason": "Non-security randomness for visual labels/icons, sort order, synthetic/demo records, estimate identifiers or display-name fallbacks; not an authentication secret, permission or cryptographic decision."
+    },
+    {
+      "test_id": "B311",
+      "path": "apps/api/plane/bgtasks/dummy_data_task.py",
+      "line": 432,
+      "code_sha256": "83c82411003c4e9c96d4e210c1bc710a6aa6c8a6f2ed12c0e020cf799ee4c120",
+      "file_sha256": "069de51e59f0507f259e0ec9cf12c27a0dc2f0126e12c527f025bbfcd2d001a7",
+      "disposition": "reviewed non-blocking in named context",
+      "reason": "Non-security randomness for visual labels/icons, sort order, synthetic/demo records, estimate identifiers or display-name fallbacks; not an authentication secret, permission or cryptographic decision."
+    },
+    {
+      "test_id": "B311",
+      "path": "apps/api/plane/bgtasks/dummy_data_task.py",
+      "line": 432,
+      "code_sha256": "83c82411003c4e9c96d4e210c1bc710a6aa6c8a6f2ed12c0e020cf799ee4c120",
+      "file_sha256": "069de51e59f0507f259e0ec9cf12c27a0dc2f0126e12c527f025bbfcd2d001a7",
+      "disposition": "reviewed non-blocking in named context",
+      "reason": "Non-security randomness for visual labels/icons, sort order, synthetic/demo records, estimate identifiers or display-name fallbacks; not an authentication secret, permission or cryptographic decision."
+    },
+    {
+      "test_id": "B311",
+      "path": "apps/api/plane/bgtasks/dummy_data_task.py",
+      "line": 442,
+      "code_sha256": "5c08cdf502fc4fa25b75193aadfe1db073fd080a1130c01f7418620623a81248",
+      "file_sha256": "069de51e59f0507f259e0ec9cf12c27a0dc2f0126e12c527f025bbfcd2d001a7",
+      "disposition": "reviewed non-blocking in named context",
+      "reason": "Non-security randomness for visual labels/icons, sort order, synthetic/demo records, estimate identifiers or display-name fallbacks; not an authentication secret, permission or cryptographic decision."
+    },
+    {
+      "test_id": "B311",
+      "path": "apps/api/plane/bgtasks/dummy_data_task.py",
+      "line": 450,
+      "code_sha256": "acedf4d783ffdca50e985a574c928c934a5b651d580269b690038ee60d2bd4a2",
+      "file_sha256": "069de51e59f0507f259e0ec9cf12c27a0dc2f0126e12c527f025bbfcd2d001a7",
+      "disposition": "reviewed non-blocking in named context",
+      "reason": "Non-security randomness for visual labels/icons, sort order, synthetic/demo records, estimate identifiers or display-name fallbacks; not an authentication secret, permission or cryptographic decision."
+    },
+    {
+      "test_id": "B311",
+      "path": "apps/api/plane/bgtasks/dummy_data_task.py",
+      "line": 474,
+      "code_sha256": "8aa3cb149c5a8dc7a18a1802b453815c7edd451b043af2f14431cd4b82511e49",
+      "file_sha256": "069de51e59f0507f259e0ec9cf12c27a0dc2f0126e12c527f025bbfcd2d001a7",
+      "disposition": "reviewed non-blocking in named context",
+      "reason": "Non-security randomness for visual labels/icons, sort order, synthetic/demo records, estimate identifiers or display-name fallbacks; not an authentication secret, permission or cryptographic decision."
+    },
+    {
+      "test_id": "B311",
+      "path": "apps/api/plane/bgtasks/dummy_data_task.py",
+      "line": 474,
+      "code_sha256": "8aa3cb149c5a8dc7a18a1802b453815c7edd451b043af2f14431cd4b82511e49",
+      "file_sha256": "069de51e59f0507f259e0ec9cf12c27a0dc2f0126e12c527f025bbfcd2d001a7",
+      "disposition": "reviewed non-blocking in named context",
+      "reason": "Non-security randomness for visual labels/icons, sort order, synthetic/demo records, estimate identifiers or display-name fallbacks; not an authentication secret, permission or cryptographic decision."
+    },
+    {
+      "test_id": "B110",
+      "path": "apps/api/plane/bgtasks/issue_activities_task.py",
+      "line": 1537,
+      "code_sha256": "fbda20460bfdb77fa5c5db352d74e94187cf3c201ef1aadb279d46116562aa79",
+      "file_sha256": "35904e9c48fe5a00fb8f392f16df90bed9d9bb02bccadfa80f9e6b676d580187",
+      "disposition": "reviewed non-blocking in named context",
+      "reason": "Suppressed optional activity/notification bookkeeping error, not an authentication or permission check. Observability/data-consistency debt remains; blanket exception logging could leak record values."
+    },
+    {
+      "test_id": "B110",
+      "path": "apps/api/plane/bgtasks/notification_task.py",
+      "line": 298,
+      "code_sha256": "7e2dac4876d20e33040f48a85d21d8765eac4edc31414321a238b0e2bf346261",
+      "file_sha256": "e2d07b634594132ddf4ff359344b3e655a7c86dda717241cd20a620da441ebcc",
+      "disposition": "reviewed non-blocking in named context",
+      "reason": "Suppressed optional activity/notification bookkeeping error, not an authentication or permission check. Observability/data-consistency debt remains; blanket exception logging could leak record values."
+    },
+    {
+      "test_id": "B311",
+      "path": "apps/api/plane/db/migrations/0039_auto_20230723_2203.py",
+      "line": 69,
+      "code_sha256": "f27a117f9b28746d620c47096159cc0a2ca2adba19ef02c21000c63d86bd3ef2",
+      "file_sha256": "bc30532db41cb2f983177d35e26d7780b819e64f79e803576857694b2db13c04",
+      "disposition": "reviewed non-blocking in named context",
+      "reason": "Non-security randomness for visual labels/icons, sort order, synthetic/demo records, estimate identifiers or display-name fallbacks; not an authentication secret, permission or cryptographic decision."
+    },
+    {
+      "test_id": "B311",
+      "path": "apps/api/plane/db/migrations/0041_cycle_sort_order_issuecomment_access_and_more.py",
+      "line": 21,
+      "code_sha256": "df73ac52194b74a6c192f05a239d305ae11212904dc0b59f11d31a64ca25c4ea",
+      "file_sha256": "763e83e51bfca52782e03109b3ddb253b829bf946776c462d348027ecdb91184",
+      "disposition": "reviewed non-blocking in named context",
+      "reason": "Non-security randomness for visual labels/icons, sort order, synthetic/demo records, estimate identifiers or display-name fallbacks; not an authentication secret, permission or cryptographic decision."
+    },
+    {
+      "test_id": "B311",
+      "path": "apps/api/plane/db/migrations/0041_cycle_sort_order_issuecomment_access_and_more.py",
+      "line": 103,
+      "code_sha256": "a07cc2a96f6d6e79695393fbbc79214e067ba77729afcb982ea1809aed69df4b",
+      "file_sha256": "763e83e51bfca52782e03109b3ddb253b829bf946776c462d348027ecdb91184",
+      "disposition": "reviewed non-blocking in named context",
+      "reason": "Non-security randomness for visual labels/icons, sort order, synthetic/demo records, estimate identifiers or display-name fallbacks; not an authentication secret, permission or cryptographic decision."
+    },
+    {
+      "test_id": "B311",
+      "path": "apps/api/plane/db/migrations/0041_cycle_sort_order_issuecomment_access_and_more.py",
+      "line": 114,
+      "code_sha256": "b04ba5a872caa1b0d60fa20f7aa1691e0bd791e73122945b0394324d22f70bff",
+      "file_sha256": "763e83e51bfca52782e03109b3ddb253b829bf946776c462d348027ecdb91184",
+      "disposition": "reviewed non-blocking in named context",
+      "reason": "Non-security randomness for visual labels/icons, sort order, synthetic/demo records, estimate identifiers or display-name fallbacks; not an authentication secret, permission or cryptographic decision."
+    },
+    {
+      "test_id": "B311",
+      "path": "apps/api/plane/db/migrations/0046_label_sort_order_alter_analyticview_created_by_and_more.py",
+      "line": 16,
+      "code_sha256": "ffa85e36c569ec600832b85003f92b2039d1d5f6e93f8cabb4c231b740a8153f",
+      "file_sha256": "f94b76578f4fffbda2cd06699acd63907b4f5522d51dd41176e97a0c5a9898e5",
+      "disposition": "reviewed non-blocking in named context",
+      "reason": "Non-security randomness for visual labels/icons, sort order, synthetic/demo records, estimate identifiers or display-name fallbacks; not an authentication secret, permission or cryptographic decision."
+    },
+    {
+      "test_id": "B311",
+      "path": "apps/api/plane/db/models/user.py",
+      "line": 181,
+      "code_sha256": "8582f108ccec006f3fd1c9e60decb03b20f78f38196e9b4baf34000e0f4c6adf",
+      "file_sha256": "2d43ba607d4a1f617e6bafcd1ea6eba8daf783ef582e09b4aa7777b8fcb3c723",
+      "disposition": "reviewed non-blocking in named context",
+      "reason": "Non-security randomness for visual labels/icons, sort order, synthetic/demo records, estimate identifiers or display-name fallbacks; not an authentication secret, permission or cryptographic decision."
+    },
+    {
+      "test_id": "B311",
+      "path": "apps/api/plane/db/models/user.py",
+      "line": 192,
+      "code_sha256": "aaa787831e265288d5d5f4f45ba809c6399fcfe6f05bccb9c5b2c4230b4f71f1",
+      "file_sha256": "2d43ba607d4a1f617e6bafcd1ea6eba8daf783ef582e09b4aa7777b8fcb3c723",
+      "disposition": "reviewed non-blocking in named context",
+      "reason": "Non-security randomness for visual labels/icons, sort order, synthetic/demo records, estimate identifiers or display-name fallbacks; not an authentication secret, permission or cryptographic decision."
+    },
+    {
+      "test_id": "B311",
+      "path": "apps/api/plane/db/models/user.py",
+      "line": 196,
+      "code_sha256": "e2b27515fee550148b676f978e5fba299effaf420244c5efd64224f8f0f309f7",
+      "file_sha256": "2d43ba607d4a1f617e6bafcd1ea6eba8daf783ef582e09b4aa7777b8fcb3c723",
+      "disposition": "reviewed non-blocking in named context",
+      "reason": "Non-security randomness for visual labels/icons, sort order, synthetic/demo records, estimate identifiers or display-name fallbacks; not an authentication secret, permission or cryptographic decision."
+    },
+    {
+      "test_id": "B105",
+      "path": "apps/api/plane/license/api/views/instance.py",
+      "line": 137,
+      "code_sha256": "4af6c610853e2c2420cad914a38f32f3935f3b53753396526a68d7cc3fdb577c",
+      "file_sha256": "756127749213ba94724ffb9fe1039c47bcb04c59599aef63e7329bec9c8e8ce3",
+      "disposition": "reviewed non-blocking in named context",
+      "reason": "Matched value is a configuration boolean, numeric error code, enabled/disabled flag or public OAuth endpoint; it is not a credential."
+    },
+    {
+      "test_id": "B311",
+      "path": "apps/api/plane/utils/color.py",
+      "line": 13,
+      "code_sha256": "80c5160c5f32a7ce8c1d1d7e1a8905b53e126618f6d12c1f936be179bc3b5433",
+      "file_sha256": "4f2369bdce5c99a97f19e7e620a7cff19269a4ced3bdbf6e26bf0fc727537a9d",
+      "disposition": "reviewed non-blocking in named context",
+      "reason": "Non-security randomness for visual labels/icons, sort order, synthetic/demo records, estimate identifiers or display-name fallbacks; not an authentication secret, permission or cryptographic decision."
+    },
+    {
+      "test_id": "B110",
+      "path": "apps/api/plane/utils/content_validator.py",
+      "line": 64,
+      "code_sha256": "4ed351ea4e42208866dacd2aa9987a98f96ce1af9b5930ea7757833d9c5f9c06",
+      "file_sha256": "b4a70fadc313b26649421caa17c532e90042cbf7b4cc6a6e48e2cdfd67d62ddf",
+      "disposition": "reviewed non-blocking in named context",
+      "reason": "Best-effort binary text heuristic; not the HTML sanitizer or a sole trust boundary. Decode errors do not provide authenticity; broader parser/size validation remains separate."
+    },
+    {
+      "test_id": "B110",
+      "path": "apps/api/plane/utils/exporters/schemas/issue.py",
+      "line": 79,
+      "code_sha256": "0cdee70cc5f4cb338a02adcabfbd16a5a2a5c0dddc21756e4eb13c193fad9ed3",
+      "file_sha256": "6176f54aa18a27cbe956f4fc015626070fa8f9d0ce591166348a4c23809fd806",
+      "disposition": "reviewed non-blocking in named context",
+      "reason": "Display-name export fallback returns an empty string; does not grant access or skip an authorization decision."
+    }
+  ]
+}

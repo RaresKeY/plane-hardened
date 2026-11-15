@@ -4,7 +4,6 @@
 
 # Django imports
 from django.utils import timezone
-from lxml import html
 from django.db import IntegrityError
 
 #  Third party imports
@@ -80,15 +79,8 @@ class IssueSerializer(BaseSerializer):
         ):
             raise serializers.ValidationError("Start date cannot exceed target date")
 
-        try:
-            if data.get("description_html", None) is not None:
-                parsed = html.fromstring(data["description_html"])
-                parsed_str = html.tostring(parsed, encoding="unicode")
-                data["description_html"] = parsed_str
-
-        except Exception:
-            raise serializers.ValidationError("Invalid HTML passed")
-
+        # The shared HTML5 sanitizer normalizes and bounds input before parsing.
+        # A preceding libxml2 pass duplicated work and exposed a second parser.
         # Validate description content for security
         if data.get("description_html"):
             is_valid, error_msg, sanitized_html = validate_html_content(data["description_html"])

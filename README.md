@@ -1,3 +1,5 @@
+> Maintained hardening candidate based on Plane v1.4.3. Use the [specs map](specs/_readme.md), [upstream differences](PATCHES.md) and [restricted testing workflow](specs/testing.md) for this branch. VPS deployment is deferred; the upstream setup/development instructions below are reference material.
+
 <br /><br />
 
 <p align="center">

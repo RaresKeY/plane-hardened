@@ -1,0 +1,48 @@
+{
+  "status": "verified:37baseline controls reproduced;37patched controls passed; actual CJS/ESM/UMD exports and valid merging retained",
+  "files": [
+    {
+      "package": "@tiptap/core@2.26.3",
+      "file": "src/utilities/mergeAttributes.ts",
+      "before": "b37b89cbced50bf41670fcc8cd6777b52861ddf493d106e20a80a8dab229488c",
+      "after": "917169847ba0aab8ee5e65f4746e2fa452c715d1616643f270c6d2bcde3da1fc"
+    },
+    {
+      "package": "@tiptap/core@2.26.3",
+      "file": "dist/index.cjs",
+      "before": "221189b14bab1d786a8b15644aeb568e9779e99bb12fbdd7d0ce28714c0fc7d0",
+      "after": "15d852a301fdd86dcbcebf7f13628bcbc5ed525c5496e898812163b399dd5e21"
+    },
+    {
+      "package": "@tiptap/core@2.26.3",
+      "file": "dist/index.js",
+      "before": "566946fdf3f976e6f37bdbbf366317b7d9b0d235b58b87e77f431ce9b19ff0f2",
+      "after": "1c0aaf4aa468101fb4c8606632174cb6781ca99d10e10d13f4bd505bba856f2b"
+    },
+    {
+      "package": "deepmerge@4.3.1",
+      "file": "index.js",
+      "before": "12440c84957c1990ea2d5e33dc0091722dc1dc1585c6d20e0c780e568ffa9d30",
+      "after": "516d3a3c349fe5240a1fcb259b4dfe0c35fb521e82e0f0d78197d0ca600faed4"
+    },
+    {
+      "package": "deepmerge@4.3.1",
+      "file": "dist/cjs.js",
+      "before": "2e5160f84a1141bd927264afe4d15766f1e6cf07daef182b37ff53fea121de7d",
+      "after": "41c13e2022bee46a9ac6e0149b69c45e4c4cdfec4ffb8757cb23626f993d2317"
+    },
+    {
+      "package": "deepmerge@4.3.1",
+      "file": "dist/umd.js",
+      "before": "f33e6596482d1fb5c7c427f8ef92f2aa849eea9223acd974176b2fb27ddbf73a",
+      "after": "5900a25d22043eac6f7aa549bbc16ca49e55a3064760ff7eead36ccf4d613be1"
+    },
+    {
+      "package": "@tiptap/core@2.26.3",
+      "file": "dist/index.umd.js",
+      "before": "ed0c8c07c79bca854b566192889f0ad5060bc7d4db160d8099ab488181cfb15f",
+      "after": "479ff8cc5bf4d8aa413fad40fa7be7bf7f860521a4d780ed21a4690230fbbcce"
+    }
+  ],
+  "evidence": "plane-js-dd09dd066885/prototype.log; earlier baseline evidence retained in external-intake receipts"
+}

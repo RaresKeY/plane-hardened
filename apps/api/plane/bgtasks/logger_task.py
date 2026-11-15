@@ -10,7 +10,7 @@ from typing import Dict, Any
 from celery import shared_task
 
 # Django imports
-from plane.utils.exception_logger import log_exception
+from plane.utils.request_logging import AUDIT_SCHEMA, activity_metadata
 from plane.db.models import APIActivityLog
 
 
@@ -24,18 +24,25 @@ def log_to_postgres(log_data: Dict[str, Any]) -> bool:
     try:
         APIActivityLog.objects.create(**log_data)
         return True
-    except Exception as e:
-        log_exception(e)
+    except Exception:
+        # Database exception strings can echo values; never serialize audit input.
+        logger.warning("Could not persist API activity metadata")
         return False
 
 
 @shared_task
-def process_logs(log_data: Dict[str, Any], **_: Any) -> None:
+def process_logs(log_data: Dict[str, Any], audit_schema=None, **_: Any) -> None:
     """
     Persist external API request logs to PostgreSQL.
 
-    The catch-all kwargs keep this task signature compatible with jobs enqueued
-    by an older release (which passed a `mongo_log` argument), so in-flight tasks
-    don't fail during a rolling deploy. It can be dropped once no such jobs remain.
+    Old queued records can contain raw credentials. Discard them without logging
+    their values, rather than reintroducing secrets after a producer upgrade.
     """
-    log_to_postgres(log_data)
+    if type(audit_schema) is not int or audit_schema != AUDIT_SCHEMA:
+        logger.warning("Discarded legacy API activity payload")
+        return
+    metadata = activity_metadata(log_data)
+    if metadata is None:
+        logger.warning("Discarded invalid API activity metadata")
+        return
+    log_to_postgres(metadata)

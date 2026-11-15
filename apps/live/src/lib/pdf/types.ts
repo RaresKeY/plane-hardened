@@ -60,7 +60,7 @@ export type PDFExportOptions = {
 export type PDFExportMetadata = {
   /** User mentions (user_mention in mention node) */
   userMentions?: PDFUserMention[];
-  /** Resolved image URLs: Map of asset ID to presigned URL */
+  /** Prepared JPEG data: Map of authorized asset UUID to bounded, re-encoded data URI */
   resolvedImageUrls?: Record<string, string>;
   /** When true, images and other assets are excluded from the PDF */
   noAssets?: boolean;

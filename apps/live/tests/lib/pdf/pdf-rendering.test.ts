@@ -17,8 +17,23 @@ const PDF_HEADER = "%PDF-";
 async function extractPdfText(buffer: Buffer): Promise<string> {
   const uint8 = new Uint8Array(buffer);
   const parser = new PDFParse(uint8);
-  const result = await parser.getText();
-  return result.pages.map((p) => p.text).join("\n");
+  try {
+    const result = await parser.getText();
+    return result.pages.map((p) => p.text).join("\n");
+  } finally {
+    await parser.destroy();
+  }
+}
+
+async function pageDimensions(buffer: Buffer): Promise<{ width: number; height: number }> {
+  const parser = new PDFParse(new Uint8Array(buffer));
+  try {
+    const info = await parser.getInfo({ parsePageInfo: true });
+    expect(info.pages.length).toBeGreaterThan(0);
+    return { width: info.pages[0]!.width, height: info.pages[0]!.height };
+  } finally {
+    await parser.destroy();
+  }
 }
 
 describe("PDF Rendering Integration", () => {
@@ -444,8 +459,12 @@ describe("PDF Rendering Integration", () => {
 
       expect(a4Text).toContain("Page size test content");
       expect(letterText).toContain("Page size test content");
-      // Different page sizes should produce different PDF sizes
-      expect(a4Buffer.length).not.toBe(letterBuffer.length);
+      const a4 = await pageDimensions(a4Buffer);
+      const letter = await pageDimensions(letterBuffer);
+      expect(a4.width).toBeCloseTo(595.28, 1);
+      expect(a4.height).toBeCloseTo(841.89, 1);
+      expect(letter.width).toBeCloseTo(612, 1);
+      expect(letter.height).toBeCloseTo(792, 1);
     });
 
     it("should support landscape orientation and verify content", async () => {
@@ -467,7 +486,13 @@ describe("PDF Rendering Integration", () => {
 
       expect(portraitText).toContain("Landscape content here");
       expect(landscapeText).toContain("Landscape content here");
-      expect(portraitBuffer.length).not.toBe(landscapeBuffer.length);
+      // File length can be identical even when the physical page orientation differs.
+      const portrait = await pageDimensions(portraitBuffer);
+      const landscape = await pageDimensions(landscapeBuffer);
+      expect(portrait.height).toBeGreaterThan(portrait.width);
+      expect(landscape.width).toBeGreaterThan(landscape.height);
+      expect(landscape.width).toBeCloseTo(portrait.height, 2);
+      expect(landscape.height).toBeCloseTo(portrait.width, 2);
     });
 
     it("should include author metadata in PDF", async () => {

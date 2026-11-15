@@ -27,8 +27,8 @@ export const withTimeoutAndRetry =
         pipe(
           Schedule.exponential(Duration.millis(200)),
           Schedule.compose(Schedule.recurs(maxRetries)),
-          Schedule.tapInput((error: E | PdfTimeoutError) =>
-            Effect.logWarning("PDF_EXPORT: Retrying operation", { operation, error })
+          Schedule.tapInput((_error: E | PdfTimeoutError) =>
+            Effect.logWarning("PDF_EXPORT: Retrying operation", { operation })
           )
         )
       )
@@ -42,7 +42,7 @@ export const recoverWithDefault =
   <A>(fallback: A) =>
   <E, R>(effect: Effect.Effect<A, E, R>): Effect.Effect<A, never, R> =>
     effect.pipe(
-      Effect.tapError((error) => Effect.logWarning("PDF_EXPORT: Operation failed, using fallback", { error })),
+      Effect.tapError(() => Effect.logWarning("PDF_EXPORT: Operation failed, using fallback")),
       Effect.catchAll(() => Effect.succeed(fallback))
     );
 

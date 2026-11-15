@@ -1,0 +1,45 @@
+{
+  "schema": 1,
+  "review_date": "2026-11-15 UTC",
+  "tools": [
+    {
+      "name": "syft",
+      "version": "1.57.1",
+      "source": "https://github.com/anchore/syft",
+      "binary_sha256": "de3982edbbc250c4a40764c7b1f30bbf54b681f9b99391ee6b85bfdfa5d4dffe",
+      "license": "Apache-2.0"
+    },
+    {
+      "name": "grype",
+      "version": "0.121.3",
+      "source": "https://github.com/anchore/grype",
+      "binary_sha256": "30f8f7de5dda71952a20d4955034d30a081a5d10e6bd00d67ce78b56fd0251dc",
+      "license": "Apache-2.0"
+    },
+    {
+      "name": "trivy",
+      "version": "0.76.2",
+      "source": "https://github.com/aquasecurity/trivy",
+      "binary_sha256": "6a972c69606c7b3ea4c6bdcc6fc9332ea9ad38381624310c1e85cc77345909f3",
+      "license": "Apache-2.0"
+    },
+    {
+      "name": "bun",
+      "version": "1.4.4",
+      "source": "https://github.com/oven-sh/bun",
+      "binary_sha256": "10702245766b225e70bbf6235fd6b47214fd94b4760d00ffaed8ab0df57ac235",
+      "license": "MIT"
+    }
+  ],
+  "checks": "Publisher release checksums, bounded ClamAV/static/manual/native-header review and restricted startup; actual Debian-host tool bytes match exact local screened binaries",
+  "limits": [
+    "ClamAV1.5.4/db28179datedNov10; no implicit signature refresh",
+    "No independently verified reproducible build or completed publisher attestation",
+    "Grype database separately pinned/intake-qualified; scanner success is not a finding gate"
+  ],
+  "fixture_images": {
+    "python312_trixie": "78976a69c067520ef8be34cde307ef9f6fea6dcefa50edb57039773d241ca0db",
+    "postgres1520": "4368ffd9b43260bf9794d9c679495b2a2504da70c0af38a0397ec79fa9e1fa98",
+    "valkey7215": "8b4ec7a03956151ffb8395a2e2fdcab32754a42548b37d209fe4568b9e44cdaa"
+  }
+}

@@ -1,0 +1,44 @@
+--- a/src/utilities/mergeAttributes.ts
++++ b/src/utilities/mergeAttributes.ts
+@@ -5,6 +5,8 @@
+       const mergedAttributes = { ...items }
+ 
+       Object.entries(item).forEach(([key, value]) => {
++        // Reserved prototype setters must never become DOM attribute inheritance.
++        if (key === '__proto__') { return }
+         const exists = mergedAttributes[key]
+ 
+         if (!exists) {
+--- a/dist/index.cjs
++++ b/dist/index.cjs
+@@ -316,6 +316,8 @@
+         .reduce((items, item) => {
+         const mergedAttributes = { ...items };
+         Object.entries(item).forEach(([key, value]) => {
++          // Reserved prototype setters must never become DOM attribute inheritance.
++          if (key === '__proto__') { return }
+             const exists = mergedAttributes[key];
+             if (!exists) {
+                 mergedAttributes[key] = value;
+--- a/dist/index.js
++++ b/dist/index.js
+@@ -314,6 +314,8 @@
+         .reduce((items, item) => {
+         const mergedAttributes = { ...items };
+         Object.entries(item).forEach(([key, value]) => {
++          // Reserved prototype setters must never become DOM attribute inheritance.
++          if (key === '__proto__') { return }
+             const exists = mergedAttributes[key];
+             if (!exists) {
+                 mergedAttributes[key] = value;
+--- a/dist/index.umd.js
++++ b/dist/index.umd.js
+@@ -312,6 +312,8 @@
+           .reduce((items, item) => {
+           const mergedAttributes = { ...items };
+           Object.entries(item).forEach(([key, value]) => {
++            // Reserved prototype setters must never become DOM attribute inheritance.
++            if (key === '__proto__') { return }
+               const exists = mergedAttributes[key];
+               if (!exists) {
+                   mergedAttributes[key] = value;

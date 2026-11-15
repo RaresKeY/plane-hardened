@@ -109,7 +109,7 @@ class GitHubOAuthProvider(OauthAdapter):
         try:
             # Github does not provide email in user response
             emails_url = "https://api.github.com/user/emails"
-            emails_response = requests.get(emails_url, headers=headers).json()
+            emails_response = requests.get(emails_url, headers=headers, timeout=(5, 30)).json()
             # Ensure the response is a list before iterating
             if not isinstance(emails_response, list):
                 self.logger.error("Unexpected response format from GitHub emails API")
@@ -144,6 +144,7 @@ class GitHubOAuthProvider(OauthAdapter):
         response = requests.get(
             f"{self.org_membership_url}/{self.organization_id}/memberships/{github_username}",
             headers=headers,
+            timeout=(5, 30),
         )
         return response.status_code == 200  # 200 means the user is a member
 

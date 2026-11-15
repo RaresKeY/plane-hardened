@@ -77,7 +77,7 @@ def sync_with_external_service(entity_name, description_html):
 
         url = normalize_url_path(f"{live_url}/convert-document/")
 
-        response = requests.post(url, json=data, headers=None)
+        response = requests.post(url, json=data, headers=None, timeout=(5, 30))
         if response.status_code == 200:
             return response.json()
     except requests.RequestException as e:

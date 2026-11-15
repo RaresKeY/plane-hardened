@@ -24,6 +24,8 @@ const envSchema = z.object({
   COMPRESSION_THRESHOLD: z.string().default("5000").transform(Number),
   // secret
   LIVE_SERVER_SECRET_KEY: z.string(),
+  // Exact storage origins allowed for PDF asset fetches; empty disables image downloads.
+  PDF_ASSET_ORIGINS: z.string().default(""),
   // Redis configuration
   REDIS_HOST: z.string().optional(),
   REDIS_PORT: z.string().default("6379").transform(Number),

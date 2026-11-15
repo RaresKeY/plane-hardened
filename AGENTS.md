@@ -1,4 +1,13 @@
-# Agent Development Guide
+# Maintained hardened fork
+
+- Read `specs/_readme.md` and relevant owning specs before changes. Current contracts belong in specs, desired behavior in design, results in `records/verification.json`, upstream differences in `PATCHES.md`. No handoff/milestone notes.
+- Work in this normal checkout on `hardened`; `upstream` is makeplane/plane and `origin` is RaresKeY/plane-hardened. Intake incoming source/dependencies/tools before execution. No PR or review publication unless requested.
+- The operator authorized source/dependency hardening and restricted tests on the qualified Debian host. VPS deployment, production-data use, host package/authentication changes and unrelated workload changes are deferred.
+- The review environment remains inert. Candidate execution uses the owning rootless restricted launcher: no host home/credentials/SSH or engine sockets, privilege escalation or public ports; default-deny egress; bounded resources and exact task-owned cleanup.
+- Never invoke Node/npm/npx/pnpm/yarn or package executors. Prefer Deno; use Bun only for repository compatibility, frozen dependencies and reviewed lifecycle scripts. The original commands below are upstream reference, superseded by these rules.
+- Preserve upstream license/copyright; provenance belongs in `vendored/THIRD_PARTY_NOTICES.md`. Test changed and related paths with positive controls. Report failures/skips, scanner freshness/coverage and maintenance risks; no broad ignores or absolute-security claims.
+
+# Upstream development guide (reference)
 
 ## Commands
 

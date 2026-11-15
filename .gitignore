@@ -117,3 +117,10 @@ packages/i18n/src/types/keys.generated.ts
 
 # Local security notes (not for version control)
 /security/
+# Fork-owned evidence, caches and restricted runtime state.
+.local/
+.venv/
+
+# Public certificate-only incident controls; private keys remain ignored.
+!/hardening/trust/fixtures/*.pem
+!/hardening/trust/chains/**/*.pem

@@ -83,6 +83,10 @@ def _split_target(url):
     URL-embedded credentials (``user:pass@host``) as a ``(user, pass)`` tuple so
     HTTP Basic Auth still works once the URL is rewritten to an IP literal.
     """
+    # URL parsers and getaddrinfo disagree on embedded controls/NUL truncation.
+    # Reject them before parsing or DNS, without echoing a potentially secret URL.
+    if not isinstance(url, str) or any(ord(char) < 32 or ord(char) == 127 for char in url):
+        raise ValueError("Invalid URL control character")
     parts = urlsplit(url)
     scheme = parts.scheme
     if scheme not in ("http", "https"):
@@ -90,6 +94,9 @@ def _split_target(url):
     hostname = parts.hostname
     if not hostname:
         raise ValueError("Invalid URL: No hostname found")
+    decoded_hostname = unquote(hostname)
+    if any(ord(char) <= 32 or ord(char) == 127 for char in decoded_hostname):
+        raise ValueError("Invalid URL hostname control character")
     port = parts.port or (443 if scheme == "https" else 80)
     path = parts.path or "/"
     if parts.query:

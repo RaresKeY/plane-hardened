@@ -239,5 +239,5 @@ class UnsplashEndpoint(BaseAPIView):
 
         headers = {"Content-Type": "application/json"}
 
-        resp = requests.get(url=url, headers=headers)
+        resp = requests.get(url=url, headers=headers, timeout=(5, 30))
         return Response(resp.json(), status=resp.status_code)

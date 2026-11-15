@@ -19,6 +19,7 @@ import { logger, loggerMiddleware } from "@plane/logger";
 import { CONTROLLERS } from "@/controllers";
 // env
 import { env } from "@/env";
+import { httpErrorHandler } from "@/lib/http-error-handler";
 // hocuspocus server
 import { HocusPocusServerManager } from "@/hocuspocus";
 // redis
@@ -48,6 +49,7 @@ export class Server {
       logger.info("SERVER: HocusPocus setup completed");
       this.setupRoutes(this.hocuspocusServer);
       this.setupNotFoundHandler();
+      this.app.use(httpErrorHandler);
     } catch (error) {
       logger.error("SERVER: Failed to initialize live server dependencies:", error);
       throw error;

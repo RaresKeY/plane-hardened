@@ -6,6 +6,15 @@
 
 import { Effect } from "effect";
 import sharp from "sharp";
+import { env } from "@/env";
+import {
+  assetUrl,
+  downloadAsset,
+  imageAssetIds,
+  ASSET_ID,
+  MAX_DOCUMENT_IMAGES,
+  MAX_IMAGE_BYTES,
+} from "@/lib/pdf/image-policy";
 import { getAllDocumentFormatsFromDocumentEditorBinaryData } from "@plane/editor/lib";
 import type { PDFExportMetadata, TipTapDocument } from "@/lib/pdf";
 import { renderPlaneDocToPdfBuffer } from "@/lib/pdf";
@@ -48,24 +57,7 @@ export class PdfExportService extends Effect.Service<PdfExportService>()("PdfExp
      * Extracts image asset IDs from document content
      */
     extractImageAssetIds: (doc: TipTapNode): string[] => {
-      const assetIds: string[] = [];
-
-      const traverse = (node: TipTapNode) => {
-        if ((node.type === "imageComponent" || node.type === "image") && node.attrs?.src) {
-          const src = node.attrs.src as string;
-          if (src && !src.startsWith("http") && !src.startsWith("data:")) {
-            assetIds.push(src);
-          }
-        }
-        if (node.content) {
-          for (const child of node.content) {
-            traverse(child);
-          }
-        }
-      };
-
-      traverse(doc);
-      return [...new Set(assetIds)];
+      return imageAssetIds(doc);
     },
 
     /**
@@ -161,94 +153,49 @@ export class PdfExportService extends Effect.Service<PdfExportService>()("PdfExp
           count: assetIds.length,
         });
 
-        // Resolve URLs first
-        const resolvedUrlMap = yield* tryAsync(
-          async () => {
-            const urlMap = new Map<string, string>();
-            for (const assetId of assetIds) {
-              const url = await pageService.resolveImageAssetUrl?.(workspaceSlug, assetId, projectId);
-              if (url) urlMap.set(assetId, url);
-            }
-            return urlMap;
-          },
-          () => new Map<string, string>()
-        ).pipe(recoverWithDefault(new Map<string, string>()));
-
-        if (resolvedUrlMap.size === 0) {
-          return {};
-        }
-
-        // Process each image
-        const processSingleImage = ([assetId, url]: [string, string]) =>
-          Effect.gen(function* () {
-            const response = yield* tryAsync(
-              () => fetch(url),
-              (cause) =>
-                new PdfImageProcessingError({
-                  message: "Failed to fetch image",
+        const processSingleImage = (assetId: string) =>
+          tryAsync(
+            async () => {
+              const controller = new AbortController();
+              const timer = setTimeout(() => controller.abort(), IMAGE_TIMEOUT_MS);
+              try {
+                const resolved = await pageService.resolveImageAssetUrl(
+                  workspaceSlug,
                   assetId,
-                  cause,
-                })
-            );
-
-            if (!response.ok) {
-              return yield* Effect.fail(
-                new PdfImageProcessingError({
-                  message: `Image fetch returned ${response.status}`,
-                  assetId,
-                })
-              );
-            }
-
-            const arrayBuffer = yield* tryAsync(
-              () => response.arrayBuffer(),
-              (cause) =>
-                new PdfImageProcessingError({
-                  message: "Failed to read image body",
-                  assetId,
-                  cause,
-                })
-            );
-
-            const processedBuffer = yield* tryAsync(
-              () =>
-                sharp(Buffer.from(arrayBuffer))
+                  projectId,
+                  controller.signal
+                );
+                if (!resolved) return null;
+                const url = assetUrl(resolved, env.PDF_ASSET_ORIGINS);
+                const body = await downloadAsset(url, controller.signal);
+                const processed = await sharp(body, { limitInputPixels: 16000000, animated: false })
+                  .timeout({ seconds: IMAGE_TIMEOUT_MS / 1000 })
                   .rotate()
                   .flatten({ background: { r: 255, g: 255, b: 255 } })
                   .resize(IMAGE_MAX_DIMENSION, IMAGE_MAX_DIMENSION, { fit: "inside", withoutEnlargement: true })
                   .jpeg({ quality: 85 })
-                  .toBuffer(),
-              (cause) =>
-                new PdfImageProcessingError({
-                  message: "Failed to process image",
-                  assetId,
-                  cause,
-                })
-            );
-
-            const base64 = processedBuffer.toString("base64");
-            return [assetId, `data:image/jpeg;base64,${base64}`] as const;
-          }).pipe(
-            withTimeoutAndRetry(`process image ${assetId}`, {
-              timeoutMs: IMAGE_TIMEOUT_MS,
-              maxRetries: 1,
-            }),
-            Effect.tapError((error) =>
-              Effect.logWarning("PDF_EXPORT: Image processing failed", {
-                requestId,
-                assetId,
-                error,
-              })
-            ),
-            Effect.catchAll(() => Effect.succeed(null as readonly [string, string] | null))
+                  .toBuffer();
+                if (processed.length > MAX_IMAGE_BYTES) throw new Error("Processed PDF image exceeds limit");
+                return [assetId, `data:image/jpeg;base64,${processed.toString("base64")}`] as const;
+              } finally {
+                clearTimeout(timer);
+                controller.abort();
+              }
+            },
+            () => new PdfImageProcessingError({ message: "PDF image processing failed", assetId })
+          ).pipe(
+            Effect.tapError(() => Effect.logWarning("PDF_EXPORT: Image processing failed", { requestId })),
+            Effect.catchAll(() => Effect.succeed(null))
           );
 
-        const entries = Array.from(resolvedUrlMap.entries());
+        // Independently validate this boundary even when called outside the export pipeline.
+        const entries = [...new Set(assetIds)].filter((id) => ASSET_ID.test(id)).slice(0, MAX_DOCUMENT_IMAGES);
+
         const pairs = yield* Effect.forEach(entries, processSingleImage, {
           concurrency: IMAGE_CONCURRENCY,
         });
 
-        const filtered = pairs.filter((p): p is readonly [string, string] => p !== null);
+        const filtered = pairs.filter((p): p is NonNullable<typeof p> => p !== null);
         return Object.fromEntries(filtered);
       }),
 
@@ -326,18 +273,18 @@ export const exportToPdf = (
     const content = yield* service.fetchPageContent(pageService, pageId, requestId);
 
     // Extract image asset IDs
-    const imageAssetIds = service.extractImageAssetIds(content.contentJSON as TipTapNode);
+    const extractedImageIds = service.extractImageAssetIds(content.contentJSON as TipTapNode);
 
     // Fetch user mentions
     let metadata = yield* service.fetchUserMentions(pageService, pageId, requestId);
 
     // Process images if needed
-    if (!noAssets && imageAssetIds.length > 0) {
+    if (!noAssets && extractedImageIds.length > 0) {
       const resolvedImages = yield* service.processImages(
         pageService,
         workspaceSlug,
         projectId,
-        imageAssetIds,
+        extractedImageIds,
         requestId
       );
       metadata = { ...metadata, resolvedImageUrls: resolvedImages };

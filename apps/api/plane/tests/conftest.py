@@ -3,6 +3,7 @@
 # See the LICENSE file for details.
 
 import pytest
+from uuid import uuid4
 from rest_framework.test import APIClient
 from pytest_django.fixtures import django_db_setup
 
@@ -52,7 +53,7 @@ def api_token(db, create_user):
     token = APIToken.objects.create(
         user=create_user,
         label="Test API Token",
-        token="test-api-token-12345",
+        token="test-api-token-" + uuid4().hex,
     )
     return token
 

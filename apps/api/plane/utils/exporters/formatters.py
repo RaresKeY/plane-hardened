@@ -8,6 +8,7 @@ import json
 from typing import Any, Dict, List, Type
 
 from openpyxl import Workbook
+from plane.utils.xlsx import save_xlsx
 
 # Module imports
 from plane.utils.csv_utils import sanitize_csv_row
@@ -177,7 +178,7 @@ class XLSXFormatter(BaseFormatter):
         for row in data:
             sh.append(sanitize_csv_row(row))
         out = io.BytesIO()
-        wb.save(out)
+        save_xlsx(wb, out)
         out.seek(0)
         return out.getvalue()
 

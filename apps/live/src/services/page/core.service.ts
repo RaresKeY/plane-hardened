@@ -4,6 +4,7 @@
  * See the LICENSE file for details.
  */
 
+import { ASSET_ID } from "@/lib/pdf/image-policy";
 import { logger } from "@plane/logger";
 import type { TDocumentPayload, TPage } from "@plane/types";
 // services
@@ -18,10 +19,6 @@ export type TUserMention = {
 
 export abstract class PageCoreService extends APIService {
   protected abstract basePath: string;
-
-  constructor() {
-    super();
-  }
 
   async fetchDetails(pageId: string): Promise<TPage> {
     try {
@@ -163,8 +160,15 @@ export abstract class PageCoreService extends APIService {
   async resolveImageAssetUrl(
     workspaceSlug: string,
     assetId: string,
-    projectId?: string | null
+    projectId?: string | null,
+    signal?: AbortSignal
   ): Promise<string | null> {
+    if (
+      !ASSET_ID.test(assetId) ||
+      !/^[a-z0-9_-]{1,255}$/i.test(workspaceSlug) ||
+      (projectId && !ASSET_ID.test(projectId))
+    )
+      return null;
     const path = projectId
       ? `/api/assets/v2/workspaces/${workspaceSlug}/projects/${projectId}/${assetId}/?disposition=inline`
       : `/api/assets/v2/workspaces/${workspaceSlug}/${assetId}/?disposition=inline`;
@@ -173,6 +177,7 @@ export abstract class PageCoreService extends APIService {
       const response = await this.get(path, {
         headers: this.getHeader(),
         maxRedirects: 0,
+        signal,
         validateStatus: (status: number) => status >= 200 && status < 400,
       });
       // If we get a 302, the Location header contains the presigned URL
@@ -188,7 +193,7 @@ export abstract class PageCoreService extends APIService {
       logger.error("Failed to resolve image asset URL", {
         assetId,
         workspaceSlug,
-        error: (error as any).message,
+        operation: "resolveImageAssetUrl",
       });
       return null;
     }

@@ -4,6 +4,7 @@
  * See the LICENSE file for details.
  */
 
+import { preparedImage } from "./image-policy";
 import { Image, Link, Text, View } from "@react-pdf/renderer";
 import type { Style } from "@react-pdf/types";
 import type { ReactElement } from "react";
@@ -257,7 +258,7 @@ export const nodeRenderers: NodeRendererRegistry = {
       return <View key={ctx.getKey()} />;
     }
 
-    const src = (node.attrs?.src as string) || "";
+    const src = preparedImage(node.attrs?.src, ctx.metadata?.resolvedImageUrls);
     const width = node.attrs?.width as number | undefined;
     const alignment = (node.attrs?.alignment as string) || "left";
 
@@ -287,7 +288,7 @@ export const nodeRenderers: NodeRendererRegistry = {
       return <View key={ctx.getKey()} />;
     }
 
-    const assetId = (node.attrs?.src as string) || "";
+    const assetId = typeof node.attrs?.src === "string" ? node.attrs.src : "";
     const rawWidth = node.attrs?.width;
     const width = typeof rawWidth === "string" ? parseInt(rawWidth, 10) : (rawWidth as number | undefined);
     const alignment = (node.attrs?.alignment as string) || "left";
@@ -296,10 +297,7 @@ export const nodeRenderers: NodeRendererRegistry = {
       return <View key={ctx.getKey()} />;
     }
 
-    let resolvedSrc = assetId;
-    if (ctx.metadata?.resolvedImageUrls && ctx.metadata.resolvedImageUrls[assetId]) {
-      resolvedSrc = ctx.metadata.resolvedImageUrls[assetId];
-    }
+    const resolvedSrc = preparedImage(assetId, ctx.metadata?.resolvedImageUrls);
 
     const alignmentStyle =
       alignment === "center"
@@ -308,10 +306,10 @@ export const nodeRenderers: NodeRendererRegistry = {
           ? { alignItems: "flex-end" as const }
           : { alignItems: "flex-start" as const };
 
-    if (!resolvedSrc.startsWith("http") && !resolvedSrc.startsWith("data:")) {
+    if (!resolvedSrc) {
       return (
         <View key={ctx.getKey()} style={[pdfStyles.imagePlaceholder, alignmentStyle]}>
-          <Text style={pdfStyles.imagePlaceholderText}>[Image: {assetId.slice(0, 8)}...]</Text>
+          <Text style={pdfStyles.imagePlaceholderText}>[Image omitted]</Text>
         </View>
       );
     }

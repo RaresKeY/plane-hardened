@@ -1,0 +1,1643 @@
+{
+  "schema": 1,
+  "review_date": "2026-11-15",
+  "base_commit": "37a15d99231042b3ff5a4401fed479fdbec9effe",
+  "scope": "Baseline source package-version findings retained with current closure resolution. All workspace builds/types and changed/upstream test lanes pass; browser/finalJSnativeimages remain unqualified.",
+  "findings": [
+    {
+      "package": "@effect/platform",
+      "version": "0.94.1",
+      "advisory": "GHSA-chp3-j5qr-2vfr",
+      "severity_from_database": "MODERATE",
+      "fixed_versions": [
+        "0.97.1"
+      ],
+      "status": "original version/advisory match removed by update or closure removal; current frozen OSV query has no match for this entry; optional features not all exercised",
+      "references": [
+        "https://github.com/Effect-TS/effect/security/advisories/GHSA-chp3-j5qr-2vfr",
+        "https://nvd.nist.gov/vuln/detail/CVE-2026-115779",
+        "https://github.com/Effect-TS/effect/pull/6763"
+      ],
+      "current_versions": []
+    },
+    {
+      "package": "@tiptap/core",
+      "version": "2.26.3",
+      "advisory": "GHSA-cp6q-959q-f8rh",
+      "severity_from_database": "MODERATE",
+      "fixed_versions": [
+        "3.30.4"
+      ],
+      "status": "local source/emitted-entrypoint patch verified by37baseline/37patchedcontrols; upstream package-version match remains visible",
+      "references": [
+        "https://github.com/ueberdosis/tiptap/security/advisories/GHSA-cp6q-959q-f8rh",
+        "https://github.com/ueberdosis/tiptap/commit/01d7af8c983ee5954c63734f4fa46cb23ae3246d",
+        "https://github.com/ueberdosis/tiptap/releases/tag/v3.30.4"
+      ],
+      "current_versions": [
+        "2.26.3"
+      ]
+    },
+    {
+      "package": "@vitest/mocker",
+      "version": "4.1.11",
+      "advisory": "GHSA-qxg6-89mg-rqv8",
+      "severity_from_database": "MODERATE",
+      "fixed_versions": [
+        "4.1.12",
+        "5.0.3"
+      ],
+      "status": "original version/advisory match removed by update or closure removal; current frozen OSV query has no match for this entry; optional features not all exercised",
+      "references": [
+        "https://github.com/vitest-dev/vitest/security/advisories/GHSA-qxg6-89mg-rqv8",
+        "https://nvd.nist.gov/vuln/detail/CVE-2026-112949",
+        "https://github.com/vitest-dev/vitest/commit/15cc006aa9f8683dc5f7e895d011fa7dc751ce35"
+      ],
+      "current_versions": [
+        "4.1.12"
+      ]
+    },
+    {
+      "package": "@vitest/mocker",
+      "version": "4.1.11",
+      "advisory": "GHSA-xp26-3454-mjgp",
+      "severity_from_database": "MODERATE",
+      "fixed_versions": [
+        "4.1.12",
+        "5.0.3"
+      ],
+      "status": "original version/advisory match removed by update or closure removal; current frozen OSV query has no match for this entry; optional features not all exercised",
+      "references": [
+        "https://github.com/vitest-dev/vitest/security/advisories/GHSA-xp26-3454-mjgp",
+        "https://nvd.nist.gov/vuln/detail/CVE-2026-112950",
+        "https://github.com/vitest-dev/vitest/commit/15cc006aa9f8683dc5f7e895d011fa7dc751ce35"
+      ],
+      "current_versions": [
+        "4.1.12"
+      ]
+    },
+    {
+      "package": "axios",
+      "version": "1.18.1",
+      "advisory": "GHSA-3pq3-5fj3-cg6v",
+      "severity_from_database": "HIGH",
+      "fixed_versions": [
+        "1.20.0"
+      ],
+      "status": "original version/advisory match removed by update or closure removal; current frozen OSV query has no match for this entry; optional features not all exercised",
+      "references": [
+        "https://github.com/axios/axios/security/advisories/GHSA-3pq3-5fj3-cg6v",
+        "https://nvd.nist.gov/vuln/detail/CVE-2026-101898",
+        "https://github.com/axios/axios/pull/11141"
+      ],
+      "current_versions": [
+        "1.20.0"
+      ]
+    },
+    {
+      "package": "axios",
+      "version": "1.18.1",
+      "advisory": "GHSA-44g4-m2mj-wpvx",
+      "severity_from_database": "MODERATE",
+      "fixed_versions": [
+        "1.20.0"
+      ],
+      "status": "original version/advisory match removed by update or closure removal; current frozen OSV query has no match for this entry; optional features not all exercised",
+      "references": [
+        "https://github.com/axios/axios/security/advisories/GHSA-44g4-m2mj-wpvx",
+        "https://github.com/axios/axios/pull/11141",
+        "https://github.com/axios/axios/commit/d19040bda7a8be2f82c3c6e1a5bc03917daee39a"
+      ],
+      "current_versions": [
+        "1.20.0"
+      ]
+    },
+    {
+      "package": "axios",
+      "version": "1.18.1",
+      "advisory": "GHSA-4hqw-qxg8-jxx2",
+      "severity_from_database": "MODERATE",
+      "fixed_versions": [
+        "1.20.0"
+      ],
+      "status": "original version/advisory match removed by update or closure removal; current frozen OSV query has no match for this entry; optional features not all exercised",
+      "references": [
+        "https://github.com/axios/axios/security/advisories/GHSA-4hqw-qxg8-jxx2",
+        "https://nvd.nist.gov/vuln/detail/CVE-2026-101900",
+        "https://github.com/axios/axios/pull/11141"
+      ],
+      "current_versions": [
+        "1.20.0"
+      ]
+    },
+    {
+      "package": "axios",
+      "version": "1.18.1",
+      "advisory": "GHSA-542g-h47m-68v8",
+      "severity_from_database": "HIGH",
+      "fixed_versions": [
+        "1.20.0"
+      ],
+      "status": "original version/advisory match removed by update or closure removal; current frozen OSV query has no match for this entry; optional features not all exercised",
+      "references": [
+        "https://github.com/axios/axios/security/advisories/GHSA-542g-h47m-68v8",
+        "https://nvd.nist.gov/vuln/detail/CVE-2026-101901",
+        "https://github.com/axios/axios/pull/11141"
+      ],
+      "current_versions": [
+        "1.20.0"
+      ]
+    },
+    {
+      "package": "axios",
+      "version": "1.18.1",
+      "advisory": "GHSA-9fr6-4gfg-395g",
+      "severity_from_database": "MODERATE",
+      "fixed_versions": [
+        "0.34.0",
+        "1.20.0"
+      ],
+      "status": "original version/advisory match removed by update or closure removal; current frozen OSV query has no match for this entry; optional features not all exercised",
+      "references": [
+        "https://github.com/axios/axios/security/advisories/GHSA-9fr6-4gfg-395g",
+        "https://nvd.nist.gov/vuln/detail/CVE-2026-101902",
+        "https://github.com/axios/axios/pull/11141"
+      ],
+      "current_versions": [
+        "1.20.0"
+      ]
+    },
+    {
+      "package": "axios",
+      "version": "1.18.1",
+      "advisory": "GHSA-c29m-xwm3-cm6r",
+      "severity_from_database": "HIGH",
+      "fixed_versions": [
+        "1.20.0"
+      ],
+      "status": "original version/advisory match removed by update or closure removal; current frozen OSV query has no match for this entry; optional features not all exercised",
+      "references": [
+        "https://github.com/axios/axios/security/advisories/GHSA-c29m-xwm3-cm6r",
+        "https://nvd.nist.gov/vuln/detail/CVE-2026-101903",
+        "https://github.com/axios/axios/pull/11141"
+      ],
+      "current_versions": [
+        "1.20.0"
+      ]
+    },
+    {
+      "package": "axios",
+      "version": "1.18.1",
+      "advisory": "GHSA-j8rh-479h-cp32",
+      "severity_from_database": "MODERATE",
+      "fixed_versions": [
+        "1.20.0"
+      ],
+      "status": "original version/advisory match removed by update or closure removal; current frozen OSV query has no match for this entry; optional features not all exercised",
+      "references": [
+        "https://github.com/axios/axios/security/advisories/GHSA-j8rh-479h-cp32",
+        "https://nvd.nist.gov/vuln/detail/CVE-2026-101904",
+        "https://github.com/axios/axios/pull/11141"
+      ],
+      "current_versions": [
+        "1.20.0"
+      ]
+    },
+    {
+      "package": "axios",
+      "version": "1.18.1",
+      "advisory": "GHSA-m8m8-qj5v-23w3",
+      "severity_from_database": "HIGH",
+      "fixed_versions": [
+        "1.20.0"
+      ],
+      "status": "original version/advisory match removed by update or closure removal; current frozen OSV query has no match for this entry; optional features not all exercised",
+      "references": [
+        "https://github.com/axios/axios/security/advisories/GHSA-m8m8-qj5v-23w3",
+        "https://nvd.nist.gov/vuln/detail/CVE-2026-101905",
+        "https://github.com/axios/axios/pull/11141"
+      ],
+      "current_versions": [
+        "1.20.0"
+      ]
+    },
+    {
+      "package": "axios",
+      "version": "1.18.1",
+      "advisory": "GHSA-mghh-pgcx-3jjj",
+      "severity_from_database": "HIGH",
+      "fixed_versions": [
+        "1.20.0"
+      ],
+      "status": "original version/advisory match removed by update or closure removal; current frozen OSV query has no match for this entry; optional features not all exercised",
+      "references": [
+        "https://github.com/axios/axios/security/advisories/GHSA-mghh-pgcx-3jjj",
+        "https://nvd.nist.gov/vuln/detail/CVE-2026-101906",
+        "https://github.com/axios/axios/pull/11141"
+      ],
+      "current_versions": [
+        "1.20.0"
+      ]
+    },
+    {
+      "package": "axios",
+      "version": "1.18.1",
+      "advisory": "GHSA-r4gj-5m52-g5wh",
+      "severity_from_database": "HIGH",
+      "fixed_versions": [
+        "1.20.0"
+      ],
+      "status": "original version/advisory match removed by update or closure removal; current frozen OSV query has no match for this entry; optional features not all exercised",
+      "references": [
+        "https://github.com/axios/axios/security/advisories/GHSA-r4gj-5m52-g5wh",
+        "https://nvd.nist.gov/vuln/detail/CVE-2026-101907",
+        "https://github.com/axios/axios/pull/11141"
+      ],
+      "current_versions": [
+        "1.20.0"
+      ]
+    },
+    {
+      "package": "axios",
+      "version": "1.18.1",
+      "advisory": "GHSA-vh66-26gq-q6x8",
+      "severity_from_database": "MODERATE",
+      "fixed_versions": [
+        "1.20.0"
+      ],
+      "status": "original version/advisory match removed by update or closure removal; current frozen OSV query has no match for this entry; optional features not all exercised",
+      "references": [
+        "https://github.com/axios/axios/security/advisories/GHSA-vh66-26gq-q6x8",
+        "https://nvd.nist.gov/vuln/detail/CVE-2026-101908",
+        "https://github.com/axios/axios/pull/11141"
+      ],
+      "current_versions": [
+        "1.20.0"
+      ]
+    },
+    {
+      "package": "axios",
+      "version": "1.18.1",
+      "advisory": "GHSA-x97p-jq2g-jp4f",
+      "severity_from_database": "HIGH",
+      "fixed_versions": [
+        "0.34.0",
+        "1.20.0"
+      ],
+      "status": "original version/advisory match removed by update or closure removal; current frozen OSV query has no match for this entry; optional features not all exercised",
+      "references": [
+        "https://github.com/axios/axios/security/advisories/GHSA-x97p-jq2g-jp4f",
+        "https://nvd.nist.gov/vuln/detail/CVE-2026-101909",
+        "https://github.com/axios/axios/pull/11141"
+      ],
+      "current_versions": [
+        "1.20.0"
+      ]
+    },
+    {
+      "package": "body-parser",
+      "version": "1.20.6",
+      "advisory": "GHSA-27r3-jxmh-p828",
+      "severity_from_database": "HIGH",
+      "fixed_versions": [
+        "2.4.0",
+        "1.20.9"
+      ],
+      "status": "original version/advisory match removed by update or closure removal; current frozen OSV query has no match for this entry; optional features not all exercised",
+      "references": [
+        "https://github.com/expressjs/body-parser/security/advisories/GHSA-27r3-jxmh-p828",
+        "https://nvd.nist.gov/vuln/detail/CVE-2026-111181",
+        "https://github.com/expressjs/body-parser/commit/1260c3845f54502a05a87594f09a334786bb34d7"
+      ],
+      "current_versions": [
+        "1.20.9"
+      ]
+    },
+    {
+      "package": "brace-expansion",
+      "version": "5.0.7",
+      "advisory": "GHSA-6j4f-fj2g-mc7p",
+      "severity_from_database": "HIGH",
+      "fixed_versions": [
+        "5.0.10",
+        "3.0.7",
+        "2.1.5",
+        "1.1.19"
+      ],
+      "status": "original version/advisory match removed by update or closure removal; current frozen OSV query has no match for this entry; optional features not all exercised",
+      "references": [
+        "https://github.com/juliangruber/brace-expansion/security/advisories/GHSA-6j4f-fj2g-mc7p",
+        "https://nvd.nist.gov/vuln/detail/CVE-2026-102276",
+        "https://github.com/juliangruber/brace-expansion/commit/0bcbfc0a5928c3073d48f42999d1ce4fc1c42fbc"
+      ],
+      "current_versions": [
+        "5.0.12"
+      ]
+    },
+    {
+      "package": "brace-expansion",
+      "version": "5.0.7",
+      "advisory": "GHSA-mh99-v99m-4gvg",
+      "severity_from_database": "HIGH",
+      "fixed_versions": [
+        "5.0.8",
+        "3.0.3",
+        "2.1.3",
+        "1.1.17"
+      ],
+      "status": "original version/advisory match removed by update or closure removal; current frozen OSV query has no match for this entry; optional features not all exercised",
+      "references": [
+        "https://github.com/juliangruber/brace-expansion/security/advisories/GHSA-mh99-v99m-4gvg",
+        "https://nvd.nist.gov/vuln/detail/CVE-2026-14257",
+        "https://github.com/juliangruber/brace-expansion/pull/129"
+      ],
+      "current_versions": [
+        "5.0.12"
+      ]
+    },
+    {
+      "package": "brace-expansion",
+      "version": "5.0.7",
+      "advisory": "GHSA-q2hr-2g5m-vwhr",
+      "severity_from_database": "MODERATE",
+      "fixed_versions": [
+        "5.0.12",
+        "3.0.9",
+        "2.1.7",
+        "1.1.21"
+      ],
+      "status": "original version/advisory match removed by update or closure removal; current frozen OSV query has no match for this entry; optional features not all exercised",
+      "references": [
+        "https://github.com/juliangruber/brace-expansion/security/advisories/GHSA-q2hr-2g5m-vwhr",
+        "https://nvd.nist.gov/vuln/detail/CVE-2026-102277",
+        "https://github.com/juliangruber/brace-expansion/commit/33a5ef17b8d800bbfa8c52b14c39043b6aac1a96"
+      ],
+      "current_versions": [
+        "5.0.12"
+      ]
+    },
+    {
+      "package": "brace-expansion",
+      "version": "5.0.7",
+      "advisory": "GHSA-qhr7-859c-m2p7",
+      "severity_from_database": "HIGH",
+      "fixed_versions": [
+        "5.0.11",
+        "3.0.8",
+        "2.1.6",
+        "1.1.20"
+      ],
+      "status": "original version/advisory match removed by update or closure removal; current frozen OSV query has no match for this entry; optional features not all exercised",
+      "references": [
+        "https://github.com/juliangruber/brace-expansion/security/advisories/GHSA-qhr7-859c-m2p7",
+        "https://nvd.nist.gov/vuln/detail/CVE-2026-102278",
+        "https://github.com/juliangruber/brace-expansion/commit/1efee7c397c191da6287a78ec19512476a966a7b"
+      ],
+      "current_versions": [
+        "5.0.12"
+      ]
+    },
+    {
+      "package": "brace-expansion",
+      "version": "5.0.7",
+      "advisory": "GHSA-rgw5-rvv9-x895",
+      "severity_from_database": "HIGH",
+      "fixed_versions": [
+        "1.1.18",
+        "2.1.4",
+        "3.0.6",
+        "5.0.9"
+      ],
+      "status": "original version/advisory match removed by update or closure removal; current frozen OSV query has no match for this entry; optional features not all exercised",
+      "references": [
+        "https://github.com/juliangruber/brace-expansion/security/advisories/GHSA-rgw5-rvv9-x895",
+        "https://nvd.nist.gov/vuln/detail/CVE-2026-69152",
+        "https://github.com/juliangruber/brace-expansion/commit/139d015104e71433ad52a41d19467c48ecbb2c7d"
+      ],
+      "current_versions": [
+        "5.0.12"
+      ]
+    },
+    {
+      "package": "compression",
+      "version": "1.8.1",
+      "advisory": "GHSA-vc2v-76pw-4v95",
+      "severity_from_database": "HIGH",
+      "fixed_versions": [
+        "1.8.2"
+      ],
+      "status": "original version/advisory match removed by update or closure removal; current frozen OSV query has no match for this entry; optional features not all exercised",
+      "references": [
+        "https://github.com/expressjs/compression/security/advisories/GHSA-vc2v-76pw-4v95",
+        "https://nvd.nist.gov/vuln/detail/CVE-2026-87776",
+        "https://github.com/expressjs/compression/commit/151f63e91e1b64f8fb0b064e19321a4f28db6bff"
+      ],
+      "current_versions": [
+        "1.8.2"
+      ]
+    },
+    {
+      "package": "deepmerge",
+      "version": "4.3.1",
+      "advisory": "GHSA-gcqx-w48m-w2h4",
+      "severity_from_database": "LOW",
+      "fixed_versions": [],
+      "status": "local source/emitted-entrypoint patch verified by37baseline/37patchedcontrols; upstream package-version match remains visible",
+      "references": [
+        "https://nvd.nist.gov/vuln/detail/CVE-2026-93753",
+        "https://github.com/TehShrike/deepmerge/issues/273",
+        "https://github.com/TehShrike/deepmerge/blob/5b87756a5671635679001cbac72aa42f23472c81/index.js#L39-L60"
+      ],
+      "current_versions": [
+        "4.3.1"
+      ]
+    },
+    {
+      "package": "effect",
+      "version": "4.0.0-beta.70",
+      "advisory": "GHSA-chp3-j5qr-2vfr",
+      "severity_from_database": "MODERATE",
+      "fixed_versions": [
+        "4.0.0-beta.103"
+      ],
+      "status": "original version/advisory match removed by update or closure removal; current frozen OSV query has no match for this entry; optional features not all exercised",
+      "references": [
+        "https://github.com/Effect-TS/effect/security/advisories/GHSA-chp3-j5qr-2vfr",
+        "https://nvd.nist.gov/vuln/detail/CVE-2026-115779",
+        "https://github.com/Effect-TS/effect/pull/6763"
+      ],
+      "current_versions": [
+        "3.20.0"
+      ]
+    },
+    {
+      "package": "fast-uri",
+      "version": "3.1.8",
+      "advisory": "GHSA-333x-w4r6-6crp",
+      "severity_from_database": "LOW",
+      "fixed_versions": [
+        "2.4.8",
+        "3.1.9",
+        "4.2.3"
+      ],
+      "status": "original version/advisory match removed by update or closure removal; current frozen OSV query has no match for this entry; optional features not all exercised",
+      "references": [
+        "https://github.com/fastify/fast-uri/security/advisories/GHSA-333x-w4r6-6crp",
+        "https://nvd.nist.gov/vuln/detail/CVE-2026-110725",
+        "https://github.com/fastify/fast-uri/commit/39e6493c1356f30a0084171627eb266786e1620e"
+      ],
+      "current_versions": [
+        "3.1.9"
+      ]
+    },
+    {
+      "package": "fast-uri",
+      "version": "3.1.8",
+      "advisory": "GHSA-w74x-v6f9-j3xg",
+      "severity_from_database": "MODERATE",
+      "fixed_versions": [
+        "2.4.8",
+        "3.1.9",
+        "4.2.3"
+      ],
+      "status": "original version/advisory match removed by update or closure removal; current frozen OSV query has no match for this entry; optional features not all exercised",
+      "references": [
+        "https://github.com/fastify/fast-uri/security/advisories/GHSA-w74x-v6f9-j3xg",
+        "https://nvd.nist.gov/vuln/detail/CVE-2026-110306",
+        "https://github.com/fastify/fast-uri/commit/39933a1f1422986f14e2d844f552238feb40f5d4"
+      ],
+      "current_versions": [
+        "3.1.9"
+      ]
+    },
+    {
+      "package": "fast-uri",
+      "version": "3.1.8",
+      "advisory": "GHSA-wjr9-j795-jxcr",
+      "severity_from_database": "MODERATE",
+      "fixed_versions": [
+        "2.4.8",
+        "3.1.9",
+        "4.2.3"
+      ],
+      "status": "original version/advisory match removed by update or closure removal; current frozen OSV query has no match for this entry; optional features not all exercised",
+      "references": [
+        "https://github.com/fastify/fast-uri/security/advisories/GHSA-wjr9-j795-jxcr",
+        "https://nvd.nist.gov/vuln/detail/CVE-2026-110180",
+        "https://github.com/fastify/fast-uri/commit/58c183d0b168ad87f98773266444ce1f6375803a"
+      ],
+      "current_versions": [
+        "3.1.9"
+      ]
+    },
+    {
+      "package": "fast-uri",
+      "version": "3.1.8",
+      "advisory": "GHSA-xhq7-xmqj-769h",
+      "severity_from_database": "LOW",
+      "fixed_versions": [
+        "2.4.8",
+        "3.1.9",
+        "4.2.3"
+      ],
+      "status": "original version/advisory match removed by update or closure removal; current frozen OSV query has no match for this entry; optional features not all exercised",
+      "references": [
+        "https://github.com/fastify/fast-uri/security/advisories/GHSA-xhq7-xmqj-769h",
+        "https://nvd.nist.gov/vuln/detail/CVE-2026-110095",
+        "https://github.com/fastify/fast-uri/commit/048bbd0a252971be86d6579f0dfc87f8de5b9c47"
+      ],
+      "current_versions": [
+        "3.1.9"
+      ]
+    },
+    {
+      "package": "follow-redirects",
+      "version": "1.16.0",
+      "advisory": "GHSA-8r9p-f939-6h3c",
+      "severity_from_database": "HIGH",
+      "fixed_versions": [
+        "1.16.1"
+      ],
+      "status": "original version/advisory match removed by update or closure removal; current frozen OSV query has no match for this entry; optional features not all exercised",
+      "references": [
+        "https://github.com/follow-redirects/follow-redirects/security/advisories/GHSA-8r9p-f939-6h3c",
+        "https://nvd.nist.gov/vuln/detail/CVE-2026-111755",
+        "https://github.com/follow-redirects/follow-redirects/commit/080a76d0e125b37bf81717368a61d5dc37aa56c8"
+      ],
+      "current_versions": [
+        "1.16.2"
+      ]
+    },
+    {
+      "package": "follow-redirects",
+      "version": "1.16.0",
+      "advisory": "GHSA-mrwp-f3q8-3g9p",
+      "severity_from_database": "HIGH",
+      "fixed_versions": [
+        "1.16.2"
+      ],
+      "status": "original version/advisory match removed by update or closure removal; current frozen OSV query has no match for this entry; optional features not all exercised",
+      "references": [
+        "https://github.com/follow-redirects/follow-redirects/security/advisories/GHSA-mrwp-f3q8-3g9p",
+        "https://nvd.nist.gov/vuln/detail/CVE-2026-116689",
+        "https://github.com/follow-redirects/follow-redirects/commit/b0a7751e9cd64cd8eeb6ec67d2f206a9cc88d3f8"
+      ],
+      "current_versions": [
+        "1.16.2"
+      ]
+    },
+    {
+      "package": "follow-redirects",
+      "version": "1.16.0",
+      "advisory": "GHSA-q3jh-wrc6-jgq8",
+      "severity_from_database": "HIGH",
+      "fixed_versions": [
+        "1.16.1"
+      ],
+      "status": "original version/advisory match removed by update or closure removal; current frozen OSV query has no match for this entry; optional features not all exercised",
+      "references": [
+        "https://github.com/follow-redirects/follow-redirects/security/advisories/GHSA-q3jh-wrc6-jgq8",
+        "https://github.com/follow-redirects/follow-redirects/commit/9865ca45490e4d0f7b6944870318408344570aff",
+        "https://github.com/follow-redirects/follow-redirects/releases/tag/v1.16.1"
+      ],
+      "current_versions": [
+        "1.16.2"
+      ]
+    },
+    {
+      "package": "glob",
+      "version": "11.1.0",
+      "advisory": "GHSA-3g3m-2fjr-6pw4",
+      "severity_from_database": "MODERATE",
+      "fixed_versions": [
+        "14.0.2"
+      ],
+      "status": "original version/advisory match removed by update or closure removal; current frozen OSV query has no match for this entry; optional features not all exercised",
+      "references": [
+        "https://github.com/isaacs/node-glob/security/advisories/GHSA-3g3m-2fjr-6pw4",
+        "https://nvd.nist.gov/vuln/detail/CVE-2026-118773",
+        "https://github.com/isaacs/node-glob/commit/4682e8c9babee1b385202ede36389634e12076d7"
+      ],
+      "current_versions": [
+        "14.0.2"
+      ]
+    },
+    {
+      "package": "markdown-it",
+      "version": "14.2.0",
+      "advisory": "GHSA-253c-mchw-3w2r",
+      "severity_from_database": "MODERATE",
+      "fixed_versions": [
+        "15.0.1",
+        "14.3.1"
+      ],
+      "status": "original version/advisory match removed by update or closure removal; current frozen OSV query has no match for this entry; optional features not all exercised",
+      "references": [
+        "https://github.com/markdown-it/markdown-it/security/advisories/GHSA-253c-mchw-3w2r",
+        "https://github.com/markdown-it/markdown-it/commit/09fa07118dda4c953f058848f53dae88395618ca",
+        "https://github.com/markdown-it/markdown-it/commit/aaadcfa6d817b3c5f89afb49d97c7b797a6dd4fd"
+      ],
+      "current_versions": [
+        "14.3.3"
+      ]
+    },
+    {
+      "package": "markdown-it",
+      "version": "14.2.0",
+      "advisory": "GHSA-gfr2-rv44-r23c",
+      "severity_from_database": "HIGH",
+      "fixed_versions": [
+        "14.3.3",
+        "15.0.3"
+      ],
+      "status": "original version/advisory match removed by update or closure removal; current frozen OSV query has no match for this entry; optional features not all exercised",
+      "references": [
+        "https://github.com/markdown-it/markdown-it/security/advisories/GHSA-gfr2-rv44-r23c",
+        "https://github.com/markdown-it/markdown-it/commit/48fbc465812c440020c663f040ab22deaf8f1eca",
+        "https://github.com/markdown-it/markdown-it/commit/d99f48839d37af6fd8a2617516c43dab90755503"
+      ],
+      "current_versions": [
+        "14.3.3"
+      ]
+    },
+    {
+      "package": "markdown-it",
+      "version": "14.2.0",
+      "advisory": "GHSA-r7fv-28h4-cvq7",
+      "severity_from_database": "HIGH",
+      "fixed_versions": [
+        "15.0.2",
+        "14.3.2"
+      ],
+      "status": "original version/advisory match removed by update or closure removal; current frozen OSV query has no match for this entry; optional features not all exercised",
+      "references": [
+        "https://github.com/markdown-it/markdown-it/security/advisories/GHSA-r7fv-28h4-cvq7",
+        "https://nvd.nist.gov/vuln/detail/CVE-2026-111759",
+        "https://github.com/markdown-it/markdown-it/commit/1b379c1b6d0522421bd1a51b77337c79af2c8670"
+      ],
+      "current_versions": [
+        "14.3.3"
+      ]
+    },
+    {
+      "package": "markdown-it",
+      "version": "14.2.0",
+      "advisory": "GHSA-vfgh-jcmw-g37q",
+      "severity_from_database": "LOW",
+      "fixed_versions": [
+        "14.3.3",
+        "15.0.3"
+      ],
+      "status": "original version/advisory match removed by update or closure removal; current frozen OSV query has no match for this entry; optional features not all exercised",
+      "references": [
+        "https://github.com/markdown-it/markdown-it/security/advisories/GHSA-vfgh-jcmw-g37q",
+        "https://nvd.nist.gov/vuln/detail/CVE-2026-111766",
+        "https://github.com/markdown-it/markdown-it/commit/928bc8c11ded60181c0e7fc5aa954eec582e8e79"
+      ],
+      "current_versions": [
+        "14.3.3"
+      ]
+    },
+    {
+      "package": "minimatch",
+      "version": "10.2.3",
+      "advisory": "GHSA-g3hv-75wg-m249",
+      "severity_from_database": "MODERATE",
+      "fixed_versions": [
+        "11.0.1"
+      ],
+      "status": "original version/advisory match removed by update or closure removal; current frozen OSV query has no match for this entry; optional features not all exercised",
+      "references": [
+        "https://github.com/isaacs/minimatch/security/advisories/GHSA-g3hv-75wg-m249",
+        "https://nvd.nist.gov/vuln/detail/CVE-2026-118764",
+        "https://github.com/isaacs/minimatch/commit/297b6c1a01f2410b3ba1ebed14ba222d0c3c1033"
+      ],
+      "current_versions": [
+        "11.0.1",
+        "3.1.4"
+      ]
+    },
+    {
+      "package": "morgan",
+      "version": "1.12.0",
+      "advisory": "GHSA-9f6g-j8ch-79g4",
+      "severity_from_database": "MODERATE",
+      "fixed_versions": [
+        "1.12.1"
+      ],
+      "status": "original version/advisory match removed by update or closure removal; current frozen OSV query has no match for this entry; optional features not all exercised",
+      "references": [
+        "https://github.com/expressjs/morgan/security/advisories/GHSA-9f6g-j8ch-79g4",
+        "https://nvd.nist.gov/vuln/detail/CVE-2026-87859",
+        "https://github.com/expressjs/morgan/commit/4b695edf967ce179cdf4009fe8cddd184b7511ee"
+      ],
+      "current_versions": [
+        "1.12.1"
+      ]
+    },
+    {
+      "package": "nanoid",
+      "version": "3.3.8",
+      "advisory": "GHSA-28wg-ghj8-5hjv",
+      "severity_from_database": "HIGH",
+      "fixed_versions": [
+        "3.3.16",
+        "5.1.16"
+      ],
+      "status": "original version/advisory match removed by update or closure removal; current frozen OSV query has no match for this entry; optional features not all exercised",
+      "references": [
+        "https://nvd.nist.gov/vuln/detail/CVE-2026-67214",
+        "https://github.com/ai/nanoid/pull/600",
+        "https://github.com/ai/nanoid/pull/601"
+      ],
+      "current_versions": [
+        "3.3.18"
+      ]
+    },
+    {
+      "package": "nanoid",
+      "version": "3.3.8",
+      "advisory": "GHSA-2v37-7h3g-55p8",
+      "severity_from_database": "HIGH",
+      "fixed_versions": [
+        "3.3.18",
+        "5.1.6"
+      ],
+      "status": "original version/advisory match removed by update or closure removal; current frozen OSV query has no match for this entry; optional features not all exercised",
+      "references": [
+        "https://nvd.nist.gov/vuln/detail/CVE-2026-67213",
+        "https://github.com/ai/nanoid/commit/cb3626d0f3342fdf179cd425fd9c4fbb92c7d0e7",
+        "https://github.com/ai/nanoid/commit/e10f8d40ce9d1ab47f66d65a16b48086432730d0"
+      ],
+      "current_versions": [
+        "3.3.18"
+      ]
+    },
+    {
+      "package": "nanoid",
+      "version": "3.3.8",
+      "advisory": "GHSA-xwg4-73v4-xw9w",
+      "severity_from_database": "HIGH",
+      "fixed_versions": [
+        "3.3.12",
+        "5.1.11"
+      ],
+      "status": "original version/advisory match removed by update or closure removal; current frozen OSV query has no match for this entry; optional features not all exercised",
+      "references": [
+        "https://github.com/ai/nanoid/security/advisories/GHSA-xwg4-73v4-xw9w",
+        "https://nvd.nist.gov/vuln/detail/CVE-2026-73086",
+        "https://github.com/ai/nanoid/commit/7087969281cab8ba8ae3babf1894e819068b3bb4"
+      ],
+      "current_versions": [
+        "3.3.18"
+      ]
+    },
+    {
+      "package": "postcss-selector-parser",
+      "version": "6.0.10",
+      "advisory": "GHSA-rj75-hqrm-r3gf",
+      "severity_from_database": "MODERATE",
+      "fixed_versions": [
+        "7.1.6",
+        "6.1.5"
+      ],
+      "status": "original version/advisory match removed by update or closure removal; current frozen OSV query has no match for this entry; optional features not all exercised",
+      "references": [
+        "https://github.com/postcss/postcss-selector-parser/security/advisories/GHSA-rj75-hqrm-r3gf",
+        "https://nvd.nist.gov/vuln/detail/CVE-2026-104844",
+        "https://github.com/postcss/postcss-selector-parser/pull/346"
+      ],
+      "current_versions": [
+        "6.1.5",
+        "7.1.6"
+      ]
+    },
+    {
+      "package": "postcss-selector-parser",
+      "version": "6.1.3",
+      "advisory": "GHSA-rj75-hqrm-r3gf",
+      "severity_from_database": "MODERATE",
+      "fixed_versions": [
+        "7.1.6",
+        "6.1.5"
+      ],
+      "status": "original version/advisory match removed by update or closure removal; current frozen OSV query has no match for this entry; optional features not all exercised",
+      "references": [
+        "https://github.com/postcss/postcss-selector-parser/security/advisories/GHSA-rj75-hqrm-r3gf",
+        "https://nvd.nist.gov/vuln/detail/CVE-2026-104844",
+        "https://github.com/postcss/postcss-selector-parser/pull/346"
+      ],
+      "current_versions": [
+        "6.1.5",
+        "7.1.6"
+      ]
+    },
+    {
+      "package": "postcss-selector-parser",
+      "version": "7.1.3",
+      "advisory": "GHSA-rj75-hqrm-r3gf",
+      "severity_from_database": "MODERATE",
+      "fixed_versions": [
+        "7.1.6",
+        "6.1.5"
+      ],
+      "status": "original version/advisory match removed by update or closure removal; current frozen OSV query has no match for this entry; optional features not all exercised",
+      "references": [
+        "https://github.com/postcss/postcss-selector-parser/security/advisories/GHSA-rj75-hqrm-r3gf",
+        "https://nvd.nist.gov/vuln/detail/CVE-2026-104844",
+        "https://github.com/postcss/postcss-selector-parser/pull/346"
+      ],
+      "current_versions": [
+        "6.1.5",
+        "7.1.6"
+      ]
+    },
+    {
+      "package": "prosemirror-view",
+      "version": "1.40.0",
+      "advisory": "GHSA-c8x8-7fp4-3x9w",
+      "severity_from_database": "HIGH",
+      "fixed_versions": [
+        "1.42.3"
+      ],
+      "status": "original version/advisory match removed by update or closure removal; current frozen OSV query has no match for this entry; optional features not all exercised",
+      "references": [
+        "https://github.com/ProseMirror/prosemirror-view/security/advisories/GHSA-c8x8-7fp4-3x9w",
+        "https://nvd.nist.gov/vuln/detail/CVE-2026-104847",
+        "https://github.com/ProseMirror/prosemirror-view/commit/20dc0a911a79f8fc6640dbbea5e7d68d3c4784b7"
+      ],
+      "current_versions": [
+        "1.42.3"
+      ]
+    },
+    {
+      "package": "proxy-addr",
+      "version": "2.0.7",
+      "advisory": "GHSA-jqcg-44mw-7w3h",
+      "severity_from_database": "CRITICAL",
+      "fixed_versions": [
+        "2.0.8"
+      ],
+      "status": "original version/advisory match removed by update or closure removal; current frozen OSV query has no match for this entry; optional features not all exercised",
+      "references": [
+        "https://github.com/jshttp/proxy-addr/security/advisories/GHSA-jqcg-44mw-7w3h",
+        "https://nvd.nist.gov/vuln/detail/CVE-2026-90711",
+        "https://github.com/jshttp/proxy-addr/commit/780911d84d18e2c5fa008ed0c0d387631ec11965"
+      ],
+      "current_versions": [
+        "2.0.8"
+      ]
+    },
+    {
+      "package": "qs",
+      "version": "6.16.0",
+      "advisory": "GHSA-6pq8-jhm2-2vcw",
+      "severity_from_database": "MODERATE",
+      "fixed_versions": [
+        "6.16.1"
+      ],
+      "status": "original version/advisory match removed by update or closure removal; current frozen OSV query has no match for this entry; optional features not all exercised",
+      "references": [
+        "https://github.com/ljharb/qs/security/advisories/GHSA-6pq8-jhm2-2vcw",
+        "https://nvd.nist.gov/vuln/detail/CVE-2026-110816",
+        "https://github.com/ljharb/qs/commit/a952e7519338ef0cfb25694a2988848f93333727"
+      ],
+      "current_versions": [
+        "6.16.1"
+      ]
+    },
+    {
+      "package": "react-router",
+      "version": "7.18.1",
+      "advisory": "GHSA-qwww-vcr4-c8h2",
+      "severity_from_database": "HIGH",
+      "fixed_versions": [
+        "7.18.2",
+        "8.3.0"
+      ],
+      "status": "original version/advisory match removed by update or closure removal; current frozen OSV query has no match for this entry; optional features not all exercised",
+      "references": [
+        "https://github.com/remix-run/react-router/security/advisories/GHSA-qwww-vcr4-c8h2",
+        "https://github.com/remix-run/react-router/pull/15353",
+        "https://github.com/remix-run/react-router/commit/7a71c728ad116bd78699a258b2014ce9585729f5"
+      ],
+      "current_versions": [
+        "7.18.2"
+      ]
+    },
+    {
+      "package": "sanitize-html",
+      "version": "2.17.7",
+      "advisory": "GHSA-374f-7chj-9948",
+      "severity_from_database": "LOW",
+      "fixed_versions": [
+        "2.18.0"
+      ],
+      "status": "original version/advisory match removed by update or closure removal; current frozen OSV query has no match for this entry; optional features not all exercised",
+      "references": [
+        "https://github.com/apostrophecms/apostrophe/security/advisories/GHSA-374f-7chj-9948",
+        "https://github.com/apostrophecms/apostrophe/commit/9500b8b0e1d630d5e07fbb5fd2c25ed0943845ce",
+        "https://github.com/apostrophecms/apostrophe/commit/f84fd41cbf6c22eb8d0008fc9c25df1f7130b350"
+      ],
+      "current_versions": [
+        "2.18.1"
+      ]
+    },
+    {
+      "package": "sanitize-html",
+      "version": "2.17.7",
+      "advisory": "GHSA-cv27-6wvh-8x7j",
+      "severity_from_database": "MODERATE",
+      "fixed_versions": [
+        "2.18.0"
+      ],
+      "status": "original version/advisory match removed by update or closure removal; current frozen OSV query has no match for this entry; optional features not all exercised",
+      "references": [
+        "https://github.com/apostrophecms/apostrophe/security/advisories/GHSA-cv27-6wvh-8x7j",
+        "https://github.com/apostrophecms/apostrophe/commit/9500b8b0e1d630d5e07fbb5fd2c25ed0943845ce",
+        "https://github.com/apostrophecms/apostrophe/commit/f84fd41cbf6c22eb8d0008fc9c25df1f7130b350"
+      ],
+      "current_versions": [
+        "2.18.1"
+      ]
+    },
+    {
+      "package": "sanitize-html",
+      "version": "2.17.7",
+      "advisory": "GHSA-x3q4-9hxx-gx8m",
+      "severity_from_database": "MODERATE",
+      "fixed_versions": [
+        "2.18.0"
+      ],
+      "status": "original version/advisory match removed by update or closure removal; current frozen OSV query has no match for this entry; optional features not all exercised",
+      "references": [
+        "https://github.com/apostrophecms/apostrophe/security/advisories/GHSA-x3q4-9hxx-gx8m",
+        "https://github.com/apostrophecms/apostrophe/commit/9500b8b0e1d630d5e07fbb5fd2c25ed0943845ce",
+        "https://github.com/apostrophecms/apostrophe/commit/f84fd41cbf6c22eb8d0008fc9c25df1f7130b350"
+      ],
+      "current_versions": [
+        "2.18.1"
+      ]
+    },
+    {
+      "package": "sharp",
+      "version": "0.35.4",
+      "advisory": "GHSA-wq5f-xc86-pv6w",
+      "severity_from_database": "HIGH",
+      "fixed_versions": [
+        "0.35.5"
+      ],
+      "status": "original version/advisory match removed by update or closure removal; current frozen OSV query has no match for this entry; optional features not all exercised",
+      "references": [
+        "https://github.com/lovell/sharp/security/advisories/GHSA-wq5f-xc86-pv6w",
+        "https://github.com/lovell/sharp/commit/96de105d9d36ab04c76c2b78b97255171630d236",
+        "https://github.com/lovell/sharp/releases/tag/v0.35.5"
+      ],
+      "current_versions": [
+        "0.35.5"
+      ]
+    },
+    {
+      "package": "source-map-js",
+      "version": "1.2.1",
+      "advisory": "GHSA-68fv-2mgg-jv7q",
+      "severity_from_database": "HIGH",
+      "fixed_versions": [
+        "1.2.2"
+      ],
+      "status": "original version/advisory match removed by update or closure removal; current frozen OSV query has no match for this entry; optional features not all exercised",
+      "references": [
+        "https://nvd.nist.gov/vuln/detail/CVE-2026-93749",
+        "https://github.com/7rulnik/source-map-js/issues/76",
+        "https://github.com/7rulnik/source-map-js/pull/79"
+      ],
+      "current_versions": [
+        "1.2.2"
+      ]
+    },
+    {
+      "package": "storybook",
+      "version": "10.4.6",
+      "advisory": "GHSA-f2ph-cmg5-wxc8",
+      "severity_from_database": "CRITICAL",
+      "fixed_versions": [
+        "8.6.19",
+        "9.1.21",
+        "10.6.2",
+        "11.0.0-alpha.6"
+      ],
+      "status": "original version/advisory match removed by update or closure removal; current frozen OSV query has no match for this entry; optional features not all exercised",
+      "references": [
+        "https://github.com/storybookjs/storybook/security/advisories/GHSA-f2ph-cmg5-wxc8",
+        "https://github.com/storybookjs/storybook/pull/36726",
+        "https://github.com/storybookjs/storybook/commit/243c06bf8f1e2f09446c44868ea100261e1374da"
+      ],
+      "current_versions": [
+        "10.6.2"
+      ]
+    },
+    {
+      "package": "storybook",
+      "version": "10.4.6",
+      "advisory": "GHSA-px85-f4q5-jh77",
+      "severity_from_database": "HIGH",
+      "fixed_versions": [
+        "8.6.19",
+        "9.1.21",
+        "10.6.2",
+        "11.0.0-alpha.6"
+      ],
+      "status": "original version/advisory match removed by update or closure removal; current frozen OSV query has no match for this entry; optional features not all exercised",
+      "references": [
+        "https://github.com/storybookjs/storybook/security/advisories/GHSA-px85-f4q5-jh77",
+        "https://nvd.nist.gov/vuln/detail/CVE-2026-114126",
+        "https://github.com/storybookjs/storybook/pull/36726"
+      ],
+      "current_versions": [
+        "10.6.2"
+      ]
+    },
+    {
+      "package": "tinypool",
+      "version": "2.1.0",
+      "advisory": "GHSA-5gmw-xhrv-c9v3",
+      "severity_from_database": "CRITICAL",
+      "fixed_versions": [
+        "2.1.1"
+      ],
+      "status": "original version/advisory match removed by update or closure removal; current frozen OSV query has no match for this entry; optional features not all exercised",
+      "references": [
+        "https://github.com/tinylibs/tinypool/security/advisories/GHSA-5gmw-xhrv-c9v3",
+        "https://nvd.nist.gov/vuln/detail/CVE-2026-104848",
+        "https://github.com/tinylibs/tinypool/pull/134"
+      ],
+      "current_versions": [
+        "2.1.2"
+      ]
+    },
+    {
+      "package": "tinypool",
+      "version": "2.1.0",
+      "advisory": "GHSA-85c8-ppgw-ccpr",
+      "severity_from_database": "CRITICAL",
+      "fixed_versions": [
+        "2.1.2"
+      ],
+      "status": "original version/advisory match removed by update or closure removal; current frozen OSV query has no match for this entry; optional features not all exercised",
+      "references": [
+        "https://github.com/tinylibs/tinypool/security/advisories/GHSA-85c8-ppgw-ccpr",
+        "https://nvd.nist.gov/vuln/detail/CVE-2026-104849",
+        "https://github.com/tinylibs/tinypool/pull/135"
+      ],
+      "current_versions": [
+        "2.1.2"
+      ]
+    },
+    {
+      "package": "toml",
+      "version": "4.3.0",
+      "advisory": "GHSA-4qx8-w7c3-pj3p",
+      "severity_from_database": "HIGH",
+      "fixed_versions": [
+        "5.0.1"
+      ],
+      "status": "original version/advisory match removed by update or closure removal; current frozen OSV query has no match for this entry; optional features not all exercised",
+      "references": [
+        "https://github.com/BinaryMuse/toml-node/security/advisories/GHSA-4qx8-w7c3-pj3p",
+        "https://nvd.nist.gov/vuln/detail/CVE-2026-114141",
+        "https://github.com/BinaryMuse/toml-node/commit/609c873fffea0a27ebe5b4dd098eed2b3daf3606"
+      ],
+      "current_versions": []
+    },
+    {
+      "package": "toml",
+      "version": "4.3.0",
+      "advisory": "GHSA-9j65-hcg3-gc64",
+      "severity_from_database": "HIGH",
+      "fixed_versions": [
+        "5.0.1"
+      ],
+      "status": "original version/advisory match removed by update or closure removal; current frozen OSV query has no match for this entry; optional features not all exercised",
+      "references": [
+        "https://github.com/BinaryMuse/toml-node/security/advisories/GHSA-9j65-hcg3-gc64",
+        "https://nvd.nist.gov/vuln/detail/CVE-2026-114143",
+        "https://github.com/BinaryMuse/toml-node/commit/609c873fffea0a27ebe5b4dd098eed2b3daf3606"
+      ],
+      "current_versions": []
+    },
+    {
+      "package": "toml",
+      "version": "4.3.0",
+      "advisory": "GHSA-9qmh-m7c6-f92p",
+      "severity_from_database": "HIGH",
+      "fixed_versions": [
+        "5.0.1"
+      ],
+      "status": "original version/advisory match removed by update or closure removal; current frozen OSV query has no match for this entry; optional features not all exercised",
+      "references": [
+        "https://github.com/BinaryMuse/toml-node/security/advisories/GHSA-9qmh-m7c6-f92p",
+        "https://nvd.nist.gov/vuln/detail/CVE-2026-114144",
+        "https://github.com/BinaryMuse/toml-node/commit/9d52e384f6030932174d1afb0d910154dd62dead"
+      ],
+      "current_versions": []
+    },
+    {
+      "package": "toml",
+      "version": "4.3.0",
+      "advisory": "GHSA-h895-cgqg-jf52",
+      "severity_from_database": "HIGH",
+      "fixed_versions": [
+        "5.0.1"
+      ],
+      "status": "original version/advisory match removed by update or closure removal; current frozen OSV query has no match for this entry; optional features not all exercised",
+      "references": [
+        "https://github.com/BinaryMuse/toml-node/security/advisories/GHSA-h895-cgqg-jf52",
+        "https://nvd.nist.gov/vuln/detail/CVE-2026-114142",
+        "https://github.com/BinaryMuse/toml-node/commit/609c873fffea0a27ebe5b4dd098eed2b3daf3606"
+      ],
+      "current_versions": []
+    },
+    {
+      "package": "undici",
+      "version": "7.29.0",
+      "advisory": "GHSA-2gqq-gqf2-x968",
+      "severity_from_database": "LOW",
+      "fixed_versions": [
+        "7.29.1",
+        "8.10.2"
+      ],
+      "status": "original version/advisory match removed by update or closure removal; current frozen OSV query has no match for this entry; optional features not all exercised",
+      "references": [
+        "https://github.com/nodejs/undici/security/advisories/GHSA-2gqq-gqf2-x968",
+        "https://nvd.nist.gov/vuln/detail/CVE-2026-84947",
+        "https://github.com/nodejs/undici/commit/21693f406f0142f3504192e9f9b022dcf84782ae"
+      ],
+      "current_versions": []
+    },
+    {
+      "package": "undici",
+      "version": "7.29.0",
+      "advisory": "GHSA-2jfj-6hjv-fm6j",
+      "severity_from_database": "MODERATE",
+      "fixed_versions": [
+        "7.29.1",
+        "8.10.2"
+      ],
+      "status": "original version/advisory match removed by update or closure removal; current frozen OSV query has no match for this entry; optional features not all exercised",
+      "references": [
+        "https://github.com/nodejs/undici/security/advisories/GHSA-2jfj-6hjv-fm6j",
+        "https://nvd.nist.gov/vuln/detail/CVE-2026-84933",
+        "https://github.com/nodejs/undici/commit/b6c5a00252c37da9dd2db9bead053bb843e1f988"
+      ],
+      "current_versions": []
+    },
+    {
+      "package": "undici",
+      "version": "7.29.0",
+      "advisory": "GHSA-2m5v-pch6-74hx",
+      "severity_from_database": "HIGH",
+      "fixed_versions": [
+        "6.29.1",
+        "7.30.1",
+        "8.12.2"
+      ],
+      "status": "original version/advisory match removed by update or closure removal; current frozen OSV query has no match for this entry; optional features not all exercised",
+      "references": [
+        "https://github.com/nodejs/undici/security/advisories/GHSA-2m5v-pch6-74hx",
+        "https://nvd.nist.gov/vuln/detail/CVE-2026-109383",
+        "https://github.com/nodejs/undici/commit/04cb74b1db131ff8f5b4557dce811cbf5f4664b4"
+      ],
+      "current_versions": []
+    },
+    {
+      "package": "undici",
+      "version": "7.29.0",
+      "advisory": "GHSA-3wwx-pv8p-q78v",
+      "severity_from_database": "MODERATE",
+      "fixed_versions": [
+        "6.28.1",
+        "7.29.1",
+        "8.10.2"
+      ],
+      "status": "original version/advisory match removed by update or closure removal; current frozen OSV query has no match for this entry; optional features not all exercised",
+      "references": [
+        "https://github.com/nodejs/undici/security/advisories/GHSA-3wwx-pv8p-q78v",
+        "https://nvd.nist.gov/vuln/detail/CVE-2026-85024",
+        "https://github.com/nodejs/undici/commit/07c60d9c7099a910451244afe42861bbdbdd974c"
+      ],
+      "current_versions": []
+    },
+    {
+      "package": "undici",
+      "version": "7.29.0",
+      "advisory": "GHSA-3xpg-4rpp-hhhm",
+      "severity_from_database": "MODERATE",
+      "fixed_versions": [
+        "7.29.1",
+        "8.10.2"
+      ],
+      "status": "original version/advisory match removed by update or closure removal; current frozen OSV query has no match for this entry; optional features not all exercised",
+      "references": [
+        "https://github.com/nodejs/undici/security/advisories/GHSA-3xpg-4rpp-hhhm",
+        "https://nvd.nist.gov/vuln/detail/CVE-2026-84890",
+        "https://github.com/nodejs/undici/commit/2c7d7e1227043c644c4c32cfd1e276f4fd4fcb11"
+      ],
+      "current_versions": []
+    },
+    {
+      "package": "undici",
+      "version": "7.29.0",
+      "advisory": "GHSA-4qv8-2p9j-2685",
+      "severity_from_database": "MODERATE",
+      "fixed_versions": [
+        "6.29.1",
+        "7.30.1",
+        "8.12.2"
+      ],
+      "status": "original version/advisory match removed by update or closure removal; current frozen OSV query has no match for this entry; optional features not all exercised",
+      "references": [
+        "https://github.com/nodejs/undici/security/advisories/GHSA-4qv8-2p9j-2685",
+        "https://nvd.nist.gov/vuln/detail/CVE-2026-109924",
+        "https://github.com/nodejs/undici/commit/299162740d5f39120092277e70efacb4d151c1c6"
+      ],
+      "current_versions": []
+    },
+    {
+      "package": "undici",
+      "version": "7.29.0",
+      "advisory": "GHSA-4w7w-5xrc-9h26",
+      "severity_from_database": "HIGH",
+      "fixed_versions": [
+        "7.30.1",
+        "8.12.2"
+      ],
+      "status": "original version/advisory match removed by update or closure removal; current frozen OSV query has no match for this entry; optional features not all exercised",
+      "references": [
+        "https://github.com/nodejs/undici/security/advisories/GHSA-4w7w-5xrc-9h26",
+        "https://nvd.nist.gov/vuln/detail/CVE-2026-109829",
+        "https://github.com/nodejs/undici/commit/26c2bfb3def0b67241ce878e80657ed5d6c3efa8"
+      ],
+      "current_versions": []
+    },
+    {
+      "package": "undici",
+      "version": "7.29.0",
+      "advisory": "GHSA-55wc-3pg8-jfw6",
+      "severity_from_database": "MODERATE",
+      "fixed_versions": [
+        "7.30.1",
+        "8.12.2"
+      ],
+      "status": "original version/advisory match removed by update or closure removal; current frozen OSV query has no match for this entry; optional features not all exercised",
+      "references": [
+        "https://github.com/nodejs/undici/security/advisories/GHSA-55wc-3pg8-jfw6",
+        "https://nvd.nist.gov/vuln/detail/CVE-2026-87029",
+        "https://github.com/nodejs/undici/commit/63cba7712ca012b2603c6aeeb4c72d8692332cd0"
+      ],
+      "current_versions": []
+    },
+    {
+      "package": "undici",
+      "version": "7.29.0",
+      "advisory": "GHSA-8436-99hf-9mmv",
+      "severity_from_database": "LOW",
+      "fixed_versions": [
+        "7.29.1",
+        "8.10.2"
+      ],
+      "status": "original version/advisory match removed by update or closure removal; current frozen OSV query has no match for this entry; optional features not all exercised",
+      "references": [
+        "https://github.com/nodejs/undici/security/advisories/GHSA-8436-99hf-9mmv",
+        "https://nvd.nist.gov/vuln/detail/CVE-2026-85008",
+        "https://github.com/nodejs/undici/commit/2be07bf97b3022e0324142d31f99f6e019d815e3"
+      ],
+      "current_versions": []
+    },
+    {
+      "package": "undici",
+      "version": "7.29.0",
+      "advisory": "GHSA-9fm3-97px-rjf6",
+      "severity_from_database": "MODERATE",
+      "fixed_versions": [
+        "6.29.1",
+        "7.30.1",
+        "8.12.2"
+      ],
+      "status": "original version/advisory match removed by update or closure removal; current frozen OSV query has no match for this entry; optional features not all exercised",
+      "references": [
+        "https://github.com/nodejs/undici/security/advisories/GHSA-9fm3-97px-rjf6",
+        "https://nvd.nist.gov/vuln/detail/CVE-2026-109932",
+        "https://github.com/nodejs/undici/commit/39f93e142df03e559fe7c3d1fc7fba9beee2c185"
+      ],
+      "current_versions": []
+    },
+    {
+      "package": "undici",
+      "version": "7.29.0",
+      "advisory": "GHSA-f72v-6w45-q472",
+      "severity_from_database": "MODERATE",
+      "fixed_versions": [
+        "7.30.1",
+        "8.12.2"
+      ],
+      "status": "original version/advisory match removed by update or closure removal; current frozen OSV query has no match for this entry; optional features not all exercised",
+      "references": [
+        "https://github.com/nodejs/undici/security/advisories/GHSA-f72v-6w45-q472",
+        "https://nvd.nist.gov/vuln/detail/CVE-2026-109841",
+        "https://github.com/nodejs/undici/commit/18bc8a1e09d15bc45815154a289dcf6fd5254d00"
+      ],
+      "current_versions": []
+    },
+    {
+      "package": "undici",
+      "version": "7.29.0",
+      "advisory": "GHSA-pmjh-fq2x-6v4x",
+      "severity_from_database": "MODERATE",
+      "fixed_versions": [
+        "7.29.1",
+        "8.10.2"
+      ],
+      "status": "original version/advisory match removed by update or closure removal; current frozen OSV query has no match for this entry; optional features not all exercised",
+      "references": [
+        "https://github.com/nodejs/undici/security/advisories/GHSA-pmjh-fq2x-6v4x",
+        "https://nvd.nist.gov/vuln/detail/CVE-2026-18149",
+        "https://github.com/nodejs/undici/commit/3c6726599cea8646384dde846c97d630da472a74"
+      ],
+      "current_versions": []
+    },
+    {
+      "package": "undici",
+      "version": "7.29.0",
+      "advisory": "GHSA-qrxm-fqhp-jwvm",
+      "severity_from_database": "HIGH",
+      "fixed_versions": [
+        "6.29.1",
+        "7.30.1",
+        "8.12.2"
+      ],
+      "status": "original version/advisory match removed by update or closure removal; current frozen OSV query has no match for this entry; optional features not all exercised",
+      "references": [
+        "https://github.com/nodejs/undici/security/advisories/GHSA-qrxm-fqhp-jwvm",
+        "https://nvd.nist.gov/vuln/detail/CVE-2026-87018",
+        "https://github.com/nodejs/undici/commit/12cfd96c3f430897656e3edc1c5e02be8c1cd309"
+      ],
+      "current_versions": []
+    },
+    {
+      "package": "undici",
+      "version": "7.29.0",
+      "advisory": "GHSA-r53p-7pc4-xj5r",
+      "severity_from_database": "LOW",
+      "fixed_versions": [
+        "6.28.1",
+        "7.29.1",
+        "8.10.2"
+      ],
+      "status": "original version/advisory match removed by update or closure removal; current frozen OSV query has no match for this entry; optional features not all exercised",
+      "references": [
+        "https://github.com/nodejs/undici/security/advisories/GHSA-r53p-7pc4-xj5r",
+        "https://nvd.nist.gov/vuln/detail/CVE-2026-18540",
+        "https://github.com/nodejs/undici/commit/0160a719063fb0a77f4fdf9500b9166b91e14329"
+      ],
+      "current_versions": []
+    },
+    {
+      "package": "undici",
+      "version": "7.29.0",
+      "advisory": "GHSA-rfgv-xxqx-mfg5",
+      "severity_from_database": "HIGH",
+      "fixed_versions": [
+        "6.28.1",
+        "7.29.1",
+        "8.10.2"
+      ],
+      "status": "original version/advisory match removed by update or closure removal; current frozen OSV query has no match for this entry; optional features not all exercised",
+      "references": [
+        "https://github.com/nodejs/undici/security/advisories/GHSA-rfgv-xxqx-mfg5",
+        "https://nvd.nist.gov/vuln/detail/CVE-2026-19534",
+        "https://github.com/nodejs/undici/commit/2af0faf88b906d3127a360c3ac75164c0f95e5a5"
+      ],
+      "current_versions": []
+    },
+    {
+      "package": "undici",
+      "version": "7.29.0",
+      "advisory": "GHSA-rx4f-c7p8-82vq",
+      "severity_from_database": "MODERATE",
+      "fixed_versions": [
+        "7.29.1",
+        "8.10.2"
+      ],
+      "status": "original version/advisory match removed by update or closure removal; current frozen OSV query has no match for this entry; optional features not all exercised",
+      "references": [
+        "https://github.com/nodejs/undici/security/advisories/GHSA-rx4f-c7p8-82vq",
+        "https://nvd.nist.gov/vuln/detail/CVE-2026-85014",
+        "https://github.com/nodejs/undici/commit/1858656ebb1e919311c1f31613dfd581b7214349"
+      ],
+      "current_versions": []
+    },
+    {
+      "package": "undici",
+      "version": "7.29.0",
+      "advisory": "GHSA-w293-vg96-wgc3",
+      "severity_from_database": "HIGH",
+      "fixed_versions": [
+        "7.29.1",
+        "8.10.2"
+      ],
+      "status": "original version/advisory match removed by update or closure removal; current frozen OSV query has no match for this entry; optional features not all exercised",
+      "references": [
+        "https://github.com/nodejs/undici/security/advisories/GHSA-w293-vg96-wgc3",
+        "https://nvd.nist.gov/vuln/detail/CVE-2026-84961",
+        "https://github.com/nodejs/undici/commit/8f5868fbdbc8f1146dfc1bcd1f2d117790141390"
+      ],
+      "current_versions": []
+    },
+    {
+      "package": "undici",
+      "version": "7.29.0",
+      "advisory": "GHSA-xjj6-f33q-929c",
+      "severity_from_database": "HIGH",
+      "fixed_versions": [
+        "6.29.1",
+        "7.30.1",
+        "8.12.2"
+      ],
+      "status": "original version/advisory match removed by update or closure removal; current frozen OSV query has no match for this entry; optional features not all exercised",
+      "references": [
+        "https://github.com/nodejs/undici/security/advisories/GHSA-xjj6-f33q-929c",
+        "https://nvd.nist.gov/vuln/detail/CVE-2026-109869",
+        "https://github.com/nodejs/undici/commit/07ded4941b1e72afec862958c3b8ddf468f3b429"
+      ],
+      "current_versions": []
+    },
+    {
+      "package": "vite",
+      "version": "8.0.16",
+      "advisory": "GHSA-587h-7wmj-h5pm",
+      "severity_from_database": "HIGH",
+      "fixed_versions": [
+        "8.3.3",
+        "8.2.4",
+        "8.1.6",
+        "7.3.7",
+        "6.4.4"
+      ],
+      "status": "original version/advisory match removed by update or closure removal; current frozen OSV query has no match for this entry; optional features not all exercised",
+      "references": [
+        "https://github.com/vitejs/launch-editor/security/advisories/GHSA-587h-7wmj-h5pm",
+        "https://nvd.nist.gov/vuln/detail/CVE-2026-112942",
+        "https://github.com/vitejs/launch-editor/commit/f13cd835d4b8e860b1d4d080ad8a490cc2463679"
+      ],
+      "current_versions": [
+        "8.3.3"
+      ]
+    },
+    {
+      "package": "vite",
+      "version": "8.0.16",
+      "advisory": "GHSA-698v-4r3x-3vcv",
+      "severity_from_database": "MODERATE",
+      "fixed_versions": [
+        "8.3.3",
+        "8.2.4",
+        "8.1.6",
+        "7.3.7",
+        "6.4.4"
+      ],
+      "status": "original version/advisory match removed by update or closure removal; current frozen OSV query has no match for this entry; optional features not all exercised",
+      "references": [
+        "https://github.com/vitejs/launch-editor/security/advisories/GHSA-698v-4r3x-3vcv",
+        "https://nvd.nist.gov/vuln/detail/CVE-2026-112943",
+        "https://github.com/vitejs/launch-editor/pull/155"
+      ],
+      "current_versions": [
+        "8.3.3"
+      ]
+    },
+    {
+      "package": "vite",
+      "version": "8.0.16",
+      "advisory": "GHSA-9jrq-w75r-8gcw",
+      "severity_from_database": "LOW",
+      "fixed_versions": [
+        "8.3.3",
+        "8.2.4",
+        "8.1.6",
+        "7.3.7",
+        "6.4.4"
+      ],
+      "status": "original version/advisory match removed by update or closure removal; current frozen OSV query has no match for this entry; optional features not all exercised",
+      "references": [
+        "https://github.com/vitejs/vite/security/advisories/GHSA-9jrq-w75r-8gcw",
+        "https://nvd.nist.gov/vuln/detail/CVE-2026-112945",
+        "https://github.com/vitejs/vite/pull/23653"
+      ],
+      "current_versions": [
+        "8.3.3"
+      ]
+    },
+    {
+      "package": "vite",
+      "version": "8.0.16",
+      "advisory": "GHSA-r825-w8mm-5pxw",
+      "severity_from_database": "MODERATE",
+      "fixed_versions": [
+        "8.3.3",
+        "8.2.4",
+        "8.1.6",
+        "7.3.7",
+        "6.4.4"
+      ],
+      "status": "original version/advisory match removed by update or closure removal; current frozen OSV query has no match for this entry; optional features not all exercised",
+      "references": [
+        "https://github.com/vitejs/launch-editor/security/advisories/GHSA-r825-w8mm-5pxw",
+        "https://nvd.nist.gov/vuln/detail/CVE-2026-112944",
+        "https://github.com/vitejs/launch-editor/pull/156"
+      ],
+      "current_versions": [
+        "8.3.3"
+      ]
+    },
+    {
+      "package": "vite",
+      "version": "8.0.16",
+      "advisory": "GHSA-rq7h-c2jc-7f22",
+      "severity_from_database": "MODERATE",
+      "fixed_versions": [
+        "8.3.3",
+        "8.2.4",
+        "8.1.6",
+        "7.3.7",
+        "6.4.4"
+      ],
+      "status": "original version/advisory match removed by update or closure removal; current frozen OSV query has no match for this entry; optional features not all exercised",
+      "references": [
+        "https://github.com/vitejs/vite/security/advisories/GHSA-rq7h-c2jc-7f22",
+        "https://nvd.nist.gov/vuln/detail/CVE-2026-112946",
+        "https://github.com/vitejs/vite/pull/23656"
+      ],
+      "current_versions": [
+        "8.3.3"
+      ]
+    },
+    {
+      "package": "webpack-dev-middleware",
+      "version": "6.1.3",
+      "advisory": "GHSA-g84c-rxfj-3j2c",
+      "severity_from_database": "HIGH",
+      "fixed_versions": [
+        "8.3.0",
+        "7.4.6"
+      ],
+      "status": "original version/advisory match removed by update or closure removal; current frozen OSV query has no match for this entry; optional features not all exercised",
+      "references": [
+        "https://github.com/webpack/webpack-dev-middleware/security/advisories/GHSA-g84c-rxfj-3j2c",
+        "https://nvd.nist.gov/vuln/detail/CVE-2026-76844",
+        "https://github.com/webpack/webpack-dev-middleware/pull/2404"
+      ],
+      "current_versions": [
+        "7.4.6"
+      ]
+    },
+    {
+      "package": "zod",
+      "version": "3.25.76",
+      "advisory": "GHSA-mrhx-c7xc-m3w5",
+      "severity_from_database": "HIGH",
+      "fixed_versions": [
+        "4.6.6"
+      ],
+      "status": "original version/advisory match removed by update or closure removal; current frozen OSV query has no match for this entry; optional features not all exercised",
+      "references": [
+        "https://nvd.nist.gov/vuln/detail/CVE-2023-54404",
+        "https://github.com/colinhacks/zod/issues/1872",
+        "https://github.com/colinhacks/zod/pull/6475"
+      ],
+      "current_versions": [
+        "4.6.6"
+      ]
+    }
+  ],
+  "current_query": {
+    "queries": 1580,
+    "matched_versions": 2,
+    "advisory_pairs": 2,
+    "root_lock_sha256": "ab394cb7b30edb0c555a1ff34d5b6361027767b1ed73a3143fb0a3bcba382b4b",
+    "osv_response_sha256": "40b562e07069eb7de31b5fc9bd148142274720973662e7a135714c77e365d1ca",
+    "matches": [
+      {
+        "package": "@tiptap/core",
+        "version": "2.26.3",
+        "advisory": "GHSA-cp6q-959q-f8rh",
+        "disposition": "tested local patch"
+      },
+      {
+        "package": "deepmerge",
+        "version": "4.3.1",
+        "advisory": "GHSA-gcqx-w48m-w2h4",
+        "disposition": "tested local patch"
+      }
+    ]
+  }
+}

@@ -4,21 +4,10 @@
 
 import redis
 from django.conf import settings
-from urllib.parse import urlparse
+from plane.utils.redis_tls import redis_tls_options
 
 
 def redis_instance():
-    # connect to redis
-    if settings.REDIS_SSL:
-        url = urlparse(settings.REDIS_URL)
-        ri = redis.Redis(
-            host=url.hostname,
-            port=url.port,
-            password=url.password,
-            ssl=True,
-            ssl_cert_reqs=None,
-        )
-    else:
-        ri = redis.Redis.from_url(settings.REDIS_URL, db=0)
-
-    return ri
+    # Preserve URL credentials, database and transport parameters while enforcing
+    # verified TLS for rediss, consistently with Django's cache connection pool.
+    return redis.Redis.from_url(settings.REDIS_URL, db=0, **redis_tls_options(settings.REDIS_URL))

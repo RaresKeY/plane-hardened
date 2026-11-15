@@ -240,7 +240,10 @@ if os.environ.get("ENABLE_READ_REPLICA", "0") == "1":
 
 # Redis Config
 REDIS_URL = os.environ.get("REDIS_URL")
-REDIS_SSL = REDIS_URL and "rediss" in REDIS_URL
+from plane.utils.redis_tls import redis_tls_options
+
+REDIS_TLS_OPTIONS = redis_tls_options(REDIS_URL)
+REDIS_SSL = bool(REDIS_TLS_OPTIONS)
 
 if REDIS_SSL:
     CACHES = {
@@ -249,7 +252,7 @@ if REDIS_SSL:
             "LOCATION": REDIS_URL,
             "OPTIONS": {
                 "CLIENT_CLASS": "django_redis.client.DefaultClient",
-                "CONNECTION_POOL_KWARGS": {"ssl_cert_reqs": False},
+                "CONNECTION_POOL_KWARGS": REDIS_TLS_OPTIONS,
             },
         }
     }
@@ -336,6 +339,8 @@ CELERY_ACCEPT_CONTENT = ["application/json"]
 
 
 CELERY_IMPORTS = (
+    # Audit tasks live outside Django's conventional tasks.py autodiscovery.
+    "plane.bgtasks.logger_task",
     # scheduled tasks
     "plane.bgtasks.issue_automation_task",
     "plane.bgtasks.exporter_expired_task",

@@ -1,0 +1,42 @@
+{
+  "schema": 1,
+  "sources": [
+    "https://emudhra.we-have-a-problem.com/roots.json",
+    "https://emudhra.we-have-a-problem.com/impacted-intermediates.json",
+    "https://bugzilla.mozilla.org/show_bug.cgi?id=2083449#c82",
+    "https://emudhra.com/en/post/certificate-security-incident/"
+  ],
+  "blocked_spki_sha256": {
+    "0a6c2b2ca5b364207954171987ac9d2178561569d8205457e77ca90c32ede282": "emSign Root CS CA - G3",
+    "43bffa19d6ef651451f6841e019931e96f6f2eaeff28ab4b6f1ce4576de2717b": "EM OV TLS CA - G3B",
+    "49dd353dc2b919a3770645117d0e60c16115e7d1bc259eefe734b00ea434fe5f": "EM DV TLS CA - G3C",
+    "5c0660a2b164910d8ff589c18e14552e9e0ec237dcefe2cb736d41a4811f81a0": "EM EV TLS CA - G3C",
+    "63ecefee431d49523bc1136c4e72d0206a477086caf606cd5cf025686c109cf8": "EM OV TLS CA - G3C",
+    "8d417db2dd8bf5e3084d1e3f196d583849d81bdd4c00c70b9d39369e96b8c782": "emSign ECC Root CA - G3",
+    "92c063d67e8f14db71d288e11266ffdaf69cbf115f7bab14f3bc2f68d25e0e30": "EM OV CS CA - G3C",
+    "bd153ed7b0434f6886b17bce8bbe84ed340c7132d702a8f4fa318f756ecbd6f3": "AAA Certificate Services",
+    "c619e4780ed8e0abeda24ad732567de4383a7ea941338f6d1a7d1b49ac792fe9": "emSign Root TLS CA - G3",
+    "e0254c7fcdc265e2f0f8a428dabb75ab4ae039b4872d62f5ee57f0877d5a8a41": "EM EV TLS CA - G3B",
+    "ebed6475c2c2d80fcb199f3fe8dd6e6b3ce60b77eb15d4e42c3dec0c6f5b5105": "EM DV TLS CA - G3B",
+    "ec4ffa1ad0ac88081314b7aaffef6a91f97cd57291bb5ba686c5415f5eb4f6b6": "EM OV CS CA - G3B",
+    "941ea0cbce0926d9f34ec667cee669b61fd39f4338fa0b91048d5749d8880d25": "subject=C=IN, O=eMudhra Technologies Limited, CN=emSign Root CS CA - G2",
+    "aa4216dc80a7299ae6de08444bea2c588dc873631ebc563c0776d83a1b61e3ce": "subject=C=US, O=eMudhra Inc, CN=EM OV TLS CA - G2C",
+    "34556838281688d1c967d43d1372a1bbaf389277222f03e1017b18b348a1f00e": "subject=C=US, O=eMudhra Inc, CN=EM DV TLS CA - G2C",
+    "1a942e3925b809896b4b291a8cd2e7bc5f1d533aa523b8353b2df377b0f0adbe": "subject=C=US, O=eMudhra Inc, CN=EM EV TLS CA - G2C",
+    "c2690b6bf35a9364e697735ec630bfd9d2cd59040e3908a66765168e3282b04e": "subject=C=NL, O=eMudhra BV, CN=EM EV TLS CA - G2B",
+    "04db3b7ddf683b1d4b5b64fe743a3a8d8c3d71f0c339d7dc25b343e665a9eb5b": "subject=C=NL, O=eMudhra BV, CN=EM DV TLS CA - G2B",
+    "376a1a7082a593dccc20d561d119e9ab8d30f11cc321d0a37fa41f0df284e01c": "subject=C=IN, OU=emSign PKI, O=eMudhra Technologies Limited, CN=emSign Root CA - G1",
+    "8429351035ba90ba14ef3f7ae38ca35480605a0296aa6c263c6a9b26bb9a48e1": "subject=C=NL, O=eMudhra BV, CN=EM OV TLS CA - G2B"
+  },
+  "reviewed_at": "2026-11-15",
+  "policy_choices": [
+    "G3/AAA original incident keys retained",
+    "Six new RSA TLS intermediate SPKIs included from exact Mozilla certificate fingerprints",
+    "Conservative immediate removal of emSign Root CA G1, and Root CS CA G2; stricter than browser G1 issuance-date transition. Can break otherwise valid G1 endpoints.",
+    "Two additional RSA code-signing certificates have known DER fingerprints but their certificate bytes/SPKIs are not yet acquired; their issuer Root CS CA G2 is blocked. No complete expanded chain proof claimed."
+  ],
+  "blocked_certificate_sha256": {
+    "913f1a04b02814b604ac5275acb201b1c802b2c0f1b4986fb1a1eb595958e072": "EM OV CS CA G2B, Mozilla comment82",
+    "ebac91b8ec9853323779edb393c595fadb29dd4ddb20c47e336f2a021684f27b": "EM OV CS CA G2C, Mozilla comment82"
+  }
+}

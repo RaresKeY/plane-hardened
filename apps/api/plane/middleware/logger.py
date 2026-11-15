@@ -17,7 +17,7 @@ from rest_framework.request import Request
 
 # Module imports
 from plane.utils.ip_address import get_client_ip
-from plane.utils.exception_logger import log_exception
+from plane.utils.request_logging import AUDIT_SCHEMA, safe_ip, safe_method, safe_route
 from plane.bgtasks.logger_task import process_logs
 
 api_logger = logging.getLogger("plane.api.request")
@@ -38,13 +38,13 @@ class RequestLoggerMiddleware:
 
     def __call__(self, request):
         # get the start time
-        start_time = time.time()
+        start_time = time.monotonic()
 
         # Get the response
         response = self.get_response(request)
 
         # calculate the duration
-        duration = time.time() - start_time
+        duration = time.monotonic() - start_time
 
         # Check if logging is required
         log_true = self._should_log_route(request=request)
@@ -57,18 +57,22 @@ class RequestLoggerMiddleware:
             request.user.id if getattr(request, "user") and getattr(request.user, "is_authenticated", False) else None
         )
 
-        user_agent = request.META.get("HTTP_USER_AGENT", "")
+        route = safe_route(request)
+        method = safe_method(request.method)
 
         # Log the request information
         api_logger.info(
-            f"{request.method} {request.get_full_path()} {response.status_code}",
+            "%s %s %s",
+            method,
+            route,
+            response.status_code,
             extra={
-                "path": request.path,
-                "method": request.method,
+                "path": route,
+                "method": method,
                 "status_code": response.status_code,
                 "duration_ms": int(duration * 1000),
-                "remote_addr": get_client_ip(request),
-                "user_agent": user_agent,
+                "remote_addr": safe_ip(get_client_ip(request)),
+                "user_agent": None,
                 "user_id": user_id,
             },
         )
@@ -86,78 +90,35 @@ class APITokenLogMiddleware:
         self.get_response = get_response
 
     def __call__(self, request):
-        request_body = request.body
         response = self.get_response(request)
-        self.process_request(request, response, request_body)
+        self.process_request(request, response)
         return response
 
-    def _safe_decode_body(self, content):
-        """
-        Safely decodes request/response body content, handling binary data.
-        Returns None if content is None, or a string representation of the content.
-        """
-        # If the content is None, return None
-        if content is None:
+    def process_request(self, request, response, request_body=None):
+        api_key = request.headers.get("X-Api-Key")
+        if not isinstance(api_key, str) or not api_key:
             return None
-
-        # If the content is an empty bytes object, return None
-        if content == b"":
-            return None
-
-        # Check if content is binary by looking for common binary file signatures
-        if content.startswith(b"\x89PNG") or content.startswith(b"\xff\xd8\xff") or content.startswith(b"%PDF"):
-            return "[Binary Content]"
-
-        try:
-            return content.decode("utf-8")
-        except UnicodeDecodeError:
-            return "[Could not decode content]"
-
-    # Headers whose values must never be persisted in plaintext logs
-    SENSITIVE_HEADERS = frozenset({"x-api-key", "authorization", "cookie"})
-
-    def _redacted_headers(self, request):
-        """
-        Returns the request headers as a string with sensitive values redacted,
-        so that credentials such as the API key are never stored in plaintext.
-        """
-        redacted = {
-            key: ("[REDACTED]" if key.lower() in self.SENSITIVE_HEADERS else value)
-            for key, value in request.headers.items()
-        }
-        return str(redacted)
-
-    def process_request(self, request, response, request_body):
-        api_key_header = "X-Api-Key"
-        api_key = request.headers.get(api_key_header)
-
-        # If the API key is not present, return
-        if not api_key:
-            return
-
         try:
             log_data = {
-                # Tokenize the (high-entropy) API key into a stable, non-reversible
-                # identifier so logs can be correlated to a token without ever
-                # persisting the raw key. A keyed HMAC is used rather than a bare
-                # hash so the digest cannot be precomputed from a known key value.
                 "token_identifier": hmac.new(
-                    settings.SECRET_KEY.encode(), api_key.encode(), hashlib.sha256
+                    settings.SECRET_KEY.encode(), api_key.encode("utf-8", errors="surrogatepass"), hashlib.sha256
                 ).hexdigest(),
-                "path": request.path,
-                "method": request.method,
-                "query_params": request.META.get("QUERY_STRING", ""),
-                "headers": self._redacted_headers(request),
-                "body": self._safe_decode_body(request_body) if request_body else None,
-                "response_body": self._safe_decode_body(response.content) if response.content else None,
+                "path": safe_route(request),
+                "method": safe_method(request.method),
+                "query_params": "",
+                "headers": None,
+                "body": None,
+                "response_body": None,
                 "response_code": response.status_code,
-                "ip_address": get_client_ip(request=request),
-                "user_agent": request.META.get("HTTP_USER_AGENT", None),
+                "ip_address": safe_ip(get_client_ip(request=request)),
+                "user_agent": None,
             }
-
-            process_logs.delay(log_data=log_data)
-
-        except Exception as e:
-            log_exception(e)
-
+            process_logs.apply_async(
+                kwargs={"log_data": log_data, "audit_schema": AUDIT_SCHEMA},
+                argsrepr="()",
+                kwargsrepr="[API activity metadata]",
+            )
+        except Exception:
+            # Broker/encoding exceptions may embed credential-bearing input.
+            api_logger.warning("Could not queue API activity metadata")
         return None

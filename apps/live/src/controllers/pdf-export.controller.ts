@@ -5,10 +5,9 @@
  */
 
 import type { Request, Response } from "express";
-import { Effect, Schema, Cause } from "effect";
+import { Effect, Schema } from "effect";
 import { Controller, Post } from "@plane/decorators";
 import { logger } from "@plane/logger";
-import { AppError } from "@/lib/errors";
 import { PdfExportRequestBody, PdfValidationError, PdfAuthenticationError } from "@/schema/pdf-export";
 import { PdfExportService, exportToPdf } from "@/services/pdf-export";
 import type { PdfExportInput } from "@/services/pdf-export";
@@ -103,15 +102,12 @@ export class PdfExportController {
       return yield* exportToPdf(input);
     }).pipe(
       // Log errors before catching them
-      Effect.tapError((error) => Effect.logError("PDF_EXPORT: Export failed", { requestId, error })),
+      Effect.tapError(() => Effect.logError("PDF_EXPORT: Export failed", { requestId })),
       // Map all tagged errors to HTTP responses
       Effect.catchAll((error) => Effect.succeed(this.mapErrorToHttpResponse(error))),
       // Handle unexpected defects
-      Effect.catchAllDefect((defect) => {
-        const appError = new AppError(Cause.pretty(Cause.die(defect)), {
-          context: { requestId, operation: "exportToPdf" },
-        });
-        logger.error("PDF_EXPORT: Unexpected failure", appError);
+      Effect.catchAllDefect(() => {
+        logger.error("PDF_EXPORT: Unexpected failure", { requestId });
         return Effect.succeed({ status: 500, error: "Failed to generate PDF" });
       })
     );

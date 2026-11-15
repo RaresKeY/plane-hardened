@@ -20,7 +20,6 @@ import type { AxiosError } from "axios";
 export class AppError extends Error {
   statusCode?: number;
   method?: string;
-  url?: string;
   code?: string;
   context?: Record<string, any>;
 
@@ -38,7 +37,11 @@ export class AppError extends Error {
       super(messageOrError);
       this.name = "AppError";
       if (data) {
-        Object.assign(this, data);
+        if (typeof data.code === "string" && /^[A-Z_]{1,64}$/.test(data.code)) this.code = data.code;
+        if (Number.isInteger(data.statusCode) && data.statusCode! >= 100 && data.statusCode! <= 599)
+          this.statusCode = data.statusCode;
+        const operation = data.context?.operation;
+        if (typeof operation === "string" && /^[a-zA-Z]{1,64}$/.test(operation)) this.context = { operation };
       }
       return;
     }
@@ -46,19 +49,18 @@ export class AppError extends Error {
     // AxiosError - extract ONLY essential info (no config, no headers, no cookies)
     if (error && typeof error === "object" && "isAxiosError" in error) {
       const axiosError = error as AxiosError;
-      const responseData = axiosError.response?.data as any;
-      super(responseData?.message || axiosError.message);
+      // Transport messages, response bodies and URLs can contain credentials or document content.
+      super("API request failed");
       this.name = "AppError";
-      this.statusCode = axiosError.response?.status;
-      this.method = axiosError.config?.method?.toUpperCase();
-      this.url = axiosError.config?.url;
-      this.code = axiosError.code;
+      const status = axiosError.response?.status;
+      if (Number.isInteger(status) && status! >= 100 && status! <= 599) this.statusCode = status;
+      this.code = axiosError.code === "ERR_CANCELED" ? "ABORT_ERROR" : "API_REQUEST_FAILED";
       return;
     }
 
     // DOMException (AbortError from cancelled requests)
     if (error instanceof DOMException && error.name === "AbortError") {
-      super(error.message);
+      super("Operation canceled");
       this.name = "AppError";
       this.code = "ABORT_ERROR";
       return;
@@ -66,9 +68,9 @@ export class AppError extends Error {
 
     // Standard Error objects
     if (error instanceof Error) {
-      super(error.message);
+      super("Operation failed");
       this.name = "AppError";
-      this.code = error.name;
+      this.code = "INTERNAL_ERROR";
       return;
     }
 

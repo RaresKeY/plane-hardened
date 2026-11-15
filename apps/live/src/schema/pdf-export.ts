@@ -5,11 +5,12 @@
  */
 
 import { Schema } from "effect";
+import { ASSET_ID } from "../lib/pdf/image-policy";
 
 export const PdfExportRequestBody = Schema.Struct({
-  pageId: Schema.NonEmptyTrimmedString,
-  workspaceSlug: Schema.NonEmptyTrimmedString,
-  projectId: Schema.optional(Schema.NonEmptyTrimmedString),
+  pageId: Schema.String.pipe(Schema.pattern(ASSET_ID)),
+  workspaceSlug: Schema.String.pipe(Schema.pattern(/^[a-z0-9_-]{1,255}$/i)),
+  projectId: Schema.String.pipe(Schema.pattern(ASSET_ID)),
   title: Schema.optional(Schema.String),
   author: Schema.optional(Schema.String),
   subject: Schema.optional(Schema.String),

@@ -5,7 +5,6 @@
 # Python imports
 import base64
 import nh3
-from plane.utils.exception_logger import log_exception
 from bs4 import BeautifulSoup
 from collections import defaultdict
 import logging
@@ -157,6 +156,10 @@ ATTRIBUTES = {
 }
 
 SAFE_PROTOCOLS = {"http", "https", "mailto", "tel"}
+SAFE_STYLE_PROPERTIES = {
+    "color", "background-color", "font-weight", "font-style", "font-size", "text-decoration", "text-align",
+    "vertical-align", "white-space", "width", "height", "min-width", "max-width", "min-height", "max-height",
+}
 
 
 def _compute_html_sanitization_diff(before_html: str, after_html: str):
@@ -213,12 +216,17 @@ def validate_html_content(html_content: str):
     Sanitize HTML content using nh3.
     Returns a tuple: (is_valid, error_message, clean_html)
     """
-    if not html_content:
+    if html_content is None or html_content == "":
         return True, None, None
+    if not isinstance(html_content, str):
+        return False, "HTML content must be text", None
 
-    # Size check - 10MB limit (consistent with binary validation)
-    if len(html_content.encode("utf-8")) > MAX_SIZE:
-        return False, "HTML content exceeds maximum size limit (10MB)", None
+    # Reject malformed Unicode and oversized text before any parser runs.
+    try:
+        if len(html_content) > MAX_SIZE or len(html_content.encode("utf-8")) > MAX_SIZE:
+            return False, "HTML content exceeds maximum size limit (10MB)", None
+    except UnicodeError:
+        return False, "HTML content is not valid UTF-8", None
 
     try:
         clean_html = nh3.clean(
@@ -226,6 +234,7 @@ def validate_html_content(html_content: str):
             tags=ALLOWED_TAGS,
             attributes=ATTRIBUTES,
             url_schemes=SAFE_PROTOCOLS,
+            filter_style_properties=SAFE_STYLE_PROPERTIES,
         )
         # Report removals to logger (Sentry) if anything was stripped
         diff = _compute_html_sanitization_diff(html_content, clean_html)
@@ -233,13 +242,17 @@ def validate_html_content(html_content: str):
             try:
                 import json
 
-                summary = json.dumps(diff)
+                summary = json.dumps({
+                    "removed_tags": sum(diff.get("removed_tags", {}).values()),
+                    "removed_attributes": sum(len(names) for names in diff.get("removed_attributes", {}).values()),
+                })
             except Exception:
-                summary = str(diff)
+                summary = "removals detected"
             logger.warning(f"HTML sanitization removals: {summary}")
         return True, None, clean_html
-    except Exception as e:
-        log_exception(e)
+    except Exception:
+        # Sanitizer exception text can echo the submitted document.
+        logger.warning("HTML sanitization failed")
         return False, "Failed to sanitize HTML", None
 
 

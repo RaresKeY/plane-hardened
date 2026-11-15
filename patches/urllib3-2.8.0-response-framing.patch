@@ -1,0 +1,66 @@
+--- a/urllib3/response.py
++++ b/urllib3/response.py
+@@ -1370,14 +1370,18 @@
+             raise ProtocolError(
+                 "Response chunk size line exceeded maximum allowed length"
+             ) from None
+-        line = line.split(b";", 1)[0]
+         try:
+-            self.chunk_left = int(line, 16)
++            if not line.endswith(b"\r\n"):
++                raise ValueError("Invalid response chunk framing")
++            size_text = line[:-2].split(b";", 1)[0]
++            if not size_text or any(c not in b"0123456789abcdefABCDEF" for c in size_text):
++                raise ValueError("Invalid response chunk framing")
++            self.chunk_left = int(size_text, 16)
+         except ValueError:
+             self.close()
+             if line:
+                 # Invalid chunked protocol response, abort.
+-                raise InvalidChunkLength(self, line) from None
++                raise InvalidChunkLength(self, b"[invalid]") from None
+             else:
+                 # Truncated at start of next chunk
+                 raise ProtocolError("Response ended prematurely") from None
+@@ -1387,7 +1391,8 @@
+         if amt is None:
+             chunk = self._fp._safe_read(self.chunk_left)  # type: ignore[union-attr]
+             returned_chunk = chunk
+-            self._fp._safe_read(2)  # type: ignore[union-attr] # Toss the CRLF at the end of the chunk.
++            if self._fp._safe_read(2) != b"\r\n":  # type: ignore[union-attr]
++                raise ProtocolError("Invalid response chunk terminator")
+             self.chunk_left = None
+         elif self.chunk_left is not None and amt < self.chunk_left:
+             value = self._fp._safe_read(amt)  # type: ignore[union-attr]
+@@ -1395,12 +1400,14 @@
+             returned_chunk = value
+         elif amt == self.chunk_left:
+             value = self._fp._safe_read(amt)  # type: ignore[union-attr]
+-            self._fp._safe_read(2)  # type: ignore[union-attr] # Toss the CRLF at the end of the chunk.
++            if self._fp._safe_read(2) != b"\r\n":  # type: ignore[union-attr]
++                raise ProtocolError("Invalid response chunk terminator")
+             self.chunk_left = None
+             returned_chunk = value
+         else:  # amt > self.chunk_left
+             returned_chunk = self._fp._safe_read(self.chunk_left)  # type: ignore[union-attr]
+-            self._fp._safe_read(2)  # type: ignore[union-attr] # Toss the CRLF at the end of the chunk.
++            if self._fp._safe_read(2) != b"\r\n":  # type: ignore[union-attr]
++                raise ProtocolError("Invalid response chunk terminator")
+             self.chunk_left = None
+         return returned_chunk  # type: ignore[no-any-return]
+ 
+@@ -1478,9 +1485,13 @@
+                 if decoded:  # Platform-specific: Jython.
+                     yield decoded
+ 
+-            # Chunk content ends with \r\n: discard it.
++            # Bound the whole trailer section as well as each individual line.
++            trailer_bytes = 0
+             while self._fp is not None:
+                 line = self._fp.fp.readline(_MAX_CHUNK_LINE_LENGTH + 1)
++                trailer_bytes += len(line)
++                if trailer_bytes > _MAX_CHUNK_LINE_LENGTH:
++                    raise ProtocolError("Response chunk trailers exceeded maximum total length")
+                 if len(line) > _MAX_CHUNK_LINE_LENGTH:
+                     raise ProtocolError(
+                         "Response chunk trailer line exceeded maximum allowed length"
