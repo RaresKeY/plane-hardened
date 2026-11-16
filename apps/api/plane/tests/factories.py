@@ -18,6 +18,8 @@ class UserFactory(factory.django.DjangoModelFactory):
 
     id = factory.LazyFunction(uuid4)
     email = factory.Sequence(lambda n: f"user{n}@plane.so")
+    # The release model's blank default still participates in the unique index.
+    username = factory.Sequence(lambda n: f"factory-user-{n}")
     password = factory.PostGenerationMethodCall("set_password", "password")
     first_name = factory.Sequence(lambda n: f"First{n}")
     last_name = factory.Sequence(lambda n: f"Last{n}")

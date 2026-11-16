@@ -117,6 +117,25 @@ def main():
         if os.environ.get("PLANE_TEST_DATABASE_URL"):
             migration = [python, "manage.py", "migrate", "--noinput"]
             checks.append(run("migrations", migration, cwd=SOURCE / "apps/api", env=env))
+            backports = [
+                python,
+                "-m",
+                "pytest",
+                "plane/tests/contract/api/test_intake_issue_update_role.py",
+                "plane/tests/contract/app/test_user_accounts_app.py",
+                "plane/tests/contract/app/test_cache_invalidation_permission_order_app.py",
+                "-o",
+                "addopts=--strict-markers --nomigrations",
+                "-q",
+                "--maxfail=5",
+                "--junitxml=/out/upstream-security-backports.xml",
+                "-o",
+                "cache_dir=/tmp/pytest-cache",
+            ]
+            backport_result = None
+            if os.environ.get("PLANE_TEST_FULL_API"):
+                backport_result = run("upstream-security-backports", backports, cwd=SOURCE / "apps/api", env=env)
+                checks.append(backport_result)
             unit = [
                 python,
                 "-m",
@@ -132,7 +151,10 @@ def main():
                 "faulthandler_timeout=60",
                 "--maxfail=10",
             ]
-            checks.append(run("upstream-unit", unit, cwd=SOURCE / "apps/api", env=env))
+            if backport_result is None or backport_result["exit_code"] == 0:
+                checks.append(run("upstream-unit", unit, cwd=SOURCE / "apps/api", env=env))
+            else:
+                checks.append({"name": "upstream-unit", "exit_code": 125, "status": "skipped: backport gate failed"})
         else:
             pytest.extend(["-m", "not django_db"])
         checks.append(run("focused", pytest, cwd=SOURCE / "apps/api", env=env))
@@ -213,6 +235,15 @@ def main():
                 bandit_result["accepted_by_exact_review"] = True
                 bandit_result["status"] = "findings retained and exactly reviewed; raw scanner exit preserved"
         changed = [
+            "apps/api/plane/api/views/intake.py",
+            "apps/api/plane/app/serializers/user.py",
+            "apps/api/plane/app/views/issue/label.py",
+            "apps/api/plane/app/views/state/base.py",
+            "apps/api/plane/app/views/workspace/member.py",
+            "apps/api/plane/tests/contract/api/test_intake_issue_update_role.py",
+            "apps/api/plane/tests/contract/app/test_user_accounts_app.py",
+            "apps/api/plane/tests/contract/app/test_cache_invalidation_permission_order_app.py",
+            "apps/api/plane/tests/factories.py",
             "apps/api/plane/utils/request_logging.py",
             "apps/api/plane/utils/redis_tls.py",
             "apps/api/plane/middleware/logger.py",

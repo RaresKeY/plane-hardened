@@ -1,13 +1,13 @@
 {
   "schema": 1,
-  "date": "2026-11-15",
-  "image": "cb9d00572e28472032dc984a543902339ad82661e56859786791ec4e7b56ba70",
+  "date": "2026-11-16",
+  "image": "3aa5f9a6b1fb4bad4c9a25ad1accd34de1e99fd0c71e16d62b6bcb16b3c05b5c",
   "scanner": {
     "name": "Grype",
     "version": "0.121.3",
     "database_built": "2026-11-15T06:19:39Z",
     "database_archive_sha256": "96ada30f3287fd04be595a8f419df98efdf19955e7bfa28eae80ef7c5fe27eb7",
-    "raw_report_sha256": "723e810059ae4bec1fa16c31e72c6fe9447efe61aae72c43521f07915ffc42d6"
+    "raw_report_sha256": "999f9dc890bbbd8a877d72c379f839f328140d674d620354cbccec9f3f7f50a0"
   },
   "summary": {
     "raw_matches": 209,
@@ -3366,11 +3366,27 @@
     }
   ],
   "applicability_review": {
-    "date": "2026-11-15 UTC",
+    "date": "2026-11-16 UTC",
     "review_by": "2026-11-29",
     "reopen_on": "any source/architecture/image/feature/configuration/isolation/dependency change",
     "scope": "Conditional reachability/component review; all209raw matches retained; no suppression or deployment acceptance",
     "inventory_sha256": "b7cfbb00238ea51c1696f66325eaef35faa45f8dede333faa0efedcd399e9224",
-    "narrative": "research/current-vulnerabilities.md"
-  }
+    "narrative": "research/current-vulnerabilities.md",
+    "source_delta": "Reopened for the three backend backports: scoped ORM authorization, serializer field omission and permission/cache decorator order introduce no new native/subprocess/archive/TLS paths. Dependency/trust/parser inputs unchanged; new effective native inventory byte-identical and all209 package/version/type/severity/advisory tuples match prior scan. Existing conditional findings and incomplete call-graph scope remain; no suppression or deployment acceptance.",
+    "evidence_directory_basis": "relative to the operator-held qualification root",
+    "evidence_directory": "security-scan-3aa5f9a6b1fb-039df6/out"
+  },
+  "artifact_history": [
+    {
+      "date": "2026-11-15",
+      "image": "cb9d00572e28472032dc984a543902339ad82661e56859786791ec4e7b56ba70",
+      "raw_report_sha256": "723e810059ae4bec1fa16c31e72c6fe9447efe61aae72c43521f07915ffc42d6",
+      "summary": {
+        "raw_matches": 209,
+        "advisory_ids": 96,
+        "critical_matches": 0,
+        "high_matches": 59
+      }
+    }
+  ]
 }

@@ -10,18 +10,18 @@
     ]
   },
   "runtime": {
-    "status": "Scoped backend and JavaScript hardening qualification passed; deployment remains deferred and conditional native/operational limits retained",
+    "status": "Three upstream security backports plus prior hardening pass full API/HTTP/native/trust/source gates; VPS deployment remains deferred",
     "host": "qualified Debian host",
-    "image": "cb9d00572e28472032dc984a543902339ad82661e56859786791ec4e7b56ba70",
+    "image": "3aa5f9a6b1fb4bad4c9a25ad1accd34de1e99fd0c71e16d62b6bcb16b3c05b5c",
     "python": "3.12.16 built backend; separate historical3.13 lane retained",
     "isolation": "non-root 1000, keep-id, network none, read-only root/source/tool/wheels, cap-drop ALL, no-new-privileges, 2CPU/4GiB/256PIDs, no host home/credentials/engine/public ports",
     "limits": [
       "NoVPSdeployment or production-data testing",
       "S3/RabbitMQ/beat/browser journeys/finalJSruntimeimages/freshproductionrestore notqualified",
       "209raw native matches/96IDs,0Critical/59High; conditional preconditions reviewed with raw findings retained",
-      "ClamAVdb28179Nov10 five-daylag; independent binary rebuild/publisherattestation incomplete"
+      "ClamAVdb28179Nov10 five-daylag initially, six-daylag at backport intake; independent binary rebuild/publisherattestation incomplete"
     ],
-    "latest_backend_image": "cb9d00572e28472032dc984a543902339ad82661e56859786791ec4e7b56ba70",
+    "latest_backend_image": "3aa5f9a6b1fb4bad4c9a25ad1accd34de1e99fd0c71e16d62b6bcb16b3c05b5c",
     "historical_tool_image": "2704858657c97e141cb2934dc6893e46c1094503bd7890536ab6eda295265dd0"
   },
   "checks": [
@@ -257,13 +257,84 @@
       },
       "database": "Grypev6.1.10 built2026-11-15T06:19:39Z",
       "evidence": "records/native-findings.json"
+    },
+    {
+      "id": "plane-qualification-1016577864d1",
+      "status": "failed; corrected in subsequent backport run",
+      "image": "cb9d00572e28472032dc984a543902339ad82661e56859786791ec4e7b56ba70",
+      "scope": "Candidate source mounted in existing qualified image, no production use",
+      "results": {
+        "api_before_deliberate_interrupt": "8 fixture failures,137passed; interrupted failing suite to inspect errors",
+        "cause": "Release UserFactory assigned blank usernames, violating unique index with multiple fixture users",
+        "ruff": "One E501 in initial unformatted test snapshot; corrected with AST-preserving Ruff formatting",
+        "other_gates": "focused/trust/compression/secret/SBOM/exact Bandit review passed"
+      },
+      "resolution": "Unique factory usernames, existing Celery fixture imported explicitly, formatted tests; retained initial raw exits and logs"
+    },
+    {
+      "id": "plane-qualification-59a86f0d68ab:backport-gate",
+      "status": "passed",
+      "image": "3aa5f9a6b1fb4bad4c9a25ad1accd34de1e99fd0c71e16d62b6bcb16b3c05b5c",
+      "results": {
+        "backport_contract_tests": 29
+      },
+      "scope": "Actual PostgreSQL/Valkey fixture; intake role/creator/active/cross-workspace boundaries, provider token omission and persistence, affected cache mutators with positive controls; subset of full API suite"
+    },
+    {
+      "id": "plane-qualification-3293b54f91c9",
+      "status": "passed",
+      "image": "3aa5f9a6b1fb4bad4c9a25ad1accd34de1e99fd0c71e16d62b6bcb16b3c05b5c",
+      "results": {
+        "runtime_checks": 9,
+        "actual_http": "Intake member denial/creator+admin allowance; connected-account list/detail omit tokens and isolate other users; signed database sessions; real Valkey cache survives denied label/state writes and is removed on allowed writes; existing auth/HTML/CORS/parser/log-privacy controls pass"
+      },
+      "scope": "Actual production entrypoint /code in restricted non-root/readonly internal fixture; seeded sessions do not qualify browser sign-in"
+    },
+    {
+      "id": "backend-sca-3aa5f9a6b1fb",
+      "status": "scan completed; every raw match retained and source-delta applicability re-reviewed",
+      "image": "3aa5f9a6b1fb4bad4c9a25ad1accd34de1e99fd0c71e16d62b6bcb16b3c05b5c",
+      "results": {
+        "raw_matches": 209,
+        "advisory_ids": 96,
+        "critical_matches": 0,
+        "high_matches": 59,
+        "match_multiset_identical_to_previous_image": true,
+        "effective_native_inventory_identical": true
+      },
+      "database": "Grypev6.1.10 built2026-11-15T06:19:39Z",
+      "evidence": "records/native-findings.json"
+    },
+    {
+      "id": "plane-qualification-59a86f0d68ab",
+      "status": "passed",
+      "image": "3aa5f9a6b1fb4bad4c9a25ad1accd34de1e99fd0c71e16d62b6bcb16b3c05b5c",
+      "results": {
+        "full_api": 779,
+        "targeted_backports": 29,
+        "focused": 263,
+        "trust": 54,
+        "transport_compression_helpers": 86,
+        "failures_errors_skips": 0,
+        "bandit_raw_findings": 74,
+        "bandit_raw_exit": 1,
+        "exact_disposition_gate": "passed, no unexpected/stale dispositions",
+        "ruff": "passed",
+        "trivy": "passed with existing upstream misconfiguration findings retained"
+      },
+      "scope": "All migrations and complete source-bound API suite; targeted/focused subsets overlap full API. Non-root readonly internal PostgreSQL/Valkey fixtures; no production data or VPS use.",
+      "warnings": "375 full-suite warnings retained: test static-assets path, factory postgeneration and existing dependency/parser/timezone deprecations. Not treated as test failures."
     }
   ],
   "source_binding": {
-    "status": "all current executable sources/runtime manifests/locks/patches/trust inputs match final JavaScript-run snapshot",
-    "files_checked": 4719,
-    "snapshot": "plane-js-dd09dd066885",
-    "limits": "Later edits are documentation/results/notices only; published-input tool hash records are observational data."
+    "status": "Current executable/runtime/configuration/dependency inputs match the passing backport API-run snapshot;732 API build inputs match current image source; JavaScript sources/dependencies unchanged from recorded passing profile",
+    "snapshot": "plane-qualification-59a86f0d68ab",
+    "source_files_checked": 5358,
+    "mismatches": [],
+    "image_api_input_files_checked": 732,
+    "image_api_input_mismatches": 0,
+    "exclusions": "Markdown and records only; dependency/manifests/locks/patches/trust/script/runtime sources included",
+    "limits": "Later edits are Markdown/verification records only; worker/JavaScript execution was not repeated for the backend-only changes"
   },
   "limits": [
     "No absolute clean/security or deployment claim",
@@ -273,23 +344,28 @@
   ],
   "record_interpretation": "Checks are chronological evidence. Historical pending/failure notes describe those specific runs; current_result and the final run IDs supersede them without erasing failures.",
   "current_result": {
-    "status": "bounded hardening and regression gates passed; VPS deployment deferred",
-    "backend_image": "cb9d00572e28472032dc984a543902339ad82661e56859786791ec4e7b56ba70",
-    "api_run": "plane-qualification-b534d988b034",
-    "http_run": "plane-qualification-c35f57e3bca2",
+    "status": "Three upstream security backports and prior hardening qualified; normal source push authorized; VPS deployment deferred",
+    "backend_image": "3aa5f9a6b1fb4bad4c9a25ad1accd34de1e99fd0c71e16d62b6bcb16b3c05b5c",
+    "api_run": "plane-qualification-59a86f0d68ab",
+    "http_run": "plane-qualification-3293b54f91c9",
     "worker_run": "plane-qualification-6c156a58a5d2",
     "javascript_run": "plane-js-dd09dd066885",
     "native_matches": 209,
     "native_critical_matches": 0,
     "native_high_matches": 59,
-    "remaining_scope": "Conditional vendor/native risk; freshrestore/S3/RabbitMQ/beat/browser/finalJSimages/prodrollout notqualified; full maintenance implications inPATCHES/specs/research"
+    "remaining_scope": "Conditional native/vendor risk; other upstream development changes not merged. Fresh restore/S3/RabbitMQ/beat/browser/final JS images/production rollout remain unqualified. Prior worker/JS passes retained for unchanged closures; see PATCHES/specs/research.",
+    "full_api": 779,
+    "backport_tests": 29,
+    "focused_tests": 263,
+    "trust_tests": 54,
+    "transport_compression_helper_tests": 86
   },
   "final_review": {
-    "code_and_runtime_inputs": "4719 current source/manifest/lock/patch/trust files match the passing complete-JavaScript snapshot; finalbackendAPI/HTTP and priorworker identities explicitly recorded",
+    "code_and_runtime_inputs": "Historical pre-cleanup comparison:5358 non-Markdown/non-record source/configuration files matched passing backport API snapshot;732 API image inputs match checkout. Later privacy cleanup changes operator routing, qualification harness and lock comments only; no application/package payload changes. Native inventory and209matches remain qualified on the existing image.",
     "tools": "All four actual qualified Debian host tool binaries match screened intake SHA256",
-    "cleanup": "No remaining task-labelled Plane containers; exact temporary fixtures/networks removed; inputs/evidence/current review images retained",
+    "cleanup": "No remaining task-labelled Plane containers; exact fixture networks removed by owning wrappers. Superseded cccae60e2553 image removed under exclusive retention lock; current candidate, prior qualification/rollback image, inputs and evidence retained for review.",
     "whitespace": "Unified-diff context produced false positives; exact three patch-data files receive only format-specific whitespace attributes; all other whitespace gates remain active",
-    "publication": "Source push authorized 2026-11-16 to RaresKeY/plane-hardened:hardened; no PR/review/advisory/image publication or VPS deployment"
+    "publication": "Reviewed combined hardened source push authorized to RaresKeY/plane-hardened:hardened; normal fast-forward only. No PR/review/advisory/image publication or VPS deployment."
   },
   "source_publication": {
     "date": "2026-11-16",
@@ -321,6 +397,78 @@
     },
     "ci": "GitHub Actions disabled and confirmed before preview sync; upstream automatic build/publication workflows were not activated",
     "checks": "Publication changes only PATCHES.md, specs/upstream-maintenance.md and this verification record; JSON parses and whitespace check passes. Existing application qualification retained; no application tests repeated for documentation-only changes.",
-    "remaining": "Preview intake-authorization, provider-token serializer and permission/cache ordering fixes require applicability/backport review before inclusion in hardened; existing operational/native qualification limits remain."
+    "remaining": "Initial three-backport qualification gap resolved by upstream_security_backports; existing native and operational/deployment limits remain.",
+    "qualified_source_scope": "Rewritten source identifier preserves application inputs. Original whole-snapshot equality is historical; publication_privacy_cleanup records later orchestration and comment changes."
+  },
+  "upstream_security_backports": {
+    "date": "2026-11-16",
+    "release_base": "37a15d99231042b3ff5a4401fed479fdbec9effe",
+    "reviewed_preview": "258e03cbcf4db5cdb8c2708b8fa64391927c4e5e",
+    "selection": "Three security backports from196development commits; unrelated refactors, translations and dependency migrations excluded",
+    "upstream_commits": [
+      "69b1f23990d4b9ee293acb7020ba08d094abb0f2",
+      "72efad14a7e7d91d927c63c9f086a3f0d3fd96b6",
+      "258e03cbcf4db5cdb8c2708b8fa64391927c4e5e"
+    ],
+    "adaptations": "Release WorkspaceMember import, explicitly reused Celery fixture, state decorator context and unique test usernames; expanded contract/actual-HTTP/real-cache coverage; existing exact low-severity random-color disposition rehashed only after unchanged code/line review",
+    "dependencies": "No changes to package/Bun/Python locks, dependency payloads, trust policy, parser patches or build runtime",
+    "intake": "Reused exact scanned delta; separate backport-decision.json permits bounded execution only for three selected backend patches with existing qualified dependency closure. AV dbNov10 has six-day lag; whole preview remains reference-only.",
+    "image": "3aa5f9a6b1fb4bad4c9a25ad1accd34de1e99fd0c71e16d62b6bcb16b3c05b5c",
+    "api_build_input_files_match": 732,
+    "runtime_source_binding": {
+      "snapshot": "plane-qualification-59a86f0d68ab",
+      "source_files_checked": 5358,
+      "mismatches": [],
+      "image_api_input_files_checked": 732,
+      "image_api_input_mismatches": 0,
+      "exclusions": "Markdown and records only; dependency/manifests/locks/patches/trust/script/runtime sources included",
+      "scope_after_privacy_cleanup": "Historical complete-snapshot result; application bytes remain unchanged, operator routing/harness and lock provenance comments have subsequent scoped verification."
+    },
+    "status": "passed:779 full API including29 targeted contracts, actual production HTTP/session/cache controls, native/trust/transport and SAST/lint gates",
+    "publication": "Normal fast-forward source push of reviewed combined changes; no force push or VPS/image/advisory/PR publication"
+  },
+  "publication_privacy_cleanup": {
+    "date": "2026-11-16",
+    "authorization": "Operator requested sanitization of all fork-owned commits, amendment/history rewrite and explicit force-with-lease push",
+    "scope": "Three fork-owned commits; operator SSH alias/home paths, workstation username, local intake/research paths and infrastructure host inventory removed. Upstream history, application sources, dependency payloads and public certificate fixtures preserved.",
+    "operator_routing": "Four launchers require explicit validated local environment configuration; batch SSH, strict host checking, reviewed intake parent and exact dependency manifest gates remain. Routing tests and lint are included in the maintained qualification harness.",
+    "routing_tests": {
+      "run": "privacy-routing-7483a237fa48",
+      "tests": 14,
+      "failures": 0,
+      "errors": 0,
+      "skips": 0,
+      "lint": "Ruff E/F,120columns: passed for all nine staged launcher/configuration/harness modules",
+      "initial_lint": "Three overlength lines, then one remaining line; corrected before final passing run"
+    },
+    "actual_remote_tools": {
+      "run": "plane-qualification-d8839e7a73ec",
+      "tools": [
+        "Bun1.4.4",
+        "Trivy0.76.2",
+        "Syft1.57.1",
+        "Grype0.121.3"
+      ],
+      "exit_code": 0
+    },
+    "invariants": "For every rewritten commit: all apps/packages bytes unchanged; three Python locks retain identical non-comment payloads; other dependency/runtime/trust/parser inputs unchanged.",
+    "history_audit": {
+      "baseline_scan": "privacy-history-a38930b0a6bc",
+      "unique_blobs": 5222,
+      "commit_metadata_files": 4,
+      "method": "Pinned Trivy0.76.2 built-in secret rules, empty custom config and ignorefile, offline non-root readonly restricted container; hash-verified staged blobs; additional known-private-identifier/private-key checks",
+      "secret_findings": 0,
+      "private_identifier_hits": 0,
+      "scope": "Three fork-owned commits plus pinned release tree; inherited upstream branches and deeper upstream history are outside this repeated scan"
+    },
+    "ancestry": {
+      "reviewed_preview": "258e03cbcf4db5cdb8c2708b8fa64391927c4e5e",
+      "latest_preview_metadata": "4cc356b2d8287b50371fa52d2e668921bff8b9bf",
+      "commits_ahead_of_release_base": 200,
+      "new_commits_since_review": 4,
+      "decision": "Metadata check only; four new changes not acquired/reviewed or integrated. Three selected backports do not merge development ancestry."
+    },
+    "verification_scope": "Focused routing tests, actual remote tool startup, lint, history privacy/secret scan, whitespace/JSON and per-commit application/lock invariants.779 API and previous HTTP/worker/JS tests not repeated because their application/dependency inputs are unchanged.",
+    "limits": "Detection is not proof of every possible secret format. History rewriting cannot remove previously cloned or cached copies. Existing native findings and unqualified runtime/deployment coverage remain. VPS deployment stays deferred."
   }
 }

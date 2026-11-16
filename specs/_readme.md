@@ -1,6 +1,6 @@
 # Hardened Plane specs
 
-Base: upstream v1.4.3 commit `37a15d99231042b3ff5a4401fed479fdbec9effe`. The operator authorized review, source/dependency fixes and restricted tests on the qualified Debian host; VPS deployment is deferred. Upstream applications are web/admin/space/live and Django API/Celery, with PostgreSQL/cache/broker/S3/proxy dependencies.
+Base: upstream v1.4.3 commit `37a15d99231042b3ff5a4401fed479fdbec9effe`, with the three reviewed backend security backports listed in maintenance and PATCHES. The operator authorized review, source/dependency fixes and restricted qualified Debian host tests; VPS deployment is deferred. Upstream applications are web/admin/space/live and Django API/Celery, with PostgreSQL/cache/broker/S3/proxy dependencies.
 
 | Spec | Owning sources | Read when |
 |---|---|---|

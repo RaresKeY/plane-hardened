@@ -15,11 +15,13 @@ OUT = Path("/out")
 MARKER = "synthetic-secret-must-not-be-logged-6f72e1"
 
 
-def request(method, path, body=None, token=None):
+def request(method, path, body=None, token=None, *, cookie=None):
     connection = http.client.HTTPConnection("127.0.0.1", 8000, timeout=5)
     headers = {"Content-Type": "application/json"}
     if token:
         headers["X-Api-Key"] = token
+    if cookie:
+        headers["Cookie"] = cookie
     try:
         connection.request(method, path, body=json.dumps(body) if body is not None else None, headers=headers)
         response = connection.getresponse()
@@ -51,6 +53,102 @@ def cors_header(origin):
         return response.getheader("Access-Control-Allow-Origin")
     finally:
         connection.close()
+
+
+def security_backport_controls(owner, workspace, project, owner_token):
+    from django.conf import settings
+    from django.core.cache import cache
+    from plane.db.models import (
+        Account,
+        APIToken,
+        Intake,
+        IntakeIssue,
+        Issue,
+        ProjectMember,
+        State,
+        User,
+        WorkspaceMember,
+    )
+    from plane.db.models.session import SessionStore
+
+    member = User.objects.create(email="member@fixture.invalid", username="fixture-member")
+    WorkspaceMember.objects.create(workspace=workspace, member=member, role=15)
+    ProjectMember.objects.create(workspace=workspace, project=project, member=member, role=15)
+    member_token = APIToken.objects.create(user=member, label="member-fixture")
+
+    def session_cookie(user):
+        # Seed a real signed database session; requests still cross the production
+        # HTTP/session middleware. This does not qualify a browser sign-in flow.
+        session = SessionStore()
+        session["_auth_user_id"] = str(user.pk)
+        session["_auth_user_backend"] = "django.contrib.auth.backends.ModelBackend"
+        session["_auth_user_hash"] = user.get_session_auth_hash()
+        session.save()
+        return f"{settings.SESSION_COOKIE_NAME}={session.session_key}"
+
+    owner_cookie, member_cookie = session_cookie(owner), session_cookie(member)
+    account = Account.objects.create(
+        user=owner,
+        provider="github",
+        provider_account_id="runtime-account",
+        access_token=MARKER + "-provider",
+        refresh_token=MARKER + "-refresh",
+        id_token=MARKER + "-id",
+    )
+    for path in ("/api/users/me/accounts/", f"/api/users/me/accounts/{account.pk}/"):
+        code, data = request("GET", path, cookie=owner_cookie)
+        assert code == 200, (path, code, data)
+        rows = data if isinstance(data, list) else [data]
+        assert len(rows) == 1 and str(rows[0]["id"]) == str(account.pk)
+        assert not {"access_token", "refresh_token", "id_token"} & set(rows[0])
+        assert MARKER not in json.dumps(rows)
+    code, data = request("GET", "/api/users/me/accounts/", cookie=member_cookie)
+    assert code == 200 and data == [], (code, data)
+    account.refresh_from_db()
+    assert account.access_token == MARKER + "-provider"
+
+    project.intake_view = True
+    project.save(update_fields=["intake_view"])
+    intake = Intake.objects.create(name="Runtime intake", workspace=workspace, project=project, is_default=True)
+    State.objects.create(name="Triage", workspace=workspace, project=project, group="triage", default=False)
+    for creator in (owner, member):
+        issue = Issue(name="Original intake", workspace=workspace, project=project)
+        issue.save(created_by_id=creator.id)
+        IntakeIssue(workspace=workspace, project=project, intake=intake, issue=issue).save(created_by_id=creator.id)
+        path = f"/api/v1/workspaces/{workspace.slug}/projects/{project.id}/intake-issues/{issue.id}/"
+        body = {"issue": {"name": "Updated intake"}}
+        code, data = request("PATCH", path, body, member_token.token)
+        assert code == (403 if creator == owner else 200), (code, data)
+        issue.refresh_from_db()
+        assert issue.name == ("Original intake" if creator == owner else "Updated intake")
+        if creator == owner:
+            code, data = request("PATCH", path, body, owner_token.token)
+            assert code == 200, (code, data)
+
+    # Check actual shared Valkey contents, not only whether a mock was called.
+    for resource, key, payload, success in (
+        ("issue-labels", f"/api/workspaces/{workspace.slug}/labels/", {"name": "Runtime label"}, 201),
+        (
+            "states",
+            f"workspaces/{workspace.slug}/states/",
+            {"name": "Runtime state", "color": "#000000", "group": "started"},
+            200,
+        ),
+    ):
+        path = f"/api/workspaces/{workspace.slug}/projects/{project.id}/{resource}/"
+        cache.set(key, "preserve-on-denial", timeout=60)
+        code, data = request("POST", path, payload, cookie=member_cookie)
+        assert code == 403 and cache.get(key) == "preserve-on-denial", (code, data)
+        code, data = request("POST", path, payload, cookie=owner_cookie)
+        assert code == success and cache.get(key) is None, (code, data)
+    return [
+        member_token.token,
+        owner_cookie,
+        member_cookie,
+        account.access_token,
+        account.refresh_token,
+        account.id_token,
+    ]
 
 
 def main():
@@ -90,6 +188,7 @@ def main():
     other_token = APIToken.objects.create(user=outsider, label="outsider-fixture")
     log_path = OUT / "runtime-api.log"
     checks = []
+    backport_secrets = []
     with log_path.open("w") as log:
         server = subprocess.Popen(
             [sys.executable, "/opt/plane-hardening/backend_entrypoint.py", "api"],
@@ -128,6 +227,11 @@ def main():
             assert "onerror" not in issue.get("description_html", "")
             assert MARKER in issue.get("description_html", "")
             checks.append("HTTP issue create, HTML sanitization, ordinary content retention")
+            backport_secrets = security_backport_controls(owner, workspace, project, token)
+            checks.append("production HTTP intake creator/admin permissions and provider-token omission")
+            checks.append(
+                "production session-authenticated denied writes preserve real Valkey cache; admin writes invalidate it"
+            )
             assert request("GET", "/missing-" + MARKER + "?token=" + MARKER)[0] == 404
             assert request("GET", "/?token=" + MARKER)[0] == 200
             for payload in [
@@ -149,7 +253,7 @@ def main():
                     os.killpg(server.pid, signal.SIGKILL)
                 server.wait(timeout=5)
     output = log_path.read_text()
-    for secret in [MARKER, token.token, other_token.token]:
+    for secret in [MARKER, token.token, other_token.token, *backport_secrets]:
         assert secret not in output, "Synthetic secret leaked in production server logs"
     checks.append("production server logs omit token, query, body and arbitrary path markers")
     # Exercise the valid origin control in a fresh process reading actual settings,

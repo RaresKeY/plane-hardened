@@ -36,7 +36,7 @@
       "path": "apps/api/plane/app/views/issue/label.py",
       "line": 102,
       "code_sha256": "c137e2775397edb206a5049071229f6af790e3308fc04ab15c576efcd5943684",
-      "file_sha256": "cbd748770ae2659c56cd7c1099ba9c38d277e5f08fc95d063cbb03260661ea05",
+      "file_sha256": "3b0cb5e7450023102a47707f7365a913145dda7a78e2ccab84549f0e00941521",
       "disposition": "reviewed non-blocking in named context",
       "reason": "Non-security randomness for visual labels/icons, sort order, synthetic/demo records, estimate identifiers or display-name fallbacks; not an authentication secret, permission or cryptographic decision."
     },

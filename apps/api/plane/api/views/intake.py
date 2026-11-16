@@ -27,7 +27,7 @@ from plane.api.serializers import (
 )
 from plane.app.permissions import ProjectLitePermission
 from plane.bgtasks.issue_activities_task import issue_activity
-from plane.db.models import Intake, IntakeIssue, Issue, Project, ProjectMember, State, StateGroup
+from plane.db.models import Intake, IntakeIssue, Issue, Project, ProjectMember, State, StateGroup, WorkspaceMember
 from plane.utils.host import base_host
 from plane.utils.content_validator import validate_html_content
 from .base import BaseAPIView
@@ -343,6 +343,19 @@ class IntakeIssueDetailAPIEndpoint(BaseAPIView):
             return Response(
                 {"error": "You cannot edit intake work items"},
                 status=status.HTTP_400_BAD_REQUEST,
+            )
+
+        # Only the work item's creator, a project admin or a workspace admin can update it
+        if not (
+            project_member.role == 20
+            or Issue.objects.filter(pk=issue_id, project_id=project_id, created_by=request.user).exists()
+            or WorkspaceMember.objects.filter(
+                workspace__slug=slug, member=request.user, role=20, is_active=True
+            ).exists()
+        ):
+            return Response(
+                {"error": "Only admin or creator can update the work item"},
+                status=status.HTTP_403_FORBIDDEN,
             )
 
         # Get issue data
