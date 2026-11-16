@@ -289,6 +289,38 @@
     "tools": "All four actual qualified Debian host tool binaries match screened intake SHA256",
     "cleanup": "No remaining task-labelled Plane containers; exact temporary fixtures/networks removed; inputs/evidence/current review images retained",
     "whitespace": "Unified-diff context produced false positives; exact three patch-data files receive only format-specific whitespace attributes; all other whitespace gates remain active",
-    "publication": "Changes local; noPR/review/advisory/imagepush/VPSdeployment"
+    "publication": "Source push authorized 2026-11-16 to RaresKeY/plane-hardened:hardened; no PR/review/advisory/image publication or VPS deployment"
+  },
+  "source_publication": {
+    "date": "2026-11-16",
+    "repository": "https://github.com/RaresKeY/plane-hardened",
+    "branch": "hardened",
+    "qualified_source_commit": "20892210313805f0949fef6084080b9679ba8f9f",
+    "upstream_latest_release": "v1.4.3",
+    "upstream_master": "37a15d99231042b3ff5a4401fed479fdbec9effe",
+    "preview_sync": {
+      "previous": "290383d7f92fa8995ea2adbd12442220b3b9b525",
+      "current": "258e03cbcf4db5cdb8c2708b8fa64391927c4e5e",
+      "commits": 4,
+      "github_comparison": "identical; zero ahead/behind after fast-forward-only ref update",
+      "scope": "Separate upstream development reference; not merged into hardened or executed"
+    },
+    "intake": {
+      "clamav_exit": 0,
+      "infected_files": 0,
+      "engine": "1.5.4",
+      "database": 28179,
+      "database_date": "2026-11-10",
+      "static_raw_exit": 2,
+      "static_raw_leads": 2708,
+      "static_raw_gaps": 1,
+      "delta_review": "Ten changed files read; six delta leads are API-key test fixtures; sole gap is validated internal locales link with scanned target",
+      "decision": "reference only; no new execution qualification",
+      "receipt_directory": "operator-held external-intake receipts",
+      "limits": "Six-day AV signature lag; whole development tree/dependency closure not execution-qualified"
+    },
+    "ci": "GitHub Actions disabled and confirmed before preview sync; upstream automatic build/publication workflows were not activated",
+    "checks": "Publication changes only PATCHES.md, specs/upstream-maintenance.md and this verification record; JSON parses and whitespace check passes. Existing application qualification retained; no application tests repeated for documentation-only changes.",
+    "remaining": "Preview intake-authorization, provider-token serializer and permission/cache ordering fixes require applicability/backport review before inclusion in hardened; existing operational/native qualification limits remain."
   }
 }

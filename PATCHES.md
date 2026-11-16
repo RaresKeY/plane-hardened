@@ -1,6 +1,6 @@
 # Differences from upstream
 
-Base: makeplane/plane v1.4.3, commit `37a15d99231042b3ff5a4401fed479fdbec9effe`. Changes are maintained locally on `hardened`; no VPS deployment, PR, review or advisory publication is authorized by this qualification. `records/verification.json` binds results to exact sources/artifacts. Conditional findings and missing coverage remain visible.
+Base: makeplane/plane v1.4.3, commit `37a15d99231042b3ff5a4401fed479fdbec9effe`. Changes are maintained on `hardened` in RaresKeY/plane-hardened; source push was authorized on 16 November. No VPS deployment, image publication, PR, review or advisory publication is authorized by this qualification. Upstream development is synced separately on `preview`; its changes are not implicitly part of this release-based qualification. `records/verification.json` binds results to exact sources/artifacts. Conditional findings and missing coverage remain visible.
 
 | Maintained change / owning sources | Why / resulting behavior | Verification and maintenance cost |
 |---|---|---|
