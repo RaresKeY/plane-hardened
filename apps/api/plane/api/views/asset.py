@@ -12,6 +12,7 @@ from django.conf import settings
 # Third party imports
 from rest_framework import status
 from rest_framework.response import Response
+from rest_framework.exceptions import APIException
 from drf_spectacular.utils import OpenApiExample, OpenApiRequest
 
 # Module Imports
@@ -45,6 +46,7 @@ from plane.utils.openapi import (
     asset_docs,
 )
 from plane.utils.exception_logger import log_exception
+from plane.utils.asset_permissions import require_asset_access, identifier, project_role
 
 
 class UserAssetEndpoint(BaseAPIView):
@@ -210,6 +212,7 @@ class UserAssetEndpoint(BaseAPIView):
         """
         # get the asset id
         asset = FileAsset.objects.get(id=asset_id, user_id=request.user.id)
+        require_asset_access(request.user, asset, write=True)
         # get the storage metadata
         asset.is_uploaded = True
         # get the storage metadata
@@ -237,6 +240,7 @@ class UserAssetEndpoint(BaseAPIView):
         This performs a soft delete by marking the asset as deleted and updating the user's profile.
         """
         asset = FileAsset.objects.get(id=asset_id, user_id=request.user.id)
+        require_asset_access(request.user, asset, write=True)
         asset.is_deleted = True
         asset.deleted_at = timezone.now()
         # get the entity and save the asset id for the request field
@@ -366,6 +370,7 @@ class UserServerAssetEndpoint(BaseAPIView):
         """
         # get the asset id
         asset = FileAsset.objects.get(id=asset_id, user_id=request.user.id)
+        require_asset_access(request.user, asset, write=True)
         # get the storage metadata
         asset.is_uploaded = True
         # get the storage metadata
@@ -394,6 +399,7 @@ class UserServerAssetEndpoint(BaseAPIView):
         asset as deleted and updating the user's profile.
         """
         asset = FileAsset.objects.get(id=asset_id, user_id=request.user.id)
+        require_asset_access(request.user, asset, write=True)
         asset.is_deleted = True
         asset.deleted_at = timezone.now()
         # get the entity and save the asset id for the request field
@@ -436,6 +442,7 @@ class GenericAssetEndpoint(BaseAPIView):
 
             # Get the asset
             asset = FileAsset.objects.get(id=asset_id, workspace_id=workspace.id, is_deleted=False)
+            require_asset_access(request.user, asset)
 
             # Check if the asset exists and is uploaded
             if not asset.is_uploaded:
@@ -473,6 +480,8 @@ class GenericAssetEndpoint(BaseAPIView):
             return Response({"error": "Workspace not found"}, status=status.HTTP_404_NOT_FOUND)
         except FileAsset.DoesNotExist:
             return Response({"error": "Asset not found"}, status=status.HTTP_404_NOT_FOUND)
+        except APIException:
+            raise
         except Exception as e:
             log_exception(e)
             return Response(
@@ -541,6 +550,9 @@ class GenericAssetEndpoint(BaseAPIView):
 
         # Get the workspace
         workspace = Workspace.objects.get(slug=slug)
+        project_id = identifier(project_id)
+        if project_id is not None:
+            project_role(request.user, workspace.id, project_id)
 
         # asset key
         asset_key = f"{workspace.id}/{uuid.uuid4().hex}-{name}"
@@ -555,6 +567,7 @@ class GenericAssetEndpoint(BaseAPIView):
             ).first()
 
             if existing_asset:
+                require_asset_access(request.user, existing_asset)
                 return Response(
                     {
                         "message": "Asset with same external id and source already exists",
@@ -619,6 +632,7 @@ class GenericAssetEndpoint(BaseAPIView):
         """
         try:
             asset = FileAsset.objects.get(id=asset_id, workspace__slug=slug, is_deleted=False)
+            require_asset_access(request.user, asset, write=True)
 
             # Update is_uploaded status
             asset.is_uploaded = request.data.get("is_uploaded", asset.is_uploaded)

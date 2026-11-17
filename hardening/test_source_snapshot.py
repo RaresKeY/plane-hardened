@@ -37,6 +37,16 @@ def test_symlink_escape_rejected(tmp_path, via_parent):
             stage(repo, "/unused", ["ssh"])
 
 
+def test_parent_symlink_cannot_bypass_private_directory_exclusion(tmp_path):
+    private = tmp_path / ".local"
+    private.mkdir()
+    (private / "fixture.py").write_text("synthetic-private-input")
+    (tmp_path / "linked").symlink_to(private, target_is_directory=True)
+    with patch("source_snapshot.subprocess.check_output", return_value=b"linked/fixture.py\0"):
+        with pytest.raises(ValueError):
+            stage(tmp_path, "/unused", ["ssh"])
+
+
 @pytest.mark.parametrize("tamper", [False, True])
 def test_only_git_listed_bytes_are_transferred_and_remote_digest_is_checked(tmp_path, tamper):
     data = b'print("reviewed fixture")\n'

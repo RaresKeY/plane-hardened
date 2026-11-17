@@ -9,12 +9,12 @@ import hashlib
 import time
 
 
-def main(cfg):
+def main(cfg, role_fixture=None):
     root = pathlib.Path(cfg["root"])
     out = root / "runs" / cfg["id"]
     out.mkdir(parents=True, mode=0o700)
     source = root / "snapshots" / cfg["id"]
-    if cfg["lane"] in ("python", "database", "integration", "server", "worker"):
+    if cfg["lane"] in ("python", "database", "integration", "server", "worker", "roles"):
         links = {str(path.relative_to(source)): os.readlink(path) for path in source.rglob("*") if path.is_symlink()}
         assert links == {"packages/i18n/locales": "src/locales"}
         manifest = {
@@ -75,8 +75,8 @@ def main(cfg):
         "--volume",
         str(out) + ":/out:rw",
     ]
-    if cfg["lane"] in ("python", "database", "integration", "server", "worker"):
-        if cfg["lane"] in ("database", "integration", "server", "worker"):
+    if cfg["lane"] in ("python", "database", "integration", "server", "worker", "roles"):
+        if cfg["lane"] in ("database", "integration", "server", "worker", "roles"):
             command[command.index("--network=none")] = "--network=" + cfg["id"] + "-net"
             command += [
                 "--env",
@@ -107,7 +107,7 @@ def main(cfg):
     pg = None
     cache = None
     try:
-        if cfg["lane"] in ("database", "integration", "server", "worker"):
+        if cfg["lane"] in ("database", "integration", "server", "worker", "roles"):
             network = cfg["id"] + "-net"
             subprocess.run(
                 ["podman", "network", "create", "--internal", "--label", "io.rareskey.project=plane-hardened", network],
@@ -172,7 +172,7 @@ def main(cfg):
             network_info = json.loads(subprocess.check_output(["podman", "network", "inspect", network]))
             assert network_info[0]["internal"] is True
             (out / "network-isolation.json").write_text(json.dumps(network_info, indent=2))
-        if cfg["lane"] in ("integration", "server", "worker"):
+        if cfg["lane"] in ("integration", "server", "worker", "roles"):
             cache = cfg["id"] + "-cache"
             cache_command = [
                 "podman",
@@ -222,7 +222,7 @@ def main(cfg):
                 "PLANE_TEST_FULL_API=1",
             ]
             (out / "cache-isolation.json").write_bytes(subprocess.check_output(["podman", "inspect", cache]))
-        if cfg["lane"] in ("server", "worker"):
+        if cfg["lane"] in ("server", "worker", "roles"):
             command[-3:-3] = [
                 "--env",
                 "DATABASE_URL=postgresql://plane_fixture:isolated-synthetic-password@postgres:5432/plane",
@@ -238,13 +238,22 @@ def main(cfg):
                 "--env",
                 "AWS_EC2_METADATA_DISABLED=true",
             ]
+        if cfg["lane"] == "roles":
+            if role_fixture is None:
+                raise ValueError("Role fixture controller must be supplied by the owning launcher")
+            code = role_fixture(cfg, out, network)
+            (out / "run.json").write_text(json.dumps({
+                "id": cfg["id"], "lane": "roles", "exit_code": code, "image": cfg["image"]
+            }))
+            print(json.dumps({"run": cfg["id"], "exit_code": code, "evidence": str(out)}))
+            sys.exit(code)
         subprocess.run(command, check=True, capture_output=True)
         created = True
         info = json.loads(subprocess.check_output(["podman", "inspect", cfg["id"]]))[0]
         (out / "isolation.json").write_text(json.dumps(info, indent=2))
         host = info["HostConfig"]
         assert host["ReadonlyRootfs"] is True
-        if cfg["lane"] not in ("database", "integration", "server", "worker"):
+        if cfg["lane"] not in ("database", "integration", "server", "worker", "roles"):
             assert host["NetworkMode"] == "none"
         assert info["Config"]["User"] == "1000:1000"
         assert host["CapDrop"] and not host.get("CapAdd") and not host.get("PortBindings")

@@ -12,26 +12,14 @@ from bs4 import BeautifulSoup
 from django.conf import settings
 
 # Module imports
-from plane.db.models import FileAsset, Page, Issue
+from plane.db.models import FileAsset, Page, Issue, User
 from plane.utils.exception_logger import log_exception
+from plane.utils.asset_permissions import has_asset_access, target_fields
+from plane.utils.path_validator import sanitize_filename
+from rest_framework.exceptions import NotFound, PermissionDenied, ValidationError
 from plane.settings.storage import S3Storage
 from celery import shared_task
 from plane.utils.url import normalize_url_path
-
-
-def get_entity_id_field(entity_type, entity_id):
-    entity_mapping = {
-        FileAsset.EntityTypeContext.WORKSPACE_LOGO: {"workspace_id": entity_id},
-        FileAsset.EntityTypeContext.PROJECT_COVER: {"project_id": entity_id},
-        FileAsset.EntityTypeContext.USER_AVATAR: {"user_id": entity_id},
-        FileAsset.EntityTypeContext.USER_COVER: {"user_id": entity_id},
-        FileAsset.EntityTypeContext.ISSUE_ATTACHMENT: {"issue_id": entity_id},
-        FileAsset.EntityTypeContext.ISSUE_DESCRIPTION: {"issue_id": entity_id},
-        FileAsset.EntityTypeContext.PAGE_DESCRIPTION: {"page_id": entity_id},
-        FileAsset.EntityTypeContext.COMMENT_DESCRIPTION: {"comment_id": entity_id},
-        FileAsset.EntityTypeContext.DRAFT_ISSUE_DESCRIPTION: {"draft_issue_id": entity_id},
-    }
-    return entity_mapping.get(entity_type, {})
 
 
 def extract_asset_ids(html, tag):
@@ -59,7 +47,7 @@ def replace_asset_ids(html, tag, duplicated_assets):
 def update_description(entity, duplicated_assets, tag):
     updated_html = replace_asset_ids(entity.description_html, tag, duplicated_assets)
     entity.description_html = updated_html
-    entity.save()
+    entity.save(disable_auto_set_user=True)
     return updated_html
 
 
@@ -88,12 +76,30 @@ def sync_with_external_service(entity_name, description_html):
 def copy_assets(entity, entity_identifier, project_id, asset_ids, user_id):
     duplicated_assets = []
     workspace = entity.workspace
-    storage = S3Storage()
+    user = User.objects.filter(id=user_id, is_active=True).first()
+    if user is None:
+        return []
+    storage = None
     original_assets = FileAsset.objects.filter(workspace=workspace, project_id=project_id, id__in=asset_ids)
 
     for original_asset in original_assets:
-        destination_key = f"{workspace.id}/{uuid.uuid4().hex}-{original_asset.attributes.get('name')}"
-        duplicated_asset = FileAsset.objects.create(
+        # The job can run after membership/ownership changed, and editor HTML
+        # can contain another page's UUID. Reauthorize both sides at execution.
+        if not has_asset_access(user, original_asset):
+            continue
+        try:
+            fields = target_fields(user, workspace.id, original_asset.entity_type, entity_identifier, project_id)
+        except (NotFound, PermissionDenied, ValidationError):
+            continue
+        if storage is None:
+            storage = S3Storage(is_server=True)
+        name = sanitize_filename(original_asset.attributes.get("name")) or "unnamed"
+        destination_key = f"{workspace.id}/{uuid.uuid4().hex}-{name}"
+        # Failed copies must not create uploaded rows or replace document asset
+        # references. A successful object copy precedes each published row.
+        if storage.copy_object(original_asset.asset, destination_key) is None:
+            continue
+        duplicated_asset = FileAsset(
             attributes={
                 "name": original_asset.attributes.get("name"),
                 "type": original_asset.attributes.get("type"),
@@ -104,20 +110,17 @@ def copy_assets(entity, entity_identifier, project_id, asset_ids, user_id):
             workspace=workspace,
             created_by_id=user_id,
             entity_type=original_asset.entity_type,
-            project_id=project_id,
             storage_metadata=original_asset.storage_metadata,
-            **get_entity_id_field(original_asset.entity_type, entity_identifier),
+            is_uploaded=True,
+            **fields,
         )
-        storage.copy_object(original_asset.asset, destination_key)
+        duplicated_asset.save(created_by_id=user.id)
         duplicated_assets.append(
             {
                 "new_asset_id": str(duplicated_asset.id),
                 "old_asset_id": str(original_asset.id),
             }
         )
-    if duplicated_assets:
-        FileAsset.objects.filter(pk__in=[item["new_asset_id"] for item in duplicated_assets]).update(is_uploaded=True)
-
     return duplicated_assets
 
 
@@ -136,6 +139,13 @@ def copy_s3_objects_of_description_and_assets(entity_name, entity_identifier, pr
             raise ValueError(f"Unsupported entity_name: {entity_name}")
 
         entity = model_class.objects.get(id=entity_identifier)
+        user = User.objects.filter(id=user_id, is_active=True).first()
+        if user is None:
+            return []
+        target_kind = (FileAsset.EntityTypeContext.PAGE_DESCRIPTION if entity_name == "PAGE"
+                       else FileAsset.EntityTypeContext.ISSUE_DESCRIPTION)
+        target_fields(user, entity.workspace_id, target_kind, entity.id, project_id)
+        entity.updated_by = user
         asset_ids = extract_asset_ids(entity.description_html, "image-component")
 
         duplicated_assets = copy_assets(entity, entity_identifier, project_id, asset_ids, user_id)
@@ -147,7 +157,7 @@ def copy_s3_objects_of_description_and_assets(entity_name, entity_identifier, pr
         if external_data:
             entity.description_json = external_data.get("description_json")
             entity.description_binary = base64.b64decode(external_data.get("description_binary"))
-            entity.save()
+            entity.save(disable_auto_set_user=True)
 
         return
     except Exception as e:

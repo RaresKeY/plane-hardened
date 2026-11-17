@@ -60,7 +60,7 @@ def main():
         for mode in ("worker", "api"):
             log = (OUT / ("worker-" + mode + ".log")).open("w")
             child = subprocess.Popen(
-                [sys.executable, "/opt/plane-hardening/backend_entrypoint.py", mode],
+                [sys.executable, "/opt/plane-hardening/backend_entrypoint.py", f"./bin/docker-entrypoint-{mode}.sh"],
                 stdout=log,
                 stderr=subprocess.STDOUT,
                 start_new_session=True,
@@ -88,16 +88,21 @@ def main():
             assert getattr(row, field) is None
         assert row.query_params == ""
 
-        # Queue legacy and deliberately dirty current-schema payloads. Producer
-        # representations are masked as in the real middleware; no fixture secret is logged.
+        # Keep default wire representations: producer masking must not hide a
+        # consumer-side leak from legacy or independently queued dirty records.
         marker = "a" * 64
-        process_logs.apply_async(kwargs={"log_data": {"body": SECRET}}, argsrepr="()", kwargsrepr="[fixture metadata]")
+        process_logs.apply_async(kwargs={"log_data": {"body": SECRET}})
+        from uuid import uuid4
+
+        legacy = app.amqp.as_task_v1(str(uuid4()), process_logs.name, kwargs={"log_data": {"body": SECRET}})
+        with app.producer_or_acquire() as producer:
+            app.amqp.send_task_message(producer, process_logs.name, legacy)
         process_logs.apply_async(
             kwargs={
                 "audit_schema": AUDIT_SCHEMA,
                 "log_data": {
                     "token_identifier": marker,
-                    "path": "/api/fixture/",
+                    "path": "/api/" + SECRET + "?token=" + SECRET,
                     "method": "POST",
                     "response_code": 201,
                     "query_params": SECRET,
@@ -107,17 +112,19 @@ def main():
                     "user_agent": SECRET,
                 },
             },
-            argsrepr="()",
-            kwargsrepr="[fixture metadata]",
         )
         wait_for(lambda: APIActivityLog.objects.filter(token_identifier=marker).exists(), "Dirty payload not consumed")
         sanitized = APIActivityLog.objects.get(token_identifier=marker)
+        assert sanitized.path == "/[unresolved]"
         assert sanitized.query_params == "" and sanitized.headers is None and sanitized.body is None
         wait_for(
             lambda: "Discarded legacy API activity payload" in (OUT / "worker-worker.log").read_text(),
             "Legacy guard not run",
         )
         assert APIActivityLog.objects.count() == 2
+        from plane.utils.runtime_health import check_health
+
+        assert all(check_health(child.pid) for child in processes)
     finally:
         for child in processes:
             with suppress(ProcessLookupError):

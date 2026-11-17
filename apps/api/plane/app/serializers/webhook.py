@@ -32,8 +32,8 @@ class WebhookSerializer(DynamicBaseSerializer):
                 allowed_ips=settings.WEBHOOK_ALLOWED_IPS,
                 allowed_hosts=settings.WEBHOOK_ALLOWED_HOSTS,
             )
-        except ValueError as e:
-            logger.warning("Webhook URL validation failed for %s: %s", url, e)
+        except ValueError:
+            logger.warning("Webhook URL validation failed")
             raise serializers.ValidationError({"url": "Invalid or disallowed webhook URL."})
 
         hostname = (urlparse(url).hostname or "").rstrip(".").lower()

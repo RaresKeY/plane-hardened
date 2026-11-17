@@ -24,13 +24,15 @@ class TestCopyS3Objects:
         return project
 
     @pytest.fixture
-    def issue(self, workspace, project):
-        return Issue.objects.create(
+    def issue(self, workspace, project, create_user):
+        issue = Issue(
             name="Test Issue",
             workspace=workspace,
             project_id=project.id,
             description_html='<div><image-component src="35e8b958-6ee5-43ce-ae56-fb0e776f421e"></image-component><image-component src="97988198-274f-4dfe-aa7a-4c0ffc684214"></image-component></div>',  # noqa: E501
         )
+        issue.save(created_by_id=create_user.id)
+        return issue
 
     @pytest.fixture
     def file_asset(self, workspace, project, issue):

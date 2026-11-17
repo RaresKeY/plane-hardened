@@ -87,6 +87,21 @@ def security_backport_controls(owner, workspace, project, owner_token):
         return f"{settings.SESSION_COOKIE_NAME}={session.session_key}"
 
     owner_cookie, member_cookie = session_cookie(owner), session_cookie(member)
+    code, data = request("PATCH", "/api/users/me/email/",
+                         {"email": MARKER + "@fixture.invalid", "code": "123456"}, cookie=owner_cookie)
+    assert code == 400 and data == {"error": "Verification code has expired or is invalid"}
+    code, data = request("POST", f"/api/workspaces/{workspace.slug}/webhooks/",
+                         {"url": "https://127.0.0.2/" + MARKER + "?token=" + MARKER}, cookie=owner_cookie)
+    assert code == 400 and "url" in data
+    original_zone = owner.user_timezone
+    try:
+        # Persist a synthetic malformed profile value so a real authenticated
+        # request reaches the production exception path, without replacing it.
+        User.objects.filter(pk=owner.pk).update(user_timezone=MARKER)
+        code, data = request("GET", "/api/users/me/?probe=" + MARKER, cookie=owner_cookie)
+        assert code == 400 and data == {"error": "The required key does not exist."}
+    finally:
+        User.objects.filter(pk=owner.pk).update(user_timezone=original_zone)
     account = Account.objects.create(
         user=owner,
         provider="github",

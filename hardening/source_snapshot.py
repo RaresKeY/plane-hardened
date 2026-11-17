@@ -14,6 +14,24 @@ import tempfile
 REVIEWED_SYMLINKS = {"packages/i18n/locales": "src/locales"}
 
 
+def source_name(name):
+    relative = Path(name)
+    if (relative.is_absolute() or ".." in relative.parts or not relative.parts
+            or relative.parts[0] in (".git", ".local")):
+        raise ValueError("Unsafe source snapshot path")
+    if relative.name == ".env" or relative.name.startswith(".env.") and not relative.name.endswith(".example"):
+        raise ValueError("Private environment file must not enter source inputs")
+    return relative
+
+
+def source_path(repo, relative):
+    path = repo / relative
+    if (path.is_symlink() or any((repo / parent).is_symlink() for parent in relative.parents)
+            or not path.resolve().is_relative_to(repo.resolve())):
+        raise ValueError("Review source symlink before qualification or image inclusion")
+    return path
+
+
 def stage(repo, destination, ssh):
     names = (
         subprocess.check_output(["git", "ls-files", "-z", "--cached", "--others", "--exclude-standard"], cwd=repo)
@@ -25,15 +43,7 @@ def stage(repo, destination, ssh):
     with tempfile.TemporaryFile() as archive:
         with tarfile.open(fileobj=archive, mode="w") as output:
             for name in sorted(set(filter(None, names))):
-                relative = Path(name)
-                if relative.is_absolute() or ".." in relative.parts or relative.parts[0] in (".git", ".local"):
-                    raise ValueError("Unsafe source snapshot path")
-                if (
-                    relative.name == ".env"
-                    or relative.name.startswith(".env.")
-                    and not relative.name.endswith(".example")
-                ):
-                    raise ValueError("Private environment file must not enter source snapshot")
+                relative = source_name(name)
                 path = repo / relative
                 if path.is_symlink():
                     link = os.readlink(path)
@@ -46,8 +56,7 @@ def stage(repo, destination, ssh):
                     output.addfile(info)
                     manifest[name] = hashlib.sha256(("SYMLINK:" + link).encode()).hexdigest()
                     continue
-                if not path.resolve().is_relative_to(repo.resolve()):
-                    raise ValueError("Source path resolves outside the owning checkout")
+                path = source_path(repo, relative)
                 if not path.is_file():
                     continue
                 if path.stat().st_size > 100 * 1024**2:

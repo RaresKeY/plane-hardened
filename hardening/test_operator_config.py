@@ -94,6 +94,23 @@ class OperatorConfigTests(unittest.TestCase):
                                         env={"PATH": os.defpath}, capture_output=True, timeout=10)
                 self.assertEqual(result.returncode, 0, result.stderr.decode())
 
+    def test_role_lane_binds_its_controller_and_source_snapshot(self):
+        with patch.dict(os.environ, PROFILE, clear=True), patch.object(
+                sys, "argv", ["run_restricted.py", "roles", "--backend-image", "a" * 64]), \
+                patch.object(run_restricted, "stage", return_value="reviewed-source") as stage, \
+                patch.object(run_restricted.subprocess, "run") as run:
+            run.return_value.returncode = 0
+            self.assertEqual(run_restricted.main(), 0)
+            program = run.call_args.kwargs["input"]
+        stage.assert_called_once()
+        compile(program, "roles:remote", "exec")
+        tree = ast.parse(program)
+        config = ast.literal_eval(tree.body[-1].value.args[0])
+        self.assertEqual(config["source_digest"], "reviewed-source")
+        self.assertEqual(tree.body[-1].value.args[1].id, "run_role_fixture")
+        self.assertTrue(any(isinstance(node, ast.FunctionDef) and node.name == "run_role_fixture"
+                            for node in tree.body))
+
     def test_all_launchers_fail_closed_without_profile(self):
         arguments = (("--wheels", "/absent", "--manifest", "/absent", "--zlib-deb", "/absent"),
                      ("tools",), ("all", "--dependencies", "/absent", "--manifest", "/absent", "--image", "a" * 64),

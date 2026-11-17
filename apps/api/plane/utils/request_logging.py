@@ -4,12 +4,31 @@
 """Bounded metadata shared by request logs and the asynchronous audit sink."""
 
 import ipaddress
+from functools import lru_cache
 import re
 
 
 AUDIT_SCHEMA = 1
 METHODS = frozenset({"GET", "HEAD", "POST", "PUT", "PATCH", "DELETE", "OPTIONS", "TRACE", "CONNECT"})
 UNRESOLVED_ROUTE = "/[unresolved]"
+
+
+@lru_cache(maxsize=8)
+def configured_routes(urlconf):
+    from django.urls import URLResolver, get_resolver
+
+    def labels(patterns, prefix=""):
+        for pattern in patterns:
+            child = str(pattern.pattern)
+            # Django removes a child's leading regex anchor when joining an
+            # include prefix; this must match ResolverMatch.route exactly.
+            route = prefix + child.removeprefix("^") if prefix else child
+            if isinstance(pattern, URLResolver):
+                yield from labels(pattern.url_patterns, route)
+            elif len(route) <= 254 and "\n" not in route and "\r" not in route:
+                yield "/" + route.lstrip("/")
+
+    return frozenset(labels(get_resolver(urlconf).url_patterns)) | {UNRESOLVED_ROUTE}
 
 
 def safe_route(request):
@@ -48,6 +67,11 @@ def activity_metadata(data):
         return None
     if type(status) is not int or not 100 <= status <= 599:
         return None
+    from django.conf import settings
+
+    # Queue metadata is not a trusted resolver result. Unknown/raw URLs must
+    # not reintroduce secrets through a path, query or converter label.
+    route = route if route in configured_routes(settings.ROOT_URLCONF) else UNRESOLVED_ROUTE
     address = safe_ip(data.get("ip_address"))
     return {
         "token_identifier": token,

@@ -36,7 +36,7 @@ def run(command, log, name=None):
 def container(tool,args,mounts,environment=None):
  name='plane-qualification-scan-'+uuid.uuid4().hex[:10]
  cmd=['podman','run','--rm','--name',name,'--label','io.rareskey.project=plane-hardened',
-      '--label','io.rareskey.retention=ephemeral','--network=none','--read-only',
+      '--label','io.rareskey.retention=ephemeral','--network=none','--read-only','--no-healthcheck',
       '--userns=keep-id:uid=1000,gid=1000','--user=1000:1000','--cap-drop=ALL',
       '--security-opt=no-new-privileges','--memory=3g','--cpus=1','--pids-limit=128',
       '--tmpfs','/tmp:rw,nosuid,nodev,size=512m','--env','HOME=/tmp']

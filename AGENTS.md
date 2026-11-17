@@ -6,6 +6,8 @@
 - The review environment remains inert. Candidate execution uses the owning rootless restricted launcher: no host home/credentials/SSH or engine sockets, privilege escalation or public ports; default-deny egress; bounded resources and exact task-owned cleanup.
 - Never invoke Node/npm/npx/pnpm/yarn or package executors. Prefer Deno; use Bun only for repository compatibility, frozen dependencies and reviewed lifecycle scripts. The original commands below are upstream reference, superseded by these rules.
 - Preserve upstream license/copyright; provenance belongs in `vendored/THIRD_PARTY_NOTICES.md`. Test changed and related paths with positive controls. Report failures/skips, scanner freshness/coverage and maintenance risks; no broad ignores or absolute-security claims.
+- Finish qualification with image cleanup: retain the current qualified candidate and an explicitly required rollback only; remove superseded backend images and discarded builder stages by exact ID after checking ongoing runs and deployment references. Reusing a tag and setting ephemeral labels do not remove older images. Preserve manifests, logs and security evidence.
+- Builds hold the shared Podman retention lock and label intermediates ephemeral. Cleanup takes its exclusive lock, rechecks container/build-container references and protected image ancestry, and uses non-forced exact removals. Preserve shared bases and unrelated workloads; never use blanket image/system/volume pruning or reset. Record removals, reclaimed space and retained exceptions in the existing verification record. See `specs/testing.md`.
 
 # Upstream development guide (reference)
 

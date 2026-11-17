@@ -1,13 +1,13 @@
 {
   "schema": 1,
-  "date": "2026-11-16",
-  "image": "3aa5f9a6b1fb4bad4c9a25ad1accd34de1e99fd0c71e16d62b6bcb16b3c05b5c",
+  "date": "2026-11-17",
+  "image": "8e0c7832768c647a5e5a7fd8e0cc907bbff312d9ef570c668622ad2f30727890",
   "scanner": {
     "name": "Grype",
     "version": "0.121.3",
     "database_built": "2026-11-15T06:19:39Z",
     "database_archive_sha256": "96ada30f3287fd04be595a8f419df98efdf19955e7bfa28eae80ef7c5fe27eb7",
-    "raw_report_sha256": "999f9dc890bbbd8a877d72c379f839f328140d674d620354cbccec9f3f7f50a0"
+    "raw_report_sha256": "3906a3cff45ee4bf788b2646dd3c78b47ea5e1dc1ebbdad69d2671835e6aaa81"
   },
   "summary": {
     "raw_matches": 209,
@@ -3366,21 +3366,65 @@
     }
   ],
   "applicability_review": {
-    "date": "2026-11-16 UTC",
+    "date": "2026-11-17 UTC",
     "review_by": "2026-11-29",
     "reopen_on": "any source/architecture/image/feature/configuration/isolation/dependency change",
     "scope": "Conditional reachability/component review; all209raw matches retained; no suppression or deployment acceptance",
     "inventory_sha256": "b7cfbb00238ea51c1696f66325eaef35faa45f8dede333faa0efedcd399e9224",
     "narrative": "research/current-vulnerabilities.md",
-    "source_delta": "Reopened for the three backend backports: scoped ORM authorization, serializer field omission and permission/cache decorator order introduce no new native/subprocess/archive/TLS paths. Dependency/trust/parser inputs unchanged; new effective native inventory byte-identical and all209 package/version/type/severity/advisory tuples match prior scan. Existing conditional findings and incomplete call-graph scope remain; no suppression or deployment acceptance.",
+    "source_delta": "Reopened for asset V2 authorization and copy/upload/bulk source/target validation. No native/dependency/trust/codec input change. Async document copies repeat source/target authorization at execution time and sanitize destination keys. Storage construction follows authorization, and remote copies retain internal routing and successful-copy-before-uploaded-row publication. Fresh exact-image native inventory and all209 package/version/type/severity/advisory tuples match the previous artifact. Conditional native reachability and incomplete all-extension call-graph proof remain; no new suppression, current-intelligence or deployment acceptance claim.",
     "evidence_directory_basis": "relative to the operator-held qualification root",
-    "evidence_directory": "security-scan-3aa5f9a6b1fb-039df6/out"
+    "evidence_directory": "security-scan-8e0c7832768c-68ca54/out"
   },
   "artifact_history": [
     {
       "date": "2026-11-15",
       "image": "cb9d00572e28472032dc984a543902339ad82661e56859786791ec4e7b56ba70",
       "raw_report_sha256": "723e810059ae4bec1fa16c31e72c6fe9447efe61aae72c43521f07915ffc42d6",
+      "summary": {
+        "raw_matches": 209,
+        "advisory_ids": 96,
+        "critical_matches": 0,
+        "high_matches": 59
+      }
+    },
+    {
+      "date": "2026-11-16",
+      "image": "3aa5f9a6b1fb4bad4c9a25ad1accd34de1e99fd0c71e16d62b6bcb16b3c05b5c",
+      "raw_report_sha256": "999f9dc890bbbd8a877d72c379f839f328140d674d620354cbccec9f3f7f50a0",
+      "summary": {
+        "raw_matches": 209,
+        "advisory_ids": 96,
+        "critical_matches": 0,
+        "high_matches": 59
+      }
+    },
+    {
+      "date": "2026-11-16",
+      "image": "72fb9377ae352adbb0125bf04f5fc87d15080b9a276971296b086befeec0c29a",
+      "raw_report_sha256": "3ac1cd87353f9354a60a2246111cd8f6cc71aba3b91fe35edd731492601beaf2",
+      "summary": {
+        "raw_matches": 209,
+        "advisory_ids": 96,
+        "critical_matches": 0,
+        "high_matches": 59
+      }
+    },
+    {
+      "date": "2026-11-16",
+      "image": "8ac98fa693559b6a26a8b1d8756c208feaf3237ab8eb04999e2bcedeb63b2cfd",
+      "raw_report_sha256": "29bf792b9ee34d1ade887787523db0d051f7a54efd35342e77c1674f02abafc9",
+      "summary": {
+        "raw_matches": 209,
+        "advisory_ids": 96,
+        "critical_matches": 0,
+        "high_matches": 59
+      }
+    },
+    {
+      "date": "2026-11-17",
+      "image": "a91f5a6fe77b0b65e1add34ccf084c8ce85b213c60f797bf36c81bb8f8f97e2e",
+      "raw_report_sha256": "5ebd40cea6dfe50a13f9067180c75d281f817d4830535e5632b1b14ebf61fcc8",
       "summary": {
         "raw_matches": 209,
         "advisory_ids": 96,

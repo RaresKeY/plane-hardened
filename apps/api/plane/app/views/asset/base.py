@@ -13,6 +13,7 @@ from ..base import BaseAPIView, BaseViewSet
 from plane.app.permissions import WorkspaceMemberPermission
 from plane.db.models import FileAsset, Workspace
 from plane.app.serializers import FileAssetSerializer
+from plane.utils.asset_permissions import require_asset_access
 
 
 class FileAssetEndpoint(BaseAPIView):
@@ -25,8 +26,10 @@ class FileAssetEndpoint(BaseAPIView):
 
     def get(self, request, workspace_id, asset_key):
         asset_key = str(workspace_id) + "/" + asset_key
-        files = FileAsset.objects.filter(asset=asset_key)
-        if files.exists():
+        files = list(FileAsset.objects.filter(asset=asset_key, workspace_id=workspace_id))
+        for asset in files:
+            require_asset_access(request.user, asset)
+        if files:
             serializer = FileAssetSerializer(files, context={"request": request}, many=True)
             return Response({"data": serializer.data, "status": True}, status=status.HTTP_200_OK)
         else:
@@ -41,13 +44,22 @@ class FileAssetEndpoint(BaseAPIView):
         workspace = Workspace.objects.get(slug=slug)
         serializer = FileAssetSerializer(data=request.data)
         if serializer.is_valid():
+            # Legacy multipart uploads do not enforce V2 image MIME policy.
+            # Never let them manufacture a publicly served static asset type.
+            if serializer.validated_data.get("entity_type") not in (None, ""):
+                return Response({"error": "Use asset V2 upload for typed assets."}, status=status.HTTP_400_BAD_REQUEST)
+            candidate = FileAsset(**serializer.validated_data)
+            candidate.workspace = workspace
+            candidate.created_by = request.user
+            require_asset_access(request.user, candidate, write=True)
             serializer.save(workspace_id=workspace.id)
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     def delete(self, request, workspace_id, asset_key):
         asset_key = str(workspace_id) + "/" + asset_key
-        file_asset = FileAsset.objects.get(asset=asset_key)
+        file_asset = FileAsset.objects.get(asset=asset_key, workspace_id=workspace_id)
+        require_asset_access(request.user, file_asset, write=True)
         file_asset.is_deleted = True
         file_asset.save(update_fields=["is_deleted"])
         return Response(status=status.HTTP_204_NO_CONTENT)
@@ -58,7 +70,8 @@ class FileAssetViewSet(BaseViewSet):
 
     def restore(self, request, workspace_id, asset_key):
         asset_key = str(workspace_id) + "/" + asset_key
-        file_asset = FileAsset.objects.get(asset=asset_key)
+        file_asset = FileAsset.objects.get(asset=asset_key, workspace_id=workspace_id)
+        require_asset_access(request.user, file_asset, write=True)
         file_asset.is_deleted = False
         file_asset.save(update_fields=["is_deleted"])
         return Response(status=status.HTTP_204_NO_CONTENT)
@@ -68,9 +81,11 @@ class UserAssetsEndpoint(BaseAPIView):
     parser_classes = (MultiPartParser, FormParser)
 
     def get(self, request, asset_key):
-        files = FileAsset.objects.filter(asset=asset_key, created_by=request.user)
-        if files.exists():
-            serializer = FileAssetSerializer(files, context={"request": request})
+        files = list(FileAsset.objects.filter(asset=asset_key, created_by=request.user))
+        for asset in files:
+            require_asset_access(request.user, asset)
+        if files:
+            serializer = FileAssetSerializer(files, context={"request": request}, many=True)
             return Response({"data": serializer.data, "status": True}, status=status.HTTP_200_OK)
         else:
             return Response(
@@ -81,12 +96,20 @@ class UserAssetsEndpoint(BaseAPIView):
     def post(self, request):
         serializer = FileAssetSerializer(data=request.data)
         if serializer.is_valid():
+            # Legacy multipart uploads do not enforce V2 image MIME policy.
+            # Never let them manufacture a publicly served static asset type.
+            if serializer.validated_data.get("entity_type") not in (None, ""):
+                return Response({"error": "Use asset V2 upload for typed assets."}, status=status.HTTP_400_BAD_REQUEST)
+            candidate = FileAsset(**serializer.validated_data)
+            candidate.created_by = request.user
+            require_asset_access(request.user, candidate, write=True)
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     def delete(self, request, asset_key):
         file_asset = FileAsset.objects.get(asset=asset_key, created_by=request.user)
+        require_asset_access(request.user, file_asset, write=True)
         file_asset.is_deleted = True
         file_asset.save(update_fields=["is_deleted"])
         return Response(status=status.HTTP_204_NO_CONTENT)

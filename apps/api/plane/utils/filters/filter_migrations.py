@@ -51,8 +51,8 @@ def migrate_single_model_filters(
                 record.rich_filters = rich_filters
                 updated_records.append(record)
 
-        except Exception as e:
-            logger.warning(f"Failed to convert filters for {model_name} ID {record.id}: {str(e)}")
+        except Exception:
+            logger.warning(f"Failed to convert filters for {model_name} ID {record.id}")
             conversion_errors += 1
             continue
 
@@ -93,8 +93,8 @@ def migrate_models_filters_to_rich_filters(
             total_updated += updated_count
             total_errors += error_count
 
-        except Exception as e:
-            logger.error(f"Failed to migrate {model_name}: {str(e)}")
+        except Exception:
+            logger.error(f"Failed to migrate {model_name}")
             results[model_name] = (0, 1)
             total_errors += 1
             continue
@@ -128,8 +128,8 @@ def clear_models_rich_filters(models_to_clear: Dict[str, Any]) -> Dict[str, int]
             total_cleared += updated_count
             logger.info(f"Cleared rich_filters for {updated_count} {model_name} records")
 
-        except Exception as e:
-            logger.error(f"Failed to clear rich_filters for {model_name}: {str(e)}")
+        except Exception:
+            logger.error(f"Failed to clear rich_filters for {model_name}")
             results[model_name] = 0
             continue
 

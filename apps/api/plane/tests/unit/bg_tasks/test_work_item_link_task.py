@@ -18,6 +18,7 @@ def _make_response(status_code=200, headers=None, is_redirect=False, content=b""
     resp.is_redirect = is_redirect
     resp.headers = headers or {}
     resp.content = content
+    resp.iter_content.side_effect = lambda **_kwargs: iter([content])
     return resp
 
 

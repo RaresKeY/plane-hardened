@@ -5,7 +5,7 @@ Base: upstream v1.4.3 commit `37a15d99231042b3ff5a4401fed479fdbec9effe`, with th
 | Spec | Owning sources | Read when |
 |---|---|---|
 | [Maintenance](upstream-maintenance.md) | Git, `PATCHES.md`, provenance | Updating upstream or assessing fork differences |
-| [Security](security-policy.md) | Middleware/tasks, dependencies, hardening tools | Changing security behavior, trust, dependency or finding disposition |
+| [Security](security-policy.md) | Middleware/tasks/assets, shared authorization, dependencies, hardening tools | Changing security behavior, trust, dependency or finding disposition |
 | [Testing](testing.md) | Hardening runner, application tests, verification | Running checks, operating restricted tests or assessing evidence |
 
 [Design](../design/security-hardening.md) owns desired work; [verification](../records/verification.json) owns actual results; [research](../research/current-vulnerabilities.md) owns the attributed project snapshot.

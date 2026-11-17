@@ -10,18 +10,18 @@
     ]
   },
   "runtime": {
-    "status": "Three upstream security backports plus prior hardening pass full API/HTTP/native/trust/source gates; VPS deployment remains deferred",
+    "status": "Reviewed asset V2 authorization, copy-target and bulk-association defects corrected; final-image full API, HTTP, worker, scheduler-role and exact static gates pass. No remaining reproduced defects in these reviewed changes. Native findings and release gates remain open.",
     "host": "qualified Debian host",
-    "image": "3aa5f9a6b1fb4bad4c9a25ad1accd34de1e99fd0c71e16d62b6bcb16b3c05b5c",
+    "image": "8e0c7832768c647a5e5a7fd8e0cc907bbff312d9ef570c668622ad2f30727890",
     "python": "3.12.16 built backend; separate historical3.13 lane retained",
-    "isolation": "non-root 1000, keep-id, network none, read-only root/source/tool/wheels, cap-drop ALL, no-new-privileges, 2CPU/4GiB/256PIDs, no host home/credentials/engine/public ports",
+    "isolation": "Non-root UID1000/keep-id, readonly root/source/tools/wheels, cap-drop ALL, no-new-privileges, bounded CPU/memory/PIDs/time; network none or inspected internal PostgreSQL/Valkey fixtures; no host home/credentials/engine sockets/public ports",
     "limits": [
       "NoVPSdeployment or production-data testing",
-      "S3/RabbitMQ/beat/browser journeys/finalJSruntimeimages/freshproductionrestore notqualified",
+      "Fresh production restore/rollback, S3/RabbitMQ, representative production periodic jobs, browser journeys, final JS images and exact production assembly not qualified",
       "209raw native matches/96IDs,0Critical/59High; conditional preconditions reviewed with raw findings retained",
-      "ClamAVdb28179Nov10 five-daylag initially, six-daylag at backport intake; independent binary rebuild/publisherattestation incomplete"
+      "ClamAV signatures2026-11-10 are seven days old and qualified Grype data2026-11-15 is two days old at this review; no refresh or new acquisition. Independent binary rebuild/publisher attestation and all-extension call-graph proof remain incomplete."
     ],
-    "latest_backend_image": "3aa5f9a6b1fb4bad4c9a25ad1accd34de1e99fd0c71e16d62b6bcb16b3c05b5c",
+    "latest_backend_image": "8e0c7832768c647a5e5a7fd8e0cc907bbff312d9ef570c668622ad2f30727890",
     "historical_tool_image": "2704858657c97e141cb2934dc6893e46c1094503bd7890536ab6eda295265dd0"
   },
   "checks": [
@@ -324,48 +324,142 @@
       },
       "scope": "All migrations and complete source-bound API suite; targeted/focused subsets overlap full API. Non-root readonly internal PostgreSQL/Valkey fixtures; no production data or VPS use.",
       "warnings": "375 full-suite warnings retained: test static-assets path, factory postgeneration and existing dependency/parser/timezone deprecations. Not treated as test failures."
+    },
+    {
+      "id": "plane-qualification-8994a30f297f",
+      "status": "passed",
+      "image": "a91f5a6fe77b0b65e1add34ccf084c8ce85b213c60f797bf36c81bb8f8f97e2e",
+      "results": {
+        "full_api": 919,
+        "focused_overlapping": 403,
+        "targeted_backports_overlapping": 29,
+        "trust": 54,
+        "transport_compression_helpers": 103,
+        "operator_routing": 15,
+        "failures_errors_skips": 0,
+        "bandit_raw_exit": 1,
+        "exact_disposition_gate": "passed"
+      },
+      "scope": "Final-image full source-bound suite and real fixture migrations; detailed HTTP/worker/role/scanner/cleanup evidence owned by review_pass3_qualification"
+    },
+    {
+      "id": "plane-qualification-0f18236aa5b7",
+      "status": "passed",
+      "image": "8e0c7832768c647a5e5a7fd8e0cc907bbff312d9ef570c668622ad2f30727890",
+      "results": {
+        "full_api": 1080,
+        "focused_overlapping": 564,
+        "targeted_backports_overlapping": 29,
+        "trust": 54,
+        "transport_compression_helpers": 103,
+        "operator_routing": 15,
+        "failures_errors_skips": 0,
+        "bandit_raw_exit": 1,
+        "exact_disposition_gate": "passed"
+      },
+      "scope": "Exact final-image source-bound suite/migrations; detailed service/scanner/cleanup evidence in review_pass4_qualification"
     }
   ],
   "source_binding": {
-    "status": "Current executable/runtime/configuration/dependency inputs match the passing backport API-run snapshot;732 API build inputs match current image source; JavaScript sources/dependencies unchanged from recorded passing profile",
-    "snapshot": "plane-qualification-59a86f0d68ab",
-    "source_files_checked": 5358,
-    "mismatches": [],
-    "image_api_input_files_checked": 732,
-    "image_api_input_mismatches": 0,
-    "exclusions": "Markdown and records only; dependency/manifests/locks/patches/trust/script/runtime sources included",
-    "limits": "Later edits are Markdown/verification records only; worker/JavaScript execution was not repeated for the backend-only changes"
+    "status": "Exact final image/build/API snapshot and executable configuration/dependency bytes match; later changes only records and documentation",
+    "snapshot": "plane-qualification-0f18236aa5b7",
+    "snapshot_files": 5420,
+    "executable_configuration_dependency_files": 5376,
+    "current_non_documentation_non_record_mismatches": 0,
+    "actual_image_api_files": 745,
+    "image_build_and_checkout_mismatches": 0,
+    "entrypoint_and_copied_health_helper": "All six entrypoint/health/runtime/parser/trust/policy copies match reviewed build inputs",
+    "full_api_binding": "All1080 full API cases execute in final8e0c7832768c with byte-matching API snapshot, including161 new asset authorization cases",
+    "changed_code_sha256": {
+      "apps/api/plane/api/views/asset.py": "ac314dd7e0d148a1fbedc899956d88fd6350e7734a96a0e1b3c30bb3afba6f89",
+      "apps/api/plane/api/views/base.py": "36af103b66602f51eabd93145142f64467c03f50b7694bcb5872ce135b344216",
+      "apps/api/plane/app/serializers/webhook.py": "0b186689671974a495219460dd3b752bb95061438174ac200ae6b85368ca42ae",
+      "apps/api/plane/app/views/asset/base.py": "f36eed6c8c84037f9b4e71169901e88320f8ac5cf0f943ceca9df3ca37ba444a",
+      "apps/api/plane/app/views/asset/v2.py": "b58375aca229e0198c75bcdc15e64846b5e873d9e5509d14ddb5f3eef320037b",
+      "apps/api/plane/app/views/user/base.py": "54f51681c57454d1e630386baee2f13334fcd14d2a717a3c6b1a301e2d7c7a39",
+      "apps/api/plane/authentication/adapter/base.py": "5d731488e6775e602c03c10814f3b434d0462c01878d3e1a9d0405975ab0bde3",
+      "apps/api/plane/bgtasks/copy_s3_object.py": "ee74a87bb03a3646c25b90717ef6d8dbf30921bc8df7639fe9c236dc107c19fc",
+      "apps/api/plane/bgtasks/deletion_task.py": "c9e999f3536f9755536dd58be2daef4a360d4d7a3f675b7c0de8b94bfee2298b",
+      "apps/api/plane/bgtasks/notification_task.py": "37743df07f0a446c3265e1c5e1756075eb0032755221fe1489af60879ad81e37",
+      "apps/api/plane/bgtasks/webhook_task.py": "c6899f5e13a8dcc95f1c914653071125bb8b7128c6f045a0e576301bc551e7a5",
+      "apps/api/plane/celery.py": "140c6d8314099aa6db3763cf53859dfd005f7f54ae7380b2dcd3f36c5551499f",
+      "apps/api/plane/settings/storage.py": "eb2263994c946393604a1d853954165798d651e48d5f7929e311c565745af1c4",
+      "apps/api/plane/tests/unit/bg_tasks/test_copy_s3_objects.py": "7cab3382dfc70bb9612082192f2d010eb46abd06d8a523d01d9987e904a2f970",
+      "apps/api/plane/tests/unit/bg_tasks/test_ssrf_advisories.py": "c6a22e83336d1e5b106ab8f70cb8581000d816ef4152f84719c9c16fba2c3189",
+      "apps/api/plane/tests/unit/bg_tasks/test_url_security.py": "df0da234ffd5e119c2968de9bd21655a6fa499cb9c4c78924b77858120c53fca",
+      "apps/api/plane/tests/unit/bg_tasks/test_work_item_link_task.py": "f6e86ce6906a9ff5f57c9f18480faa568e4ddb4eb5b2b724d80d3c67563d83c4",
+      "apps/api/plane/tests/unit/utils/test_asset_authorization.py": "04e155b4f3090e0f60c5f7c0f27de66f966f8098d721f7a981ecf1f11ce1678c",
+      "apps/api/plane/tests/unit/utils/test_asset_copy_storage.py": "4599544cf5a7a11b4f5284d8bd2efd2f76dbf91283364dea968caaa1de3d8618",
+      "apps/api/plane/tests/unit/utils/test_avatar_storage.py": "7242b71a53d55fc3c28a91af21b8fa3412959bd5469eae58e6a5b0b5e94fcef8",
+      "apps/api/plane/tests/unit/utils/test_backend_entrypoint.py": "f1133aa8ae33e38f771212815299c4cef9441eeec313631c5569691b97a410c4",
+      "apps/api/plane/tests/unit/utils/test_exception_logging.py": "b87d4fbb0cac1362b4fd6bb6d99323522c673c853640a02a9978fb45b29262f1",
+      "apps/api/plane/tests/unit/utils/test_outbound_response_bounds.py": "6f0ab5411629a427a7030f89778fb593d557bc95ad7d86648c287cb619776a2f",
+      "apps/api/plane/tests/unit/utils/test_request_logging.py": "d9cef0a5059d56558adffbb1f89f8ba3f418b40bb53bc1f0b73df8e335feafa9",
+      "apps/api/plane/tests/unit/utils/test_runtime_health.py": "b5b415711ed18b5919fc4bd5533aed0bce35d48f6dda2652ace4b2bd80eeb800",
+      "apps/api/plane/tests/unit/utils/test_storage_configuration.py": "da35be3b651469857e1a8751ecdb030853e6fa7f6ff70094846045328ded495e",
+      "apps/api/plane/tests/unit/utils/test_worker_logging.py": "564862bdfc2489531218d14042603202d4051c8d16a8bc209e592de5211b001d",
+      "apps/api/plane/utils/asset_permissions.py": "ebf0a9cf1e60ce43f5d486a11f75eb988de4137b0006eb23bb644700f53f7194",
+      "apps/api/plane/utils/celery_health.py": "000180afd28a2eb28cab608fbd99765bb66cf6820fcfa8059b94260935ee52f0",
+      "apps/api/plane/utils/exception_logger.py": "2c277fd45dfb90932d87b4f374e33410eb2d73bdd5b8176a68976b4529f742da",
+      "apps/api/plane/utils/filters/filter_migrations.py": "31c5949a81ed5f24e946cb3c469ff8dfe8c37ab1cb72728c4f11348fc76fc1f3",
+      "apps/api/plane/utils/request_logging.py": "0b1afa32c7a666567c593d62e23301abf75d00f2b7c50db107f9b9c63d71ed5f",
+      "apps/api/plane/utils/runtime_health.py": "efc2ea854b49a18453ebea03decf7b7530ada2d14166d0a8ebb3a0991000d25a",
+      "apps/api/plane/utils/url_security.py": "662d633f3e01075f30a8aac22bcb1b09e4a0248c65ec77b3e45a4321d2fe0212",
+      "apps/api/plane/utils/worker_logging.py": "ec9935d662f2ab112393c548e1569a915a7887eed18038871459f3f2bd9de795",
+      "hardening/backend.Dockerfile": "3967218c28d5137aba49e22a8002cb6cacdb9dc4be2b5ed64cd83a76aa80b6a7",
+      "hardening/backend_entrypoint.py": "641fd82473449c9c1b16fd528a4c30700d91c0632e1d3054adc75b8001160e25",
+      "hardening/bandit_dispositions.json": "39c665750885cd0049947eab322b2f5279a787f1379af1cb8b6677c819e6c0d0",
+      "hardening/build_backend.py": "5e2d56fcdd48472cde4b7abb651005066c99ce072050ea5482299e1cba5121f0",
+      "hardening/qualify.py": "67154963c7a6955162fc3207e1a84190bdaa2ab08ca807b5dec55839e2ae9293",
+      "hardening/remote_runner.py": "6c1893528097c0f5552bffe553bbf5ce8f82bb9e457c033fbae1adb02df6333e",
+      "hardening/role_fixture.py": "4f955b238ee7fd2c5c7bd1f2adc6509ee6a63161d0013aaba29ad651b3864c83",
+      "hardening/run_restricted.py": "ae70219a23fb32a05331893150925d2d396b964cd5084198331caf6c566cb539",
+      "hardening/runtime_smoke.py": "31b47eaf0832c6b83920ed9030bd86f0d93f6be5fae0fad0619132a7463f61db",
+      "hardening/scan_backend.py": "93e880624df9369e19fbf0d06706a3a2cd8178475de67c921cf6047f8a1da3b4",
+      "hardening/source_snapshot.py": "77ad8e0e0eacc2635084876fe9ed56612df849d05c9146dbe46747e355b068b1",
+      "hardening/test_build_backend.py": "a1ce2ac828bf29e83e1febbde2a37d775ccebfda4eeaac656e78261cc6e183ce",
+      "hardening/test_operator_config.py": "1b2ab15a5160ddb2a374741c1767758b1c50352a8d9a407ac80b269f13eb8bf4",
+      "hardening/test_source_snapshot.py": "1df04a16b2fa99a1a8be0ae0b824e3f905aee68768af3e1906972587c3a05b2b",
+      "hardening/worker_receive.py": "201fc3ac23fa13648ce4dc66e6ba5c2e28cee4ec7dc9da24e57497c98d2e26f9",
+      "hardening/worker_smoke.py": "004e71ad94b77c3b5a1c1a17d932dc5955f2d2cb37daf37a1ddf3301334dface"
+    }
   },
   "limits": [
     "No absolute clean/security or deployment claim",
     "Prebuilt/signature/nativecallgraph/antivirusfreshness limits retained",
-    "Productiondata/restore/S3/RabbitMQ/beat/browser/finalJSimages remain outside passed scope",
+    "Productiondata/restore/S3/RabbitMQ/representative-production-periodic-jobs/browser/finalJSimages remain outside passed scope",
     "NoVPSpackage/service/image/configuration or Planeitem mutation duringforkwork"
   ],
   "record_interpretation": "Checks are chronological evidence. Historical pending/failure notes describe those specific runs; current_result and the final run IDs supersede them without erasing failures.",
   "current_result": {
-    "status": "Three upstream security backports and prior hardening qualified; normal source push authorized; VPS deployment deferred",
-    "backend_image": "3aa5f9a6b1fb4bad4c9a25ad1accd34de1e99fd0c71e16d62b6bcb16b3c05b5c",
-    "api_run": "plane-qualification-59a86f0d68ab",
-    "http_run": "plane-qualification-3293b54f91c9",
-    "worker_run": "plane-qualification-6c156a58a5d2",
-    "javascript_run": "plane-js-dd09dd066885",
+    "status": "Reviewed asset V2 authorization, copy-target and bulk-association defects corrected; final-image full API, HTTP, worker, scheduler-role and exact static gates pass. No remaining reproduced defects in these reviewed changes. Native findings and release gates remain open.",
+    "backend_image": "8e0c7832768c647a5e5a7fd8e0cc907bbff312d9ef570c668622ad2f30727890",
+    "api_run": "plane-qualification-0f18236aa5b7",
+    "api_binding": "All1080 full API cases execute in final8e0c7832768c with byte-matching API snapshot, including161 new asset authorization cases",
+    "http_run": "plane-qualification-01c3c43999bf",
+    "worker_run": "plane-qualification-f793cd017c19",
+    "roles_run": "plane-qualification-35fd28178c8d",
+    "focused_run": "plane-qualification-0f18236aa5b7",
+    "javascript_run": "plane-js-0dbe9cbfaa64",
+    "full_api": 1080,
+    "backport_tests": 29,
+    "focused_tests": 564,
+    "trust_tests": 54,
+    "transport_compression_helper_tests": 103,
+    "operator_routing_tests": 15,
     "native_matches": 209,
     "native_critical_matches": 0,
     "native_high_matches": 59,
-    "remaining_scope": "Conditional native/vendor risk; other upstream development changes not merged. Fresh restore/S3/RabbitMQ/beat/browser/final JS images/production rollout remain unqualified. Prior worker/JS passes retained for unchanged closures; see PATCHES/specs/research.",
-    "full_api": 779,
-    "backport_tests": 29,
-    "focused_tests": 263,
-    "trust_tests": 54,
-    "transport_compression_helper_tests": 86
+    "scanner_database_built": "2026-11-15T06:19:39Z",
+    "remaining_scope": "Fresh production restore/rollback; final frontend images/Compose/proxy/browser/RabbitMQ/S3/representative jobs; endpoint compatibility; conditional native/trust/vendor risk. Byte cap does not establish a total deadline or distributed storage/database rollback. Deployment deferred. Shared asset authorization adds lookups; membership/parent state is not locked across remote operations. Legacy multipart typed assets must use V2."
   },
   "final_review": {
     "code_and_runtime_inputs": "Historical pre-cleanup comparison:5358 non-Markdown/non-record source/configuration files matched passing backport API snapshot;732 API image inputs match checkout. Later privacy cleanup changes operator routing, qualification harness and lock comments only; no application/package payload changes. Native inventory and209matches remain qualified on the existing image.",
     "tools": "All four actual qualified Debian host tool binaries match screened intake SHA256",
     "cleanup": "No remaining task-labelled Plane containers; exact fixture networks removed by owning wrappers. Superseded cccae60e2553 image removed under exclusive retention lock; current candidate, prior qualification/rollback image, inputs and evidence retained for review.",
     "whitespace": "Unified-diff context produced false positives; exact three patch-data files receive only format-specific whitespace attributes; all other whitespace gates remain active",
-    "publication": "Reviewed combined hardened source push authorized to RaresKeY/plane-hardened:hardened; normal fast-forward only. No PR/review/advisory/image publication or VPS deployment."
+    "publication": "Reviewed combined hardened source push authorized to RaresKeY/plane-hardened:hardened; normal fast-forward only. No PR/review/advisory/image publication or VPS deployment.",
+    "superseded_by": "review_pass4_qualification; historical results, failures, bindings and publication history retained"
   },
   "source_publication": {
     "date": "2026-11-16",
@@ -470,5 +564,1495 @@
     },
     "verification_scope": "Focused routing tests, actual remote tool startup, lint, history privacy/secret scan, whitespace/JSON and per-commit application/lock invariants.779 API and previous HTTP/worker/JS tests not repeated because their application/dependency inputs are unchanged.",
     "limits": "Detection is not proof of every possible secret format. History rewriting cannot remove previously cloned or cached copies. Existing native findings and unqualified runtime/deployment coverage remain. VPS deployment stays deferred."
+  },
+  "vps_readiness_review": {
+    "date": "2026-11-16",
+    "source_commit": "f1c543b7d7ac716b9a6968923982f57ae066f282",
+    "candidate": "Current maintained v1.4.3 release-based fork; no development-branch merge",
+    "verdict": "NOT READY for VPS deployment; reproduced privacy defect and deployment-contract gaps remain",
+    "execution_boundary": "Dedicated rootless restricted containers on the qualified Debian host; synthetic data only; readonly root, non-root UID, capabilities dropped, no-new-privileges, bounded resources, no public ports or host credentials/sockets. Offline lanes use network none; DB/broker/HTTP lanes use inspected internal networks. General review environment did not execute Plane.",
+    "review_scope": [
+      "Authorization and cache backports; serializer token omission",
+      "Request/audit logs, consumer behavior and legacy-message representations",
+      "HTML/XML/spreadsheet and remote-target handling",
+      "PDF image/download limits, error handling and shared JS logs",
+      "Dependency/trust/parser patches, build/entrypoint/configuration and maintained launchers",
+      "Current deployment contracts and required recovery/integration gates"
+    ],
+    "source_binding": {
+      "snapshot_files": 5404,
+      "snapshot_mismatches": 0,
+      "image_api_files": 732,
+      "image_api_mismatches": 0,
+      "stage": "Application and qualification inputs at source_commit, before result-only documentation updates"
+    },
+    "python": {
+      "run": "plane-qualification-10d2b9a24692",
+      "full_api": 779,
+      "targeted_backports": 29,
+      "focused": 263,
+      "trust": 54,
+      "transport_compression_helpers": 86,
+      "operator_routing": 14,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "overlap": "29 targeted and263 focused overlap the779 full API tests; do not sum as unique coverage",
+      "dependency_consistency": "passed",
+      "lint": "Ruff passed",
+      "warnings": "375 full-API dependency/deprecation warnings retained"
+    },
+    "http": {
+      "run": "plane-qualification-906719a238ca",
+      "groups": 9,
+      "status": "passed",
+      "scope": "Actual immutable image entrypoint, session/API-key auth, workspace isolation, intake/provider-token backports, real cache retention/invalidation, HTML/parser/log privacy and default-deny/explicit-allow CORS"
+    },
+    "worker_scheduler": {
+      "run": "plane-readiness-7633376ef21a",
+      "existing_worker_regression": "passed actual API\u2192Valkey broker\u2192prefork Celery\u2192PostgreSQL; producer-masked message scope only",
+      "new_scheduler_control": "Actual beat entrypoint/DatabaseScheduler\u2192Valkey\u2192standalone prefork worker persisted a synthetic scheduled audit record",
+      "legacy_compose_commands": "All four old shell-script commands exit1 with Unknown backend mode",
+      "inherited_worker_healthcheck": "Exit1/connection refused while actual standalone worker and beat remain alive; API-only inherited check is inappropriate for those roles",
+      "limits": "Does not qualify RabbitMQ, S3 or all production periodic jobs"
+    },
+    "javascript": {
+      "run": "plane-js-0dbe9cbfaa64",
+      "phases": [
+        {
+          "label": "build",
+          "exit_code": 0
+        },
+        {
+          "label": "types",
+          "exit_code": 0
+        },
+        {
+          "label": "format",
+          "exit_code": 0
+        },
+        {
+          "label": "lint",
+          "exit_code": 0
+        },
+        {
+          "label": "upstream-live",
+          "exit_code": 0
+        },
+        {
+          "label": "upstream-codemods",
+          "exit_code": 0
+        },
+        {
+          "label": "unit-pdf",
+          "exit_code": 0
+        },
+        {
+          "label": "prototype",
+          "exit_code": 0
+        },
+        {
+          "label": "tls",
+          "exit_code": 0
+        },
+        {
+          "label": "live-http",
+          "exit_code": 0
+        }
+      ],
+      "all_workspace_builds": "passed",
+      "all_workspace_types": "passed",
+      "upstream_live": 32,
+      "upstream_codemods": 33,
+      "unit_pdf": 48,
+      "prototype": 37,
+      "native_tls": 22,
+      "real_http_pdf_two_client_realtime": "passed",
+      "lint_format": "passed with zero lint warnings/errors",
+      "limits": "Source/build/test runtime coverage; no final production JS images or browser journeys"
+    },
+    "security_scans": {
+      "bandit_raw_exit": 1,
+      "bandit_findings": 74,
+      "bandit_unique_dispositions": 70,
+      "bandit_disposition_gate": "passed exact code/line/source identities; no unexpected findings or stale dispositions",
+      "trivy_secret_findings": 0,
+      "trivy_misconfigurations": {
+        "HIGH": 14,
+        "MEDIUM": 2,
+        "LOW": 10
+      },
+      "trivy_scope": "All26 misconfigurations are retained upstream reference Dockerfiles; no findings on hardening/backend.Dockerfile. Trivy exit0 means scan completed, not no findings.",
+      "native_sca": "Reused exact unchanged image evidence:209raw matches/96IDs,0Critical/59High, Grype0.121.3 database built2026-11-15T06:19:39Z. No new full-image SCA run or new suppression; conditional reachability remains open.",
+      "published_upstream_advisories": 89,
+      "latest_upstream_publication": "2026-11-09T18:23:00Z",
+      "advisory_limits": "Public metadata check only; ambiguous legacy version labels do not establish automatic source clearance. Not a new dependency-OSV refresh. ClamAVdbNov10 remains six days old for previously screened input receipts."
+    },
+    "findings": [
+      {
+        "priority": "P1",
+        "id": "legacy-worker-log-payload",
+        "status": "reproduced; unresolved",
+        "source": "apps/api/plane/celery.py:99",
+        "test_gap": "hardening/worker_smoke.py:94",
+        "trigger": "An old/unmasked queued audit message contains sensitive input in its default representation",
+        "behavior": "Celery worker.strategy emits data.kwargs through the structured INFO handler before process_logs rejects the legacy schema. No database insertion is required for the log leak. Current producer masking does not protect messages already queued with default representations.",
+        "negative_control": {
+          "run": "plane-legacy-receive-9afe8b1d963d",
+          "privacy_invariant": "failed",
+          "task_completed": true,
+          "legacy_payload_logged": true,
+          "matches": [
+            {
+              "logger": "celery.worker.strategy",
+              "field": "data.kwargs",
+              "stage": "Task received, before application audit guard"
+            }
+          ],
+          "real_secrets_used": false,
+          "scope": "Actual production Celery app and audit task; real solo worker, default task-message representation; memory broker and network none; no database queries required for legacy rejection"
+        },
+        "correction": "Sanitize task representations at the worker logging boundary and add an actual-worker regression with unmodified legacy and dirty message representations, including meaningful positive controls."
+      },
+      {
+        "priority": "P1",
+        "id": "deployment-mode-contract",
+        "status": "reproduced; unresolved",
+        "source": "hardening/backend_entrypoint.py:46",
+        "trigger": "Substitute the hardened image into the existing deployment without replacing its four legacy command values",
+        "behavior": "API, worker, beat and migrator shell-script commands are rejected as unknown modes.",
+        "correction": "Prepare an offline-reviewed deployment overlay using api, worker, beat and manage migrate --noinput, then qualify the exact stack/rollback on isolated data."
+      },
+      {
+        "priority": "P2",
+        "id": "worker-api-healthcheck",
+        "status": "reproduced; unresolved",
+        "source": "hardening/backend.Dockerfile:27",
+        "trigger": "Run this shared image in a standalone worker or scheduler role with its inherited health check enabled",
+        "behavior": "The inherited check probes API port8000, which those healthy roles do not serve. Existing wrappers disable health checks and the prior worker fixture co-locates API, so neither proves production role health.",
+        "correction": "Define appropriate per-role health checks and exercise separate service containers with effective deployment health settings."
+      }
+    ],
+    "unqualified_release_gates": [
+      "Final hardened web/admin/space/live production images and exact Compose assembly",
+      "Production RabbitMQ transport, S3 upload/download and representative periodic jobs",
+      "Browser sign-in/admin/ordinary-user authorization, PDF/storage and two-browser realtime through the final proxy stack",
+      "Fresh full restore/migration from the actual previous release and rollback acceptance; production-data use remains deferred",
+      "Conditional native findings, broad trust-policy compatibility and infrastructure update/reboot decisions remain open"
+    ],
+    "failed_or_limited_checks": [
+      "Legacy-worker log privacy negative control FAILED; its reproduction process exits0 because it successfully demonstrates the defect",
+      "Four legacy command probes and worker health probe intentionally return1, with actual healthy worker/beat positive controls",
+      "An initial private probe driver failed before container startup because a placeholder replacement modified an environment-variable name; corrected rerun produced the confirmed finding",
+      "Raw Bandit exit1/74 exact reviewed findings and26 reference-recipe Trivy findings retained; not silently treated as clean",
+      "No production restore, production data, RabbitMQ/S3/browser/final frontend-image test or VPS inspection/deployment performed in this review"
+    ],
+    "changes": "Verification/specification/PATCHES documentation only; application code unchanged. No commit, push, PR/review/advisory publication, Plane work-item mutation or VPS action.",
+    "cleanup": "All task-owned test containers and fixture networks removed; current runtime, rollback images, screened inputs and private evidence retained. No images built or pruned during this review.",
+    "superseded_by": "review_pass4_qualification; historical results, failures, bindings and publication history retained"
+  },
+  "review_patch_qualification": {
+    "date": "2026-11-16",
+    "base_source_commit": "f1c543b7d7ac716b9a6968923982f57ae066f282",
+    "source_state": "Local reviewed patches on hardened; not committed or pushed by this turn",
+    "status": "Reproduced defects corrected; final focused/API-HTTP/worker/role acceptance checks pass within the documented artifact bindings. Broader deployment gates and conditional native findings remain open.",
+    "image": "72fb9377ae352adbb0125bf04f5fc87d15080b9a276971296b086befeec0c29a",
+    "build": "backend-build-c353bc3b527d",
+    "execution_boundary": "Existing qualified Debian host only: rootless non-root readonly containers, all capabilities dropped, no-new-privileges, bounded resources, no public ports/home/credentials/sockets; none or inspected internal networks; synthetic data only. Review environment inert. No external acquisitions, dependency changes or VPS actions.",
+    "changes": [
+      "Worker handler-local record replacement before filters/formatting/queue preparation; constant events and validated IDs/names only, no payload/result/exception/extra serialization. Parent/prefork/beat hooks cover Django logger reinitialization.",
+      "Exact four legacy command aliases map to safe API/worker/beat/manage argument arrays; no shell scripts or automatic long-running-role migrations.",
+      "Bounded role-aware health: custom local API port, destination-specific worker RPC and PID/start-bound fresh beat-loop heartbeat; private atomic metadata. Standalone health adds the immutable /code import path.",
+      "Shared private-file and direct/parent-symlink build/snapshot guards, including within-checkout links; extracted file-set/hash verification before building; unique build tags.",
+      "Unmasked real protocol1/protocol2 worker probes, result/exception/unknown-task controls, actual separate-role health/stall/recovery and scheduled DB persistence fixtures; scanners disable service health checks."
+    ],
+    "source_binding": {
+      "snapshot": "plane-qualification-0e210b6825ab",
+      "snapshot_files": 5413,
+      "executable_configuration_dependency_files": 5369,
+      "current_non_documentation_non_record_mismatches": 0,
+      "actual_image_api_files": 738,
+      "image_build_and_checkout_mismatches": 0,
+      "entrypoint_and_copied_health_helper": "Actual image hashes match reviewed build inputs",
+      "full_api_binding": "Full841 runs in preceding05467 image/snapshot. Every production API source byte matches final72fb. Only one API test file subsequently adds a /code import-path assertion, covered by final focused tests; entrypoint bootstrap fix covered by actual final-image roles/HTTP/worker tests. Full suite not repeated in final image.",
+      "changed_code_sha256": {
+        "apps/api/plane/celery.py": "140c6d8314099aa6db3763cf53859dfd005f7f54ae7380b2dcd3f36c5551499f",
+        "apps/api/plane/tests/unit/utils/test_backend_entrypoint.py": "f1133aa8ae33e38f771212815299c4cef9441eeec313631c5569691b97a410c4",
+        "apps/api/plane/tests/unit/utils/test_runtime_health.py": "b5b415711ed18b5919fc4bd5533aed0bce35d48f6dda2652ace4b2bd80eeb800",
+        "apps/api/plane/tests/unit/utils/test_worker_logging.py": "564862bdfc2489531218d14042603202d4051c8d16a8bc209e592de5211b001d",
+        "apps/api/plane/utils/celery_health.py": "000180afd28a2eb28cab608fbd99765bb66cf6820fcfa8059b94260935ee52f0",
+        "apps/api/plane/utils/runtime_health.py": "efc2ea854b49a18453ebea03decf7b7530ada2d14166d0a8ebb3a0991000d25a",
+        "apps/api/plane/utils/worker_logging.py": "ec9935d662f2ab112393c548e1569a915a7887eed18038871459f3f2bd9de795",
+        "hardening/backend.Dockerfile": "3967218c28d5137aba49e22a8002cb6cacdb9dc4be2b5ed64cd83a76aa80b6a7",
+        "hardening/backend_entrypoint.py": "641fd82473449c9c1b16fd528a4c30700d91c0632e1d3054adc75b8001160e25",
+        "hardening/bandit_dispositions.json": "37f44c55b53bd5af86e18542b4ab2c9170ae3353f4dd233ccc2e66ba3f0616e0",
+        "hardening/build_backend.py": "ebc61ce4cac9e1e70fba1ff3b558c458ef9ad66c6c218d82300d7f31ab36c7ae",
+        "hardening/qualify.py": "9bd5b6e0108aee0666dff568ccba985b205450aae9620a6004442296130896c7",
+        "hardening/remote_runner.py": "6c1893528097c0f5552bffe553bbf5ce8f82bb9e457c033fbae1adb02df6333e",
+        "hardening/role_fixture.py": "245b6b16851312c7a2898dd512e060825b7084cf12341a26e0efee06f943a2b5",
+        "hardening/run_restricted.py": "ae70219a23fb32a05331893150925d2d396b964cd5084198331caf6c566cb539",
+        "hardening/scan_backend.py": "93e880624df9369e19fbf0d06706a3a2cd8178475de67c921cf6047f8a1da3b4",
+        "hardening/source_snapshot.py": "95ab28b2e73202c1640901e294cd9c18608af1cc90ea7775f5312dca91312b61",
+        "hardening/test_build_backend.py": "cd04fcc37334a9d5b01b426f7fcf8c3baafa0e6860b884ce0aa4c9a8bacab78d",
+        "hardening/test_operator_config.py": "1b2ab15a5160ddb2a374741c1767758b1c50352a8d9a407ac80b269f13eb8bf4",
+        "hardening/test_source_snapshot.py": "1df04a16b2fa99a1a8be0ae0b824e3f905aee68768af3e1906972587c3a05b2b",
+        "hardening/worker_receive.py": "7aa2c213a093466d05b0acdf64e74012a0190cb0f3a7d9330951ffbad092e240",
+        "hardening/worker_smoke.py": "43a2ccb386aa2913776e94772322d75c51f784d37055dd502a0c4fca601a2583"
+      }
+    },
+    "tests": {
+      "full_api": {
+        "run": "plane-qualification-57b381001c31",
+        "tests": 841,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0,
+        "warnings": 375,
+        "migrations": "all applied",
+        "overlapping_backports": 29,
+        "overlapping_focused": 325,
+        "aggregate_exit": 1,
+        "aggregate_failure": "Only Ruff F821 for injected controller function; corrected wiring passes final focused lint. This historical aggregate is not marked passed."
+      },
+      "final_focused": {
+        "run": "plane-qualification-0e210b6825ab",
+        "exit_code": 0,
+        "focused": 324,
+        "trust": 54,
+        "transport_compression_helpers": 101,
+        "operator_routing": 15,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0,
+        "deselected": 1,
+        "deselected_reason": "Offline lane omits one DB case, passed in325-test/full DB run",
+        "worker_reception": "passed actual unmasked v1/v2 messages, return/failure/unknown-task positive controls",
+        "dependency_consistency": "passed",
+        "lint": "passed"
+      },
+      "final_http": {
+        "run": "plane-qualification-fc812049afe5",
+        "groups": 9,
+        "status": "passed"
+      },
+      "final_worker": {
+        "run": "plane-qualification-80918d1f55db",
+        "status": "passed",
+        "scope": "Real API\u2192Valkey\u2192prefork Celery\u2192PostgreSQL, unmasked v1/v2 legacy and dirty current-schema inputs, per-process health, payload/credential log privacy"
+      },
+      "final_roles": {
+        "run": "plane-qualification-1687c4cb53a0",
+        "status": "passed",
+        "results": {
+          "legacy_migrator_alias": "passed real migrations without invoking the old shell script",
+          "api_health": "passed actual image health check in its own PID1 container",
+          "worker_health": "passed actual image health check in its own PID1 container",
+          "beat_health": "passed actual image health check in its own PID1 container",
+          "api_custom_port": 8123,
+          "scheduled_delivery": "DatabaseScheduler\u2192Valkey\u2192standalone prefork worker\u2192PostgreSQL",
+          "worker_unresponsive_and_recovery": "passed negative and positive RPC controls",
+          "beat_stale_and_recovery": "passed negative and positive scheduler-loop controls",
+          "scheduled_payload_log_privacy": "passed with default unmasked message representation",
+          "scope": "Synthetic fixtures only; Valkey transport, not RabbitMQ or production restore"
+        }
+      },
+      "direct_image_reception": {
+        "run": "plane-legacy-receive-450f8d8c8889",
+        "status": "passed",
+        "scope": "Actual immutable code, real solo worker/memory broker, default unmasked v1/v2 payloads, unknown task, return and failure; event/UUID positive controls; no DB/network"
+      },
+      "javascript": {
+        "run": "plane-js-0dbe9cbfaa64",
+        "status": "Previous complete qualification retained; app/package/lock inputs unchanged; not rerun for Python/runtime-only changes"
+      }
+    },
+    "security_scans": {
+      "bandit_raw_exit": 1,
+      "bandit_raw_findings": 75,
+      "bandit_exact_unique_dispositions": 71,
+      "bandit_gate": "passed; unexpected0, stale0; new B108 private container tmpfs state disposition is exact file/line/code hash with explicit rationale",
+      "trivy_secrets": 0,
+      "trivy_misconfigurations": {
+        "HIGH": 14,
+        "LOW": 10,
+        "MEDIUM": 2
+      },
+      "supported_backend_dockerfile_findings": 0,
+      "trivy_limits": "All26 findings remain in upstream reference Dockerfiles; scanner exit0 is not a no-findings claim",
+      "native": {
+        "image": "72fb9377ae352adbb0125bf04f5fc87d15080b9a276971296b086befeec0c29a",
+        "evidence": "security-scan-72fb9377ae35-4f3083/out",
+        "raw_matches": 209,
+        "advisory_ids": 96,
+        "critical": 0,
+        "high": 59,
+        "database_built": "2026-11-15T06:19:39Z",
+        "raw_report_sha256": "3ac1cd87353f9354a60a2246111cd8f6cc71aba3b91fe35edd731492601beaf2",
+        "effective_inventory_sha256": "b7cfbb00238ea51c1696f66325eaef35faa45f8dede333faa0efedcd399e9224",
+        "comparison": "All209 package/version/type/severity/advisory tuples and effective native inventory identical to prior artifact; conditional applicability reopened for new health/logging/build paths, all raw findings retained"
+      },
+      "intake_limits": "No new downloads or AV refresh. Prior screened input receipts reused; ClamAVdbNov10 is six days old. No independent binary rebuild or complete native extension call-graph proof."
+    },
+    "resolved_findings": [
+      {
+        "id": "legacy-worker-log-payload",
+        "priority": "P1",
+        "status": "fixed and regression-tested",
+        "original_reproduction": "plane-legacy-receive-9afe8b1d963d"
+      },
+      {
+        "id": "deployment-mode-contract",
+        "priority": "P1",
+        "status": "exact aliases fixed and exercised as real separate roles/migrator; exact full production Compose assembly still unqualified"
+      },
+      {
+        "id": "worker-api-healthcheck",
+        "priority": "P2",
+        "status": "role-aware checks pass healthy/stalled/recovery controls in separate PID1 containers"
+      },
+      {
+        "id": "standalone-health-import-path",
+        "priority": "P2",
+        "status": "found by first role run, fixed immutable /code import resolution, confirmed by final real role tests"
+      },
+      {
+        "id": "build-input-private-symlink-integrity",
+        "priority": "P1",
+        "status": "private/path/parent-link/extracted-context checks and tampering controls pass; exact resulting image inputs verified"
+      }
+    ],
+    "failed_or_limited_checks": [
+      "Initial focused iterations7fa/55cd/8298/a68 exposed lint/diagnostic fixture errors, missing readonly-safe probe log directory, incomplete embedded-program fixture parsing and the new exact B108 disposition. Their raw results remain in private evidence.",
+      "First actual-image reception6e99 omitted trace/unknown-task positive events because Django disabled those diagnostic loggers. Test worker-init hook enables them before tracers; final actual image probe passes all positive events without payload leakage.",
+      "Full841-test run aggregate exits1 for stale injected-controller Ruff F821; corrected function injection and final focused lint pass. The aggregate failure is preserved.",
+      "First role run d2dc found the actual worker health import-path failure; final1687 role run confirms correction.",
+      "Initial HTTP eb0e and worker5608 fixtures exceeded240-second migration bounds under four concurrent migrations. Sequential final HTTP fc81 and worker8091 reruns pass without relaxing those bounds.",
+      "Raw Bandit exit1/75 findings,26 reference Dockerfile findings and209 native matches retained; no blanket suppression.",
+      "Full API is reused on identical production API bytes from the preceding artifact, with the later health bootstrap separately verified. Offline focused lane deliberately deselects one already-passing DB case."
+    ],
+    "unqualified_release_gates": [
+      "Final hardened web/admin/space/live production images and exact Compose assembly",
+      "Production RabbitMQ transport, S3 upload/download and representative periodic jobs",
+      "Browser sign-in/admin/ordinary-user authorization, PDF/storage and two-browser realtime through the final proxy stack",
+      "Fresh full restore/migration from the actual previous release and rollback acceptance; production-data use remains deferred",
+      "Conditional native findings, broad trust-policy compatibility and infrastructure update/reboot decisions remain open"
+    ],
+    "maintenance_risks": [
+      "Worker diagnostic messages/tracebacks deliberately reduced to categories and validated identity; later logger/handler reconfiguration or Python below3.12 requires fresh review.",
+      "Heartbeat proves scheduler-loop liveness, not every job result; worker RPC requires broker control availability.",
+      "Native/vendor matches and incomplete all-extension reachability remain; follow vendor fixes and rerun exact artifact scans.",
+      "Existing CA distrust compatibility, local parser/package patches and alternate Bun runtime remain fork obligations; no additional dependency/trust changes this turn."
+    ],
+    "publication": "No commit, push, PR/review/advisory/image publication, Plane work-item change or VPS mutation. Previous published commit remains unchanged.",
+    "cleanup": {
+      "status": "completed",
+      "receipt": "image-cleanup-c38346c1b80c.json",
+      "removed_image_configurations": [
+        "05467a86d54f7626590bad517ba6b68b29b298b01b09666c0e27b89224826906",
+        "330b6c931b758d40f480e4b627e67a52c62d6acd5bcf715dfc355e82177036f2",
+        "3aa5f9a6b1fb4bad4c9a25ad1accd34de1e99fd0c71e16d62b6bcb16b3c05b5c",
+        "9dab633cae6749007b2a1dde7670ef22ed2a6b994e5a3c964f2daa912f1fbd9a",
+        "c2813b4c5e8d04f06f9a14d1acbd536f068cbed16fdbfe833d41d535781070e2",
+        "bc2b973eb8316ead7bb220221f54d21dabbf59df4c5a01fd3052b06cbfa5f3d0",
+        "bfa1adf48c7ca24758821f0a60ff1ed034f0a959cc2c147e5e17c71cebef103c",
+        "c559ccee6b9785981eb52ed2d12a5eaceee664c46f5793c025df9b3fd5f55e06",
+        "d89e217449aea0a8d864a0d6c3283898db50a4cec92313868b8d035a01b2dd21",
+        "e611bcbada30b2d106d6ea0f155ab3cbd52567b45db042616ff1d066e7fa7b0f",
+        "08fa1d9203c9fd61d8519293c74b8b964016ca4af58ec553ef9df23bbdd4ab54",
+        "8c0d7e7d93201846ef24c471377ae3654560976e5c327aae4783d1d9b53951a2",
+        "cd0c42a05517b83438a8f27bc90fda825d0d1d6de5f2b5764fe99d4c032ac118",
+        "d6e7a8de56f8ae9785a6269436955ff1559af7bb9aec3bf4ae19862cbf558509",
+        "607c642f697b7611e3d89388c9ffb01aa937ffc235638e86a7a5cd782938ba35",
+        "64baf63b8ec065747455408955bbb38f8a97af5a94dcf94ab059f46c172ce6d1",
+        "7d2d43eea079cf045fb5f7987b3f00847c310d1587f5849885ca21be338c8e35",
+        "f36216a678e6118862a094e1cbe7e7dc16719e8759dd347d238cddae340cd917",
+        "211ce72cf6110a07aab4bee8c7c1a2b24a43bad17ba033a65b958a6b623db1c0",
+        "423bc4b0466a2cbc7b4df1c22f3630db63c368c805f95773d5d9c200255b6e08",
+        "7070664bb69fd7f20c44b7d5eaa31e8dbd76995271f0f772985252b24549f474",
+        "087fb9ab53353473b85c9a08f55eef8445478e7c9b87e4416b94de5b31a4961c",
+        "1a46f5ff88eaa6e1d05d12245b622c470cbc034734baf69024d4148702bc5d2a",
+        "5092025c1bd2f71f9839853ec534152d906b517829cd2d93080c3a360ea63418",
+        "120b0d704c0cf9866996fc0257c64f1b952e9ed65edcf48474b708db0443ffe0",
+        "9bdbb4d3924d9c3ce56121e1a174fefc76c57e6cf52e507d0a1d5d3d9428e430",
+        "cf29323f84fdeab6b56dd5cd5ae34581fb30921440d1b352e6bba27c7e54fdfd",
+        "186ce85f94cdcae43c018b3eaf03553dfadc42bd850df94985aee1cf7fe80c34",
+        "7d48221ca56b5d1e69c4bc401ff855673aa556c09dcf66ac45bb27177dabf431",
+        "fe55889bf40424e155013b7ce766999fe8f065c9ed811b8cafc8d589ce8815f3",
+        "5e2657773a24488661913aac747edc64950dbdf34dd7133995a8d630b8afa9da",
+        "89f960817d67acef20b6446704bed15d16eb141193139e40c5b4e0027f9164a1",
+        "98ecd24f34e01e68e9a4205a97e10d1dd59560e30058b7839af0447200849d43",
+        "6b328944b15f822b1ec0b74f7dff38bd70cafe4fcf74ab0d081bf711db682ca1",
+        "98e17467ad4239a39d102143b04f35e2d817f978147bbec49004f7654c789ab2"
+      ],
+      "retained_current_image": "72fb9377ae352adbb0125bf04f5fc87d15080b9a276971296b086befeec0c29a",
+      "protected_project_ancestry": [
+        "16ddd90dcf85dda32d9f741cb79d00d26f0f0692879c5500b551de24722cf9f8",
+        "294cbb2b5a84f46d24a55e8723aa3e9872e20898014282137fad44fd62a610ed",
+        "2e258aece5c6ac580e8a3445583ab2a859e318b788ca9d9ba84c765a73cf13fe",
+        "32d91360a033a6422b427e0345f77c877fc8fb2aad82255a62870bb0cb238345",
+        "6ea1dc4636d1c077ae7f5712a900966c03f5cebab745fe48856bf69eb19dd97b",
+        "72fb9377ae352adbb0125bf04f5fc87d15080b9a276971296b086befeec0c29a",
+        "868bd297297d62d1f10cdd2b6e78e5cdd2e76f9aba040fa3b12b43e07aaa711a",
+        "88e6ae53dc2f620907cce9caa13c611ca3b4938f59b1a294f5ba663ba9cec27d",
+        "899dfc6562ad9ae9ead0a52b40fcdd4b83727de37f0bc1df2dd637aa578d4f1f",
+        "cfec5ac07cb4b6f4b73b9d7db3e8ea6c49a9c8e0ba986b650e36e08573085059",
+        "d828f33f3f31c1921b368e48ae2f06d8aae748ba4aaeeb26a846fe01d6732a1a",
+        "d896aab9e65ba34c4e3b4710848c667b1a46d87af0781b5544d0decc7f4766ce",
+        "d9001e10aa25d4992d80a67e33251e12c2fd50dae3476eba527b3a3c92f4e70e",
+        "de220eb5af4a3b1ac0cfb43cccc177024a0064c58ba12665e49be52111287095",
+        "e0d219c6a28882c58cb428e0988a58246e556008476e7feb9e54e0fa20b46f2a",
+        "e754395645c4b729644655f975212f446bfdad8edabca8d87ba06936681c3480",
+        "f28f6d4aae14a00640f1201cc2db6e8a2486f626e1f467609dee78403d74782b"
+      ],
+      "removed_superseded_backends": [
+        "3aa5f9a6b1fb4bad4c9a25ad1accd34de1e99fd0c71e16d62b6bcb16b3c05b5c",
+        "9dab633cae6749007b2a1dde7670ef22ed2a6b994e5a3c964f2daa912f1fbd9a",
+        "05467a86d54f7626590bad517ba6b68b29b298b01b09666c0e27b89224826906"
+      ],
+      "method": "Exclusive retention lock; exact project/ephemeral labels, complete ordinary and external build-container image references and protected parent ancestry; child-before-parent ordering; exact non-forced --no-prune removals. Owned tags removed only from selected superseded images.",
+      "observed_filesystem_free_byte_increase": 537182208,
+      "measurement_limit": "Observed filesystem free-byte change; concurrent unrelated writes affect this value. Image virtual sizes are not summed. Exact per-task physical reclamation cannot be isolated on this live shared filesystem.",
+      "retained": "Current qualified backend, shared bases/tool runtimes, unrelated images/containers/volumes and all source manifests/logs/SCA evidence. No additional local rollback artifact explicitly required; no VPS/deployed artifact was changed.",
+      "initial_attempts": "Read-only preview stopped on an external Buildah container that ordinary inspect cannot resolve; switched to explicit ps --external image IDs. Broad storage du encountered mapped-directory permissions and was stopped without permission changes or image removal; free-space measurement used instead. Final preview and cleanup succeed."
+    },
+    "superseded_by": "review_pass4_qualification; historical results, failures, bindings and publication history retained"
+  },
+  "review_pass2_qualification": {
+    "date": "2026-11-16",
+    "base_source_commit": "f1c543b7d7ac716b9a6968923982f57ae066f282",
+    "source_state": "Local reviewed work on hardened; no commit, push, PR or advisory mutation in this review",
+    "status": "Reproduced privacy, storage-origin and build-input defects corrected. Final-image full API, HTTP, worker, scheduler and exact static gates pass. Conditional native findings and broader deployment gates remain open; deployment deferred.",
+    "image": "8ac98fa693559b6a26a8b1d8756c208feaf3237ab8eb04999e2bcedeb63b2cfd",
+    "build": "backend-build-46989b02efca",
+    "execution_boundary": "Existing qualified Debian host only; rootless non-root readonly containers, all capabilities dropped, no-new-privileges, bounded resources, no public ports/home/credentials/engine sockets; none or inspected internal networks; synthetic data only. Review environment inert. No new acquisition/dependency download or VPS actions.",
+    "resolved_findings": [
+      {
+        "id": "queued-route-text",
+        "priority": "P1",
+        "status": "fixed and regression-tested",
+        "change": "Only configured Django route labels survive current-schema queued metadata. Unknown concrete/query/converter text becomes /[unresolved]; nested path/regex labels match real resolver controls."
+      },
+      {
+        "id": "shared-python-exception-disclosure",
+        "priority": "P1",
+        "status": "fixed and regression-tested",
+        "change": "Constant message plus bounded exception type, never exception str/repr/args/cause/traceback even in DEBUG. API error extras, email cache/error and webhook validation call sites no longer render private input."
+      },
+      {
+        "id": "runtime-stdout-error-bypass",
+        "priority": "P1",
+        "status": "fixed and reproduced before/after",
+        "change": "Storage signing, notification, deletion, DEBUG webhook and migration failure paths avoid raw exception prints/text; soft-deletion and migration return/continuation semantics preserved. Actual Celery notification error no longer leaks to stdout."
+      },
+      {
+        "id": "request-selected-storage-origin",
+        "priority": "P1",
+        "status": "fixed and regression-tested",
+        "change": "Public MinIO origin uses explicit PUBLIC_S3_ENDPOINT_URL or WEB_URL; server/background origin uses configured internal endpoint. Request Host/scheme never choose the credentialed endpoint. Strict HTTP(S) origin validation, is_server support and standard AWS defaults covered by real SDK signing with HTTP sends forbidden."
+      },
+      {
+        "id": "non-api-build-helper-symlink",
+        "priority": "P1",
+        "status": "fixed and regression-tested",
+        "change": "Fixed Dockerfile/helper inputs use the shared direct/parent-symlink containment guard; ignored private files cannot enter through helper aliases."
+      }
+    ],
+    "source_binding": {
+      "status": "Exact actual image, offline build inputs and final full-API snapshot match current executable/configuration/dependency bytes; later edits only documentation and records",
+      "snapshot": "plane-qualification-1ea33c7513ae",
+      "snapshot_files": 5415,
+      "executable_configuration_dependency_files": 5371,
+      "current_non_documentation_non_record_mismatches": 0,
+      "actual_image_api_files": 740,
+      "image_build_and_checkout_mismatches": 0,
+      "entrypoint_and_copied_health_helper": "All six copied entrypoint/health/runtime/parser/trust/policy files match reviewed build inputs",
+      "full_api_binding": "All893 full API tests execute in the final8ac image with an exact matching API snapshot; no preceding-artifact reuse",
+      "changed_code_sha256": {
+        "apps/api/plane/api/views/base.py": "36af103b66602f51eabd93145142f64467c03f50b7694bcb5872ce135b344216",
+        "apps/api/plane/app/serializers/webhook.py": "0b186689671974a495219460dd3b752bb95061438174ac200ae6b85368ca42ae",
+        "apps/api/plane/app/views/user/base.py": "54f51681c57454d1e630386baee2f13334fcd14d2a717a3c6b1a301e2d7c7a39",
+        "apps/api/plane/bgtasks/deletion_task.py": "c9e999f3536f9755536dd58be2daef4a360d4d7a3f675b7c0de8b94bfee2298b",
+        "apps/api/plane/bgtasks/notification_task.py": "37743df07f0a446c3265e1c5e1756075eb0032755221fe1489af60879ad81e37",
+        "apps/api/plane/bgtasks/webhook_task.py": "c6899f5e13a8dcc95f1c914653071125bb8b7128c6f045a0e576301bc551e7a5",
+        "apps/api/plane/celery.py": "140c6d8314099aa6db3763cf53859dfd005f7f54ae7380b2dcd3f36c5551499f",
+        "apps/api/plane/settings/storage.py": "eb2263994c946393604a1d853954165798d651e48d5f7929e311c565745af1c4",
+        "apps/api/plane/tests/unit/utils/test_backend_entrypoint.py": "f1133aa8ae33e38f771212815299c4cef9441eeec313631c5569691b97a410c4",
+        "apps/api/plane/tests/unit/utils/test_exception_logging.py": "b87d4fbb0cac1362b4fd6bb6d99323522c673c853640a02a9978fb45b29262f1",
+        "apps/api/plane/tests/unit/utils/test_request_logging.py": "d9cef0a5059d56558adffbb1f89f8ba3f418b40bb53bc1f0b73df8e335feafa9",
+        "apps/api/plane/tests/unit/utils/test_runtime_health.py": "b5b415711ed18b5919fc4bd5533aed0bce35d48f6dda2652ace4b2bd80eeb800",
+        "apps/api/plane/tests/unit/utils/test_storage_configuration.py": "da35be3b651469857e1a8751ecdb030853e6fa7f6ff70094846045328ded495e",
+        "apps/api/plane/tests/unit/utils/test_worker_logging.py": "564862bdfc2489531218d14042603202d4051c8d16a8bc209e592de5211b001d",
+        "apps/api/plane/utils/celery_health.py": "000180afd28a2eb28cab608fbd99765bb66cf6820fcfa8059b94260935ee52f0",
+        "apps/api/plane/utils/exception_logger.py": "2c277fd45dfb90932d87b4f374e33410eb2d73bdd5b8176a68976b4529f742da",
+        "apps/api/plane/utils/filters/filter_migrations.py": "31c5949a81ed5f24e946cb3c469ff8dfe8c37ab1cb72728c4f11348fc76fc1f3",
+        "apps/api/plane/utils/request_logging.py": "0b1afa32c7a666567c593d62e23301abf75d00f2b7c50db107f9b9c63d71ed5f",
+        "apps/api/plane/utils/runtime_health.py": "efc2ea854b49a18453ebea03decf7b7530ada2d14166d0a8ebb3a0991000d25a",
+        "apps/api/plane/utils/worker_logging.py": "ec9935d662f2ab112393c548e1569a915a7887eed18038871459f3f2bd9de795",
+        "hardening/backend.Dockerfile": "3967218c28d5137aba49e22a8002cb6cacdb9dc4be2b5ed64cd83a76aa80b6a7",
+        "hardening/backend_entrypoint.py": "641fd82473449c9c1b16fd528a4c30700d91c0632e1d3054adc75b8001160e25",
+        "hardening/bandit_dispositions.json": "39c665750885cd0049947eab322b2f5279a787f1379af1cb8b6677c819e6c0d0",
+        "hardening/build_backend.py": "5e2d56fcdd48472cde4b7abb651005066c99ce072050ea5482299e1cba5121f0",
+        "hardening/qualify.py": "73ea9a33bc2698b0f4ca377c72367ec4740927aaf20fa5afe97bc37a82e975b7",
+        "hardening/remote_runner.py": "6c1893528097c0f5552bffe553bbf5ce8f82bb9e457c033fbae1adb02df6333e",
+        "hardening/role_fixture.py": "4f955b238ee7fd2c5c7bd1f2adc6509ee6a63161d0013aaba29ad651b3864c83",
+        "hardening/run_restricted.py": "ae70219a23fb32a05331893150925d2d396b964cd5084198331caf6c566cb539",
+        "hardening/runtime_smoke.py": "31b47eaf0832c6b83920ed9030bd86f0d93f6be5fae0fad0619132a7463f61db",
+        "hardening/scan_backend.py": "93e880624df9369e19fbf0d06706a3a2cd8178475de67c921cf6047f8a1da3b4",
+        "hardening/source_snapshot.py": "77ad8e0e0eacc2635084876fe9ed56612df849d05c9146dbe46747e355b068b1",
+        "hardening/test_build_backend.py": "a1ce2ac828bf29e83e1febbde2a37d775ccebfda4eeaac656e78261cc6e183ce",
+        "hardening/test_operator_config.py": "1b2ab15a5160ddb2a374741c1767758b1c50352a8d9a407ac80b269f13eb8bf4",
+        "hardening/test_source_snapshot.py": "1df04a16b2fa99a1a8be0ae0b824e3f905aee68768af3e1906972587c3a05b2b",
+        "hardening/worker_receive.py": "201fc3ac23fa13648ce4dc66e6ba5c2e28cee4ec7dc9da24e57497c98d2e26f9",
+        "hardening/worker_smoke.py": "004e71ad94b77c3b5a1c1a17d932dc5955f2d2cb37daf37a1ddf3301334dface"
+      }
+    },
+    "tests": {
+      "full_api": {
+        "run": "plane-qualification-1ea33c7513ae",
+        "tests": 893,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0,
+        "warnings": 381,
+        "migrations": "all applied",
+        "aggregate_exit": 0,
+        "overlapping_backports": 29,
+        "overlapping_focused": 377
+      },
+      "additional_groups": {
+        "run": "plane-qualification-1ea33c7513ae",
+        "trust": 54,
+        "transport_compression_helpers": 103,
+        "operator_routing": 15,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0,
+        "dependency_consistency": "passed",
+        "ruff": "passed",
+        "worker_reception": {
+          "passed": true,
+          "child_exit": 0,
+          "payload_leaked": false,
+          "control_states": {
+            "v2": "SUCCESS",
+            "v1": "SUCCESS",
+            "return": "SUCCESS",
+            "failure": "FAILURE",
+            "notification": "SUCCESS"
+          },
+          "required_events_visible": true,
+          "task_identities_visible": true,
+          "scope": "Actual Celery/audit code; real solo worker and memory broker; default v1/v2 payloads, unknown task, return, failure and actual notification error path; no database/network"
+        }
+      },
+      "final_offline_focused": {
+        "run": "plane-qualification-7bc90987c441",
+        "focused": 376,
+        "deselected": 1,
+        "exit_code": 0,
+        "scope": "One DB case deliberately omitted offline; it passes in the377 focused DB run and893 full suite"
+      },
+      "final_http": {
+        "run": "plane-qualification-85db7c3b4eaa",
+        "exit_code": 0,
+        "passed": true,
+        "checks": [
+          "production entrypoint healthy with readonly root and non-root UID",
+          "unset CORS origin configuration denies arbitrary credentialed browser origins",
+          "HTTP API token authentication and workspace isolation",
+          "HTTP issue create, HTML sanitization, ordinary content retention",
+          "production HTTP intake creator/admin permissions and provider-token omission",
+          "production session-authenticated denied writes preserve real Valkey cache; admin writes invalidate it",
+          "five malformed/oversized HTTP parser rejection controls",
+          "production server logs omit token, query, body and arbitrary path markers",
+          "explicit configured CORS origin succeeds and other origins remain denied"
+        ],
+        "image_source": "/code",
+        "limits": [
+          "Celery uses memory transport here; no live worker/RabbitMQ or S3/UI qualification"
+        ],
+        "additional_real_paths": [
+          "Authenticated stored-timezone KeyError returns400 and preserves log privacy; original timezone restored",
+          "Private email-verification cache miss returns400 without email/cache-key logging",
+          "Secret-bearing loopback webhook URL rejected400 without outbound callback or raw URL/exception logging"
+        ]
+      },
+      "final_worker": {
+        "run": "plane-qualification-09411bb6ae81",
+        "exit_code": 0,
+        "passed": true,
+        "checks": [
+          "Production API producer sends JSON through real Valkey broker to real prefork Celery worker",
+          "Actual PostgreSQL metadata persistence, keyed token correlation, route/status and secret stripping",
+          "Legacy payload rejection and worker-side revalidation of dirty current-schema records",
+          "API and worker logs omit synthetic credentials and payload markers"
+        ],
+        "limits": [
+          "Valkey broker qualification does not qualify RabbitMQ transport",
+          "Synthetic data only; no S3, beat or VPS action"
+        ],
+        "unknown_route": "Concrete/query-bearing current payload normalized to /[unresolved] in persisted metadata"
+      },
+      "final_roles": {
+        "run": "plane-qualification-40a1cbb5f52d",
+        "exit_code": 0,
+        "results": {
+          "legacy_migrator_alias": "passed real migrations without invoking the old shell script",
+          "api_health": "passed actual image health check in its own PID1 container",
+          "worker_health": "passed actual image health check in its own PID1 container",
+          "beat_health": "passed actual image health check in its own PID1 container",
+          "api_custom_port": 8123,
+          "scheduled_delivery": "DatabaseScheduler\u2192Valkey\u2192standalone prefork worker\u2192PostgreSQL",
+          "worker_unresponsive_and_recovery": "passed negative and positive RPC controls",
+          "beat_stale_and_recovery": "passed negative and positive scheduler-loop controls",
+          "scheduled_payload_log_privacy": "passed with default unmasked message representation",
+          "scope": "Synthetic fixtures only; Valkey transport, not RabbitMQ or production restore"
+        },
+        "unknown_route": "Synthetic scheduled current payload normalizes unknown secret-bearing route before persistence"
+      },
+      "direct_image_reception": {
+        "run": "plane-legacy-receive-40955d7eb4ba",
+        "result": {
+          "passed": true,
+          "child_exit": 0,
+          "payload_leaked": false,
+          "control_states": {
+            "v2": "SUCCESS",
+            "v1": "SUCCESS",
+            "return": "SUCCESS",
+            "failure": "FAILURE",
+            "notification": "SUCCESS"
+          },
+          "required_events_visible": true,
+          "task_identities_visible": true,
+          "scope": "Actual Celery/audit code; real solo worker and memory broker; default v1/v2 payloads, unknown task, return, failure and actual notification error path; no database/network"
+        },
+        "before_fix_run": "plane-legacy-receive-e8bcc0d75efd",
+        "before_fix_result": {
+          "passed": false,
+          "child_exit": 0,
+          "payload_leaked": true,
+          "control_states": {
+            "v2": "SUCCESS",
+            "v1": "SUCCESS",
+            "return": "SUCCESS",
+            "failure": "FAILURE",
+            "notification": "SUCCESS"
+          },
+          "required_events_visible": true,
+          "task_identities_visible": true,
+          "scope": "Actual Celery/audit code; real solo worker and memory broker; default v1/v2 payloads, unknown task, return, failure and actual notification error path; no database/network"
+        },
+        "interpretation": "Both real worker children complete all five controls and exit0. Before-fix privacy parent fails because notification exception leaks via stdout; final privacy parent passes. Expected failure task state is a positive control."
+      },
+      "storage_sdk": {
+        "status": "passed",
+        "real_sdk_cases": 2,
+        "scope": "Actual Botocore upload/download presigning, synthetic credentials, HTTP sends forbidden; public/internal origin and poison request guards plus invalid-origin and AWS default contracts",
+        "limit": "No actual S3 transfer/recovery or final browser/proxy storage assembly"
+      },
+      "coverage_delta": "52 additional API cases versus preceding841; two additional build-helper cases versus preceding101 transport/helper group. API/backport/focused counts overlap and must not be summed as unique tests.",
+      "javascript": {
+        "run": "plane-js-0dbe9cbfaa64",
+        "status": "Previous complete qualification retained; JavaScript app/package/lock inputs unchanged. Not rerun for Python/storage/helper-only changes; final browser storage and JS images remain open."
+      }
+    },
+    "security_scans": {
+      "bandit_raw_exit": 1,
+      "bandit_review": {
+        "raw_findings": 75,
+        "reviewed": 75,
+        "reviewed_unique": 71,
+        "unexpected": [],
+        "stale_dispositions": 0,
+        "passed": true
+      },
+      "exact_disposition_change": "Only unchanged optional notification B110 moved298 to299 after import. Re-read exact inner suppression and updated code/file hashes; no new broad ignores.",
+      "trivy": {
+        "secrets": 0,
+        "misconfigurations": {
+          "HIGH": 14,
+          "LOW": 10,
+          "MEDIUM": 2
+        },
+        "supported_backend_findings": []
+      },
+      "trivy_limits": "26 findings remain in upstream reference Dockerfiles; none in hardening/backend.Dockerfile. Scanner exit0 does not mean zero findings.",
+      "native": {
+        "image": "8ac98fa693559b6a26a8b1d8756c208feaf3237ab8eb04999e2bcedeb63b2cfd",
+        "evidence": "security-scan-8ac98fa69355-f0efa7/out",
+        "raw_matches": 209,
+        "advisory_ids": 96,
+        "critical": 0,
+        "high": 59,
+        "database_built": "2026-11-15T06:19:39Z",
+        "database_archive_sha256": "96ada30f3287fd04be595a8f419df98efdf19955e7bfa28eae80ef7c5fe27eb7",
+        "raw_report_sha256": "29bf792b9ee34d1ade887787523db0d051f7a54efd35342e77c1674f02abafc9",
+        "effective_inventory_sha256": "b7cfbb00238ea51c1696f66325eaef35faa45f8dede333faa0efedcd399e9224",
+        "comparison": "All209 package/version/type/severity/advisory tuples and effective native inventory identical to the previous artifact; final image freshly scanned. Source applicability reviewed for route/error/helper/storage-origin changes. Conditional utility/API/extension exposure remains documented, not blanket suppressed."
+      },
+      "intake_limits": "No new acquisition or AV refresh. Existing screened wheels/images/tools reused. ClamAV signatures from2026-11-10 are six days old. No independent binary rebuild, complete publisher-attestation or all-extension call-graph proof."
+    },
+    "failed_or_limited_checks": [
+      "Initial focused run690b2f9ce3bd reproduces16 exception/path failures before fixes;324 pass, one deliberate DB deselection. Raw results retained.",
+      "Intermediate image49c full run393796b67a2a passes867API and static gates before broader call-site review discovers actual notification stdout leak in the enhanced worker probe. Its successful suite did not establish absence of that later-discovered defect.",
+      "Focused runfc42c51a17e1 passes359 tests but aggregate exits1 for an E501 assertion and a stale exact notification B110 row. Assertion reformatted and unchanged inner suppression re-reviewed with exact hashes. Subsequent focused and final aggregate gates pass.",
+      "Final API/HTTP/worker/role aggregates all exit0. Offline focused intentionally deselects one DB case covered by final full DB execution.",
+      "Raw Bandit75,26 legacy-reference Dockerfile findings and209 native package matches remain visible; no absolute security or malware-free claim."
+    ],
+    "maintenance_risks": [
+      "Configured route registry is cached per URLconf; restart after route changes and preserve Django nested path/regex joining semantics when upgrading.",
+      "Fixed exception categories intentionally reduce diagnostic detail. New raw prints, formatting extras or logger reconfiguration require privacy regression controls.",
+      "MinIO public endpoint must be an explicitly configured HTTP(S) origin without userinfo, path prefix, query or fragment. PUBLIC_S3_ENDPOINT_URL falls back to WEB_URL; internal server/background calls use configured internal origin.",
+      "The endpoint URL scheme is authoritative; MINIO_ENDPOINT_SSL no longer overrides it. Review real public/internal endpoints before deployment. Standard AWS service discovery remains available when no custom endpoint is configured.",
+      "Source/helper checks and exact static dispositions must follow upstream refactors. Full S3 transfers, final proxy/browser assembly and production-data restore are not established by SDK signing tests.",
+      "Native findings remain condition-dependent and scanner freshness is bounded; later dependencies, transports or native entrypoints require renewed applicability review."
+    ],
+    "unqualified_release_gates": [
+      "Final hardened web/admin/space/live production images and exact production Compose/proxy assembly",
+      "Production RabbitMQ, actual S3 upload/download/recovery and representative production periodic jobs",
+      "Browser sign-in/admin/ordinary-user authorization, PDF/storage and two-browser realtime through the final proxy stack",
+      "Fresh full restore/migration from the actual prior deployment and rollback acceptance; production-data use remains deferred",
+      "Deployment-specific public/internal storage origins and URL-scheme compatibility",
+      "Conditional native/vendor findings, broad trust-policy compatibility and infrastructure update/reboot decisions"
+    ],
+    "cleanup": {
+      "receipt": "image-cleanup-d17d7809ef7f.json",
+      "removed_image_configurations": 24,
+      "removed_image_ids": [
+        "2bfb1e4828da2379bef4c4ddcd0db47e2e03df27f27d973ed8dcf43ee29007d0",
+        "49c9483eaf36795b167855f424abd4d76d6c02cd885497027b7ee5161d072878",
+        "72fb9377ae352adbb0125bf04f5fc87d15080b9a276971296b086befeec0c29a",
+        "73cf035ddc975e1b3a778fa4289ef3861b72d7a343185f165bbda3e001ed7d68",
+        "a27d445a2d51b85867a7e65ddd6fd8883b2bf867aa1c80fe033990d2029629ec",
+        "e754395645c4b729644655f975212f446bfdad8edabca8d87ba06936681c3480",
+        "1b464293b0605792da0fa8c3a8a670118209d9ac30438e6ee21e6ed2b288ebd0",
+        "6c2a724b888d639ca3511774310b922345157222c7c37cb51db0b8c1ba2f21d4",
+        "899dfc6562ad9ae9ead0a52b40fcdd4b83727de37f0bc1df2dd637aa578d4f1f",
+        "2e258aece5c6ac580e8a3445583ab2a859e318b788ca9d9ba84c765a73cf13fe",
+        "685bef3f2ea6945d6b163f2e6cee2a0368f83aec6393c919edced7ccc3334076",
+        "df560bec614d68660a289b5526302813be2c38ad4add04ae778bbcb244648754",
+        "18475880c0acb324d36e6e80b0ffadda85451f37d5da0cd7de53ba6594c6b737",
+        "d9001e10aa25d4992d80a67e33251e12c2fd50dae3476eba527b3a3c92f4e70e",
+        "6ea1dc4636d1c077ae7f5712a900966c03f5cebab745fe48856bf69eb19dd97b",
+        "f5f9666573c9b75ab1d34c2eb2f3e7b39cdc1b26a066c01a7d3463b16be87dcb",
+        "868bd297297d62d1f10cdd2b6e78e5cdd2e76f9aba040fa3b12b43e07aaa711a",
+        "f543823094d9857555b3321d8c98c15cd2949463a43cd97ac7f99cd1239bcf55",
+        "88e6ae53dc2f620907cce9caa13c611ca3b4938f59b1a294f5ba663ba9cec27d",
+        "d0cf1951960723d90c800cc9d38d8c3482dbb4f1851f01fa73a695a262fc3536",
+        "59f4ea48a9f92156e096bd133b18cde4a397eb46273c8324602b2adf1f1978c8",
+        "f28f6d4aae14a00640f1201cc2db6e8a2486f626e1f467609dee78403d74782b",
+        "2c945bc5635e08cac07376a5d23837411bd8e8be1276d6bd2b143b7fc84731d0",
+        "d828f33f3f31c1921b368e48ae2f06d8aae748ba4aaeeb26a846fe01d6732a1a"
+      ],
+      "retained_candidate": "8ac98fa693559b6a26a8b1d8756c208feaf3237ab8eb04999e2bcedeb63b2cfd",
+      "protected_project_configurations": 17,
+      "retained_exceptions": "Current final candidate and ancestry/shared bases; all container/build-container referenced ancestry and unrelated images preserved. No rollback image explicitly required; superseded candidates were never deployed.",
+      "filesystem_free_before": 262547812352,
+      "filesystem_free_after": 262820184064,
+      "observed_storage_delta_bytes": 272371712,
+      "measurement_limit": "Observed filesystem free-byte change; concurrent unrelated writes affect this value. Image virtual sizes are not summed. Exact per-task physical reclamation cannot be isolated on this live shared filesystem.",
+      "method": "Exclusive shared build-retention lock; exact owned image IDs, leaf-first, references/ancestry checked and rechecked, non-forced removal with no-prune. No blanket prune, volumes or unrelated containers touched. Logs/manifests/scans retained.",
+      "final_project_containers": 0,
+      "final_project_networks": 0,
+      "final_tagged_backend_candidates": 1
+    },
+    "vps_deployment": "Deferred; no production/VPS mutation, no Plane item mutation",
+    "closeout_checks": {
+      "git_diff_check": "passed",
+      "structured_records": "valid JSON",
+      "changed_code_hashes": "all36 match",
+      "source_and_actual_image_binding": "740 API and5371 source/configuration/dependency files match; zero mismatches",
+      "operator_privacy_markers": "zero in all43 changed/untracked public files",
+      "private_evidence": "ignored by Git",
+      "runtime_cleanup": "no remaining task-owned containers/networks; final candidate retained"
+    },
+    "superseded_by": "review_pass4_qualification; historical results, failures, bindings and publication history retained"
+  },
+  "review_pass3_qualification": {
+    "date": "2026-11-17",
+    "base_source_commit": "f1c543b7d7ac716b9a6968923982f57ae066f282",
+    "source_state": "Normal hardened checkout; local uncommitted patches preserved. No commit, push, PR, review, advisory or Plane-item publication.",
+    "status": "Reviewed response-budget and storage ingestion/copy defects corrected; final-image full API, HTTP, worker, scheduler-role and exact static gates pass. No remaining reproduced defects in these reviewed changes. Conditional native findings and deployment gates remain open.",
+    "image": "a91f5a6fe77b0b65e1add34ccf084c8ce85b213c60f797bf36c81bb8f8f97e2e",
+    "build": "backend-build-25c7593efb38",
+    "execution_boundary": "Existing qualified Debian host only: rootless non-root readonly containers, cap-drop ALL, no-new-privileges, bounded CPU/memory/PIDs/time; none or inspected internal fixture networks, no public ports/home/authentication/engine sockets; synthetic data only. No candidate execution on the review workstation, new acquisition/dependency change or VPS mutation.",
+    "review_scope": [
+      "Changed worker/error/request/health/build contracts and related storage callers",
+      "Shared pinned outbound client, link/favicon/webhook/streaming-avatar consumers, Requests and qualified urllib3 decode paths",
+      "Synchronous duplicate-asset endpoint and background copy publication, preserving existing permission wrappers"
+    ],
+    "resolved_findings": [
+      {
+        "id": "unbounded-outbound-response-buffering",
+        "priority": "P1",
+        "status": "fixed and regression-tested",
+        "change": "Force transport streaming before Requests buffering; cap non-streaming decoded bytes at2MiB; preserve content/text/json/repeated iteration, close both resources on read/size failure, skip retrying every IP on oversize. Streaming avatar retains its own size/close policy."
+      },
+      {
+        "id": "server-storage-caller-origin",
+        "priority": "P2",
+        "status": "fixed and regression-tested",
+        "change": "OAuth avatar upload/metadata and synchronous duplication use is_server=True and the configured internal endpoint. Browser presigning remains public; ordinary AWS defaults unchanged."
+      },
+      {
+        "id": "failed-copy-published-as-uploaded",
+        "priority": "P2",
+        "status": "fixed and regression-tested",
+        "change": "Copy the object successfully before creating an uploaded row. None returns fixed502 for synchronous duplication and skips failed background mappings; successful and partial-success behavior preserved."
+      }
+    ],
+    "source_binding": {
+      "status": "Exact final image/build/API snapshot and executable configuration/dependency bytes match; later changes only records and documentation",
+      "snapshot": "plane-qualification-8994a30f297f",
+      "snapshot_files": 5418,
+      "executable_configuration_dependency_files": 5374,
+      "current_non_documentation_non_record_mismatches": 0,
+      "actual_image_api_files": 743,
+      "image_build_and_checkout_mismatches": 0,
+      "entrypoint_and_copied_health_helper": "All six entrypoint/health/runtime/parser/trust/policy copies match reviewed build inputs",
+      "full_api_binding": "All919 full API cases execute in final a91 with byte-matching API snapshot, including the final isolated throttle-cache test fixture",
+      "changed_code_sha256": {
+        "apps/api/plane/api/views/base.py": "36af103b66602f51eabd93145142f64467c03f50b7694bcb5872ce135b344216",
+        "apps/api/plane/app/serializers/webhook.py": "0b186689671974a495219460dd3b752bb95061438174ac200ae6b85368ca42ae",
+        "apps/api/plane/app/views/asset/v2.py": "d4039aebceaae7cba8ff2047bc0bbbfaf3e2022c37d15b2bda7336e430428f01",
+        "apps/api/plane/app/views/user/base.py": "54f51681c57454d1e630386baee2f13334fcd14d2a717a3c6b1a301e2d7c7a39",
+        "apps/api/plane/authentication/adapter/base.py": "5d731488e6775e602c03c10814f3b434d0462c01878d3e1a9d0405975ab0bde3",
+        "apps/api/plane/bgtasks/copy_s3_object.py": "9dfb6136c7eee3e7489feb25b581dd4a06a396f4dbf35e31e2199c19ab4f4d4c",
+        "apps/api/plane/bgtasks/deletion_task.py": "c9e999f3536f9755536dd58be2daef4a360d4d7a3f675b7c0de8b94bfee2298b",
+        "apps/api/plane/bgtasks/notification_task.py": "37743df07f0a446c3265e1c5e1756075eb0032755221fe1489af60879ad81e37",
+        "apps/api/plane/bgtasks/webhook_task.py": "c6899f5e13a8dcc95f1c914653071125bb8b7128c6f045a0e576301bc551e7a5",
+        "apps/api/plane/celery.py": "140c6d8314099aa6db3763cf53859dfd005f7f54ae7380b2dcd3f36c5551499f",
+        "apps/api/plane/settings/storage.py": "eb2263994c946393604a1d853954165798d651e48d5f7929e311c565745af1c4",
+        "apps/api/plane/tests/unit/bg_tasks/test_ssrf_advisories.py": "c6a22e83336d1e5b106ab8f70cb8581000d816ef4152f84719c9c16fba2c3189",
+        "apps/api/plane/tests/unit/bg_tasks/test_url_security.py": "df0da234ffd5e119c2968de9bd21655a6fa499cb9c4c78924b77858120c53fca",
+        "apps/api/plane/tests/unit/bg_tasks/test_work_item_link_task.py": "f6e86ce6906a9ff5f57c9f18480faa568e4ddb4eb5b2b724d80d3c67563d83c4",
+        "apps/api/plane/tests/unit/utils/test_asset_copy_storage.py": "4599544cf5a7a11b4f5284d8bd2efd2f76dbf91283364dea968caaa1de3d8618",
+        "apps/api/plane/tests/unit/utils/test_avatar_storage.py": "7242b71a53d55fc3c28a91af21b8fa3412959bd5469eae58e6a5b0b5e94fcef8",
+        "apps/api/plane/tests/unit/utils/test_backend_entrypoint.py": "f1133aa8ae33e38f771212815299c4cef9441eeec313631c5569691b97a410c4",
+        "apps/api/plane/tests/unit/utils/test_exception_logging.py": "b87d4fbb0cac1362b4fd6bb6d99323522c673c853640a02a9978fb45b29262f1",
+        "apps/api/plane/tests/unit/utils/test_outbound_response_bounds.py": "6f0ab5411629a427a7030f89778fb593d557bc95ad7d86648c287cb619776a2f",
+        "apps/api/plane/tests/unit/utils/test_request_logging.py": "d9cef0a5059d56558adffbb1f89f8ba3f418b40bb53bc1f0b73df8e335feafa9",
+        "apps/api/plane/tests/unit/utils/test_runtime_health.py": "b5b415711ed18b5919fc4bd5533aed0bce35d48f6dda2652ace4b2bd80eeb800",
+        "apps/api/plane/tests/unit/utils/test_storage_configuration.py": "da35be3b651469857e1a8751ecdb030853e6fa7f6ff70094846045328ded495e",
+        "apps/api/plane/tests/unit/utils/test_worker_logging.py": "564862bdfc2489531218d14042603202d4051c8d16a8bc209e592de5211b001d",
+        "apps/api/plane/utils/celery_health.py": "000180afd28a2eb28cab608fbd99765bb66cf6820fcfa8059b94260935ee52f0",
+        "apps/api/plane/utils/exception_logger.py": "2c277fd45dfb90932d87b4f374e33410eb2d73bdd5b8176a68976b4529f742da",
+        "apps/api/plane/utils/filters/filter_migrations.py": "31c5949a81ed5f24e946cb3c469ff8dfe8c37ab1cb72728c4f11348fc76fc1f3",
+        "apps/api/plane/utils/request_logging.py": "0b1afa32c7a666567c593d62e23301abf75d00f2b7c50db107f9b9c63d71ed5f",
+        "apps/api/plane/utils/runtime_health.py": "efc2ea854b49a18453ebea03decf7b7530ada2d14166d0a8ebb3a0991000d25a",
+        "apps/api/plane/utils/url_security.py": "662d633f3e01075f30a8aac22bcb1b09e4a0248c65ec77b3e45a4321d2fe0212",
+        "apps/api/plane/utils/worker_logging.py": "ec9935d662f2ab112393c548e1569a915a7887eed18038871459f3f2bd9de795",
+        "hardening/backend.Dockerfile": "3967218c28d5137aba49e22a8002cb6cacdb9dc4be2b5ed64cd83a76aa80b6a7",
+        "hardening/backend_entrypoint.py": "641fd82473449c9c1b16fd528a4c30700d91c0632e1d3054adc75b8001160e25",
+        "hardening/bandit_dispositions.json": "39c665750885cd0049947eab322b2f5279a787f1379af1cb8b6677c819e6c0d0",
+        "hardening/build_backend.py": "5e2d56fcdd48472cde4b7abb651005066c99ce072050ea5482299e1cba5121f0",
+        "hardening/qualify.py": "1075fe95fa7be011f21b5f22b148d171f41780ecb7fcda31936e49e6deb10654",
+        "hardening/remote_runner.py": "6c1893528097c0f5552bffe553bbf5ce8f82bb9e457c033fbae1adb02df6333e",
+        "hardening/role_fixture.py": "4f955b238ee7fd2c5c7bd1f2adc6509ee6a63161d0013aaba29ad651b3864c83",
+        "hardening/run_restricted.py": "ae70219a23fb32a05331893150925d2d396b964cd5084198331caf6c566cb539",
+        "hardening/runtime_smoke.py": "31b47eaf0832c6b83920ed9030bd86f0d93f6be5fae0fad0619132a7463f61db",
+        "hardening/scan_backend.py": "93e880624df9369e19fbf0d06706a3a2cd8178475de67c921cf6047f8a1da3b4",
+        "hardening/source_snapshot.py": "77ad8e0e0eacc2635084876fe9ed56612df849d05c9146dbe46747e355b068b1",
+        "hardening/test_build_backend.py": "a1ce2ac828bf29e83e1febbde2a37d775ccebfda4eeaac656e78261cc6e183ce",
+        "hardening/test_operator_config.py": "1b2ab15a5160ddb2a374741c1767758b1c50352a8d9a407ac80b269f13eb8bf4",
+        "hardening/test_source_snapshot.py": "1df04a16b2fa99a1a8be0ae0b824e3f905aee68768af3e1906972587c3a05b2b",
+        "hardening/worker_receive.py": "201fc3ac23fa13648ce4dc66e6ba5c2e28cee4ec7dc9da24e57497c98d2e26f9",
+        "hardening/worker_smoke.py": "004e71ad94b77c3b5a1c1a17d932dc5955f2d2cb37daf37a1ddf3301334dface"
+      }
+    },
+    "tests": {
+      "full_api": {
+        "run": "plane-qualification-8994a30f297f",
+        "tests": 919,
+        "additional_api_cases": 26,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0,
+        "aggregate_exit": 0,
+        "migrations": "all applied",
+        "overlapping_backports": 29,
+        "overlapping_focused": 403,
+        "warnings": 384
+      },
+      "additional_groups": {
+        "run": "plane-qualification-8994a30f297f",
+        "trust": 54,
+        "transport_compression_helpers": 103,
+        "operator_routing": 15,
+        "dependency_consistency": "passed",
+        "ruff": "passed",
+        "worker_reception": {
+          "passed": true,
+          "child_exit": 0,
+          "payload_leaked": false,
+          "control_states": {
+            "v2": "SUCCESS",
+            "v1": "SUCCESS",
+            "return": "SUCCESS",
+            "failure": "FAILURE",
+            "notification": "SUCCESS"
+          },
+          "required_events_visible": true,
+          "task_identities_visible": true,
+          "scope": "Actual Celery/audit code; real solo worker and memory broker; default v1/v2 payloads, unknown task, return, failure and actual notification error path; no database/network"
+        },
+        "scope": "API/backport/focused counts overlap and are not additive unique coverage"
+      },
+      "new_contracts": {
+        "outbound": 14,
+        "avatar": 7,
+        "database_copy": 5,
+        "outbound_scope": "Real loopback HTTP: raw/gzip/deflate/chunked overflow, exact/empty/valid compressed bodies, Requests text/json/repeated access, plus close/read/retry/stream ownership controls",
+        "storage_scope": "Actual avatar function success and six failure exits; actual endpoint/database copy success/failure/partial-success/unexpected error. S3 calls synthetic; local throttle cache explicitly scoped to copy tests."
+      },
+      "final_http": {
+        "run": "plane-qualification-7aae4b687c4a",
+        "exit_code": 0,
+        "passed": true,
+        "checks": [
+          "production entrypoint healthy with readonly root and non-root UID",
+          "unset CORS origin configuration denies arbitrary credentialed browser origins",
+          "HTTP API token authentication and workspace isolation",
+          "HTTP issue create, HTML sanitization, ordinary content retention",
+          "production HTTP intake creator/admin permissions and provider-token omission",
+          "production session-authenticated denied writes preserve real Valkey cache; admin writes invalidate it",
+          "five malformed/oversized HTTP parser rejection controls",
+          "production server logs omit token, query, body and arbitrary path markers",
+          "explicit configured CORS origin succeeds and other origins remain denied"
+        ],
+        "image_source": "/code",
+        "limits": [
+          "Celery uses memory transport here; no live worker/RabbitMQ or S3/UI qualification"
+        ]
+      },
+      "final_worker": {
+        "run": "plane-qualification-e048badf0c13",
+        "exit_code": 0,
+        "passed": true,
+        "checks": [
+          "Production API producer sends JSON through real Valkey broker to real prefork Celery worker",
+          "Actual PostgreSQL metadata persistence, keyed token correlation, route/status and secret stripping",
+          "Legacy payload rejection and worker-side revalidation of dirty current-schema records",
+          "API and worker logs omit synthetic credentials and payload markers"
+        ],
+        "limits": [
+          "Valkey broker qualification does not qualify RabbitMQ transport",
+          "Synthetic data only; no S3, beat or VPS action"
+        ]
+      },
+      "final_roles": {
+        "run": "plane-qualification-b31aa1d0dde5",
+        "exit_code": 0,
+        "results": {
+          "legacy_migrator_alias": "passed real migrations without invoking the old shell script",
+          "api_health": "passed actual image health check in its own PID1 container",
+          "worker_health": "passed actual image health check in its own PID1 container",
+          "beat_health": "passed actual image health check in its own PID1 container",
+          "api_custom_port": 8123,
+          "scheduled_delivery": "DatabaseScheduler\u2192Valkey\u2192standalone prefork worker\u2192PostgreSQL",
+          "worker_unresponsive_and_recovery": "passed negative and positive RPC controls",
+          "beat_stale_and_recovery": "passed negative and positive scheduler-loop controls",
+          "scheduled_payload_log_privacy": "passed with default unmasked message representation",
+          "scope": "Synthetic fixtures only; Valkey transport, not RabbitMQ or production restore"
+        }
+      },
+      "javascript": {
+        "run": "plane-js-0dbe9cbfaa64",
+        "status": "Previous complete source/dependency qualification retained; inputs unchanged. Not rerun for backend/test-only changes; frontend images/browser/storage assembly remain open."
+      }
+    },
+    "security_scans": {
+      "bandit_raw_exit": 1,
+      "bandit_review": {
+        "raw_findings": 75,
+        "reviewed": 75,
+        "reviewed_unique": 71,
+        "unexpected": [],
+        "stale_dispositions": 0,
+        "passed": true
+      },
+      "dispositions": "75 raw findings/71 exact unique dispositions retained, unexpected0/stale0; no new disposition or blanket ignore in this pass",
+      "trivy": {
+        "secrets": 0,
+        "misconfigurations": {
+          "HIGH": 14,
+          "LOW": 10,
+          "MEDIUM": 2
+        },
+        "supported_backend_findings": []
+      },
+      "trivy_limits": "26 upstream reference-recipe findings retained; none in the supported hardened backend Dockerfile. Scanner exit0 is not a no-findings claim.",
+      "native": {
+        "image": "a91f5a6fe77b0b65e1add34ccf084c8ce85b213c60f797bf36c81bb8f8f97e2e",
+        "evidence": "security-scan-a91f5a6fe77b-451cfa/out",
+        "raw_matches": 209,
+        "advisory_ids": 96,
+        "critical": 0,
+        "high": 59,
+        "database_built": "2026-11-15T06:19:39Z",
+        "database_age_days_at_review": 2,
+        "database_archive_sha256": "96ada30f3287fd04be595a8f419df98efdf19955e7bfa28eae80ef7c5fe27eb7",
+        "raw_report_sha256": "5ebd40cea6dfe50a13f9067180c75d281f817d4830535e5632b1b14ebf61fcc8",
+        "effective_inventory_sha256": "b7cfbb00238ea51c1696f66325eaef35faa45f8dede333faa0efedcd399e9224",
+        "comparison": "All209 package/version/type/severity/advisory tuples and effective native inventory match the previous artifact. Final image freshly scanned with the existing qualified database; no claim of current advisory intelligence or absence of reachable native defects.",
+        "applicability": "Re-reviewed bounded Requests/urllib3 decoding and internal Botocore/storage call paths. Strict framing/IP pinning/TLS and dependency inputs unchanged; conditional component/API and incomplete native call-graph limits retained."
+      },
+      "intake_limits": "No new acquisition or scanner refresh. Exact previously screened inputs reused. ClamAV signatures2026-11-10 are seven days old; qualified Grype data2026-11-15 is two days old. No independent binary rebuild, completed publisher attestation or complete native extension call-graph proof."
+    },
+    "failed_or_limited_checks": [
+      "Initial regression run6f2bc9b9b4f3:9 failed/385 passed/one DB deselected; includes response-budget/ingestion contracts and one close-wrapper fixture assertion. First patched run3d980513b3a4 has only that fixture failure; retain both raw results.",
+      "Corrected focused run97944696e7a9 passes394/zero failures with six DB cases deliberately deselected. Three further transport cases and the five copy DB cases are covered by the final403 focused/919 full suite; no claim this intermediate run covered the later final test bytes.",
+      "Copy baseline5b8d27212f73:4 failed/640 passed in unit and4 failed/396 passed in focused. Two background-copy failures reproduce false uploaded rows. Two duplicate endpoint cases fail before storage because the database-only lane lacks Valkey; they are fixture/setup limitations, not endpoint defect reproductions. Final copy tests use a scoped local throttle cache and assert actual storage calls, including unexpected-error cleanup.",
+      "Superseded image308 HTTP66c9fac0c4d2 and native scan pass. Its API runa62621dd81c4 passes29 backports then is deliberately stopped with137 during duplicate full-suite execution after the fixture correction; it is not marked passed. Final a91 full suite runs to completion.",
+      "Full API dependency/deprecation warnings retained; raw Bandit exit1/75 findings,26 legacy Dockerfile findings and209 native matches retained."
+    ],
+    "maintenance_risks": [
+      "Requests consumed-content fields are private pinned-version contracts; re-review upgrades and repeat real compressed/chunked/text/JSON/cleanup controls.",
+      "The2MiB cap intentionally rejects large preview/webhook responses. Explicit streaming callers must independently cap/close; decoded byte limits are not a total wall-clock or all-parser/native resource budget.",
+      "A successful remote copy followed by database insertion failure can leave an orphan object. No distributed rollback, real storage transfer/recovery or automatic orphan sweep was implemented.",
+      "Internal/public storage endpoint configuration and URL-scheme compatibility require deployment review. Existing authorization wrappers are preserved; this is not a complete application authorization audit.",
+      "Native applicability and independent trust/alternate transports remain conditional; new source/dependency/configuration paths require renewed review."
+    ],
+    "unqualified_release_gates": [
+      "Final hardened web/admin/space/live production images and exact production Compose/proxy assembly",
+      "Production RabbitMQ, actual S3 upload/download/recovery and representative production periodic jobs",
+      "Browser sign-in/admin/ordinary-user authorization, PDF/storage and two-browser realtime through the final proxy stack",
+      "Fresh full restore/migration from the actual prior deployment and rollback acceptance; production-data use remains deferred",
+      "Deployment-specific public/internal storage origins and URL-scheme compatibility",
+      "Conditional native/vendor findings, broad trust-policy compatibility and infrastructure update/reboot decisions"
+    ],
+    "cleanup": {
+      "receipt": "image-cleanup-c55b121f3b6b.json",
+      "removed_image_configurations": 24,
+      "removed_image_ids": [
+        "308cea1fe5db31d9906d83ee0ce6322e42c25d5b91099f58feabb4db879651f5",
+        "3a7c42e461ee98fec284fc02bc8292887ac09a2e2fe1a84980e1796ff45debaa",
+        "8ac98fa693559b6a26a8b1d8756c208feaf3237ab8eb04999e2bcedeb63b2cfd",
+        "1fa462e90b66bcbadd22662c31884071044d6b612aa87c0b9a3a3cf33b2bb22d",
+        "600610dd85480f73e2c56606f27b20e0cdcaf72a2111414e096e52f74a519e3d",
+        "fc96e8bb15b7fcde7c307b02d9206dba65d04df25a39d269557b538809e85fdb",
+        "0d27d4118ddf97d2afe9387db36b12ee8ff564d951f098a40712075888d1ef0f",
+        "a50c83e600c2cf6f2c4bc6ba163e4d64bdb62d3aa37d7cc7b84e2aec102be052",
+        "e6906ff6d9f5b1625f88273295f3573e78444867ec3ebd66f3eb7a34f633bf25",
+        "696408ddc3139c24da1f6214c20507ea4af9e7a1628fc98b5f7feef69d0e31c4",
+        "9f389dd24ac16a4078ba87937ce850c6bbd8ed2cfbd6e5b41b33664dd4c222e2",
+        "bcda6b1a9fe10fe6347b503ba5a97a3c0901e6c029fba497de61eb3a42fa86f5",
+        "2e207ee92dba795a1600537cb3979d0d0dcf1b23ff7744fe711742ab5d0767fb",
+        "cf083cb61d8d3aee544343394902fa1ed440fa50d98b60258e9248b44a40010b",
+        "a12ccfed71329c486bf871b3b40f4aaecca779bb34bfff01d43c423cf1fa8c1f",
+        "ec46e498392323f12ab05e2e42bfb3670e7497c8fa315050f2067e0646f2e8f3",
+        "8a7466479897815340762f3988ef963ba18dee123bac27f4672d110344b7ca14",
+        "9f1fa34443f88d8aaecd69dc5dde1ed5b1743ff34a5b871374526c4708825614",
+        "1ea881c29b5156654920265533240cb40aef038388f45b82e7c5a3bec259c0e0",
+        "5dad2e90bce256d6f200e11df2f4b531cbfff24180e0794c7070dc70aa717cbe",
+        "0aca452aa8c2611cf01be8f6e74ca6aea1146f9b20b3661338ad7a559d6a53fe",
+        "cfc970e7294aeb813146e970f21c5b82d50ba9bddf76b2c23d27af985ea0c8ff",
+        "5b4f930148027e754ee220e343b82fa6899026cb50a82568507110b26f51cab8",
+        "bddb523163fd7c527ee4d674bbd8492c04f6200b716af7f95f06e845b5788b7f"
+      ],
+      "retained_candidate": "a91f5a6fe77b0b65e1add34ccf084c8ce85b213c60f797bf36c81bb8f8f97e2e",
+      "protected_project_configurations": 17,
+      "retained_exceptions": "Current candidate, shared bases/ancestry and all referenced/unrelated images. Superseded backend candidates never deployed; no separate rollback artifact required.",
+      "observed_storage_delta_bytes": 272441344,
+      "filesystem_free_before": 262495109120,
+      "filesystem_free_after": 262767550464,
+      "measurement_limit": "Observed filesystem free-byte change; concurrent unrelated writes affect this value. Image virtual sizes are not summed. Exact per-task physical reclamation cannot be isolated on this live shared filesystem.",
+      "method": "Exclusive build-retention lock, exact ownership/ref/ancestry checks and rechecks, leaf-first non-forced no-prune removal. No blanket prune, volume or unrelated-workload mutation; logs/manifests/scans retained.",
+      "final_project_containers": 0,
+      "final_project_networks": 0,
+      "final_tagged_backend_candidates": 1
+    },
+    "vps_deployment": "Deferred; no VPS/production-data/Plane-item mutation",
+    "closeout_checks": {
+      "git_diff_check": "passed",
+      "structured_records": "valid JSON",
+      "changed_code_hashes": "all46 match",
+      "source_and_actual_image_binding": "743 API inputs and5374 executable/configuration/dependency files match; zero mismatches",
+      "changed_public_files_checked": 53,
+      "operator_privacy_markers": 0,
+      "private_evidence": "ignored by Git",
+      "runtime_cleanup": "zero project containers/networks; one current tagged backend retained"
+    },
+    "superseded_by": "review_pass4_qualification; historical results, failures, bindings and publication history retained"
+  },
+  "review_pass4_qualification": {
+    "date": "2026-11-17",
+    "base_source_commit": "f1c543b7d7ac716b9a6968923982f57ae066f282",
+    "source_state": "Normal hardened checkout; local uncommitted changes preserved. No commit/push/PR/advisory/Plane-item publication.",
+    "status": "Reviewed asset V2 authorization, copy-target and bulk-association defects corrected; final-image full API, HTTP, worker, scheduler-role and exact static gates pass. No remaining reproduced defects in these reviewed changes. Native findings and release gates remain open.",
+    "image": "8e0c7832768c647a5e5a7fd8e0cc907bbff312d9ef570c668622ad2f30727890",
+    "build": "backend-build-7a9e1658149d",
+    "execution_boundary": "Existing qualified Debian host only: rootless non-root readonly containers, cap-drop ALL/no-new-privileges, bounded CPU/memory/PIDs/time; none or inspected internal fixture networks, no public ports/home/authentication/engine sockets, synthetic data only. No workstation candidate execution, new acquisition/dependency change or VPS mutation.",
+    "review_scope": [
+      "Asset V2 detail/download/check/restore/copy source authorization and upload/copy targets",
+      "Workspace/project, token API and legacy file siblings, personal mutations, parent-only legacy assets and mixed bulk association",
+      "Page visibility/link/role, draft/comment/profile/logo ownership, editor staging, public image and unassociated legacy compatibility"
+    ],
+    "resolved_findings": [
+      {
+        "id": "asset-v2-alternate-route-authorization",
+        "priority": "P1",
+        "status": "fixed and regression-tested",
+        "change": "Require active workspace and real-project membership before signed URLs, copies, existence disclosure or restore; derive legacy scope from every populated parent. Session, token API, legacy and personal mutation routes share this guard; token external-ID lookups and project upload targets are checked before disclosure/storage."
+      },
+      {
+        "id": "asset-v2-unchecked-target-identifiers",
+        "priority": "P1",
+        "status": "fixed and regression-tested",
+        "change": "Legacy multipart saves validate prospective scope and reject typed assets outside V2 MIME policy. Resolve typed target IDs, actual workspace/project/parent and mutation authority before storage construction or writes. Protect other-user profile/admin-only logo/private-page/other-author draft and comment writes. Fix conflicting cover/logo scope fields and missing draft-attachment association."
+      },
+      {
+        "id": "asset-v2-bulk-parent-and-source-bypass",
+        "priority": "P1",
+        "status": "fixed and regression-tested",
+        "change": "Authorize asynchronous copy sources and targets at execution time, including private pages and revoked/missing actors; sanitize destination keys and construct the internal SDK only for allowed objects. Guard empty-document jobs, preserve document authorship and attribute copied rows to the actor explicitly. Authorize each selected bulk source, including parent-only legacy uploads, and validate every destination before any update. Handle entity types independently and commit changes atomically, preserving valid owner-staged attachment and reassociation."
+      }
+    ],
+    "source_binding": {
+      "status": "Exact final image/build/API snapshot and executable configuration/dependency bytes match; later changes only records and documentation",
+      "snapshot": "plane-qualification-0f18236aa5b7",
+      "snapshot_files": 5420,
+      "executable_configuration_dependency_files": 5376,
+      "current_non_documentation_non_record_mismatches": 0,
+      "actual_image_api_files": 745,
+      "image_build_and_checkout_mismatches": 0,
+      "entrypoint_and_copied_health_helper": "All six entrypoint/health/runtime/parser/trust/policy copies match reviewed build inputs",
+      "full_api_binding": "All1080 full API cases execute in final8e0c7832768c with byte-matching API snapshot, including161 new asset authorization cases",
+      "changed_code_sha256": {
+        "apps/api/plane/api/views/asset.py": "ac314dd7e0d148a1fbedc899956d88fd6350e7734a96a0e1b3c30bb3afba6f89",
+        "apps/api/plane/api/views/base.py": "36af103b66602f51eabd93145142f64467c03f50b7694bcb5872ce135b344216",
+        "apps/api/plane/app/serializers/webhook.py": "0b186689671974a495219460dd3b752bb95061438174ac200ae6b85368ca42ae",
+        "apps/api/plane/app/views/asset/base.py": "f36eed6c8c84037f9b4e71169901e88320f8ac5cf0f943ceca9df3ca37ba444a",
+        "apps/api/plane/app/views/asset/v2.py": "b58375aca229e0198c75bcdc15e64846b5e873d9e5509d14ddb5f3eef320037b",
+        "apps/api/plane/app/views/user/base.py": "54f51681c57454d1e630386baee2f13334fcd14d2a717a3c6b1a301e2d7c7a39",
+        "apps/api/plane/authentication/adapter/base.py": "5d731488e6775e602c03c10814f3b434d0462c01878d3e1a9d0405975ab0bde3",
+        "apps/api/plane/bgtasks/copy_s3_object.py": "ee74a87bb03a3646c25b90717ef6d8dbf30921bc8df7639fe9c236dc107c19fc",
+        "apps/api/plane/bgtasks/deletion_task.py": "c9e999f3536f9755536dd58be2daef4a360d4d7a3f675b7c0de8b94bfee2298b",
+        "apps/api/plane/bgtasks/notification_task.py": "37743df07f0a446c3265e1c5e1756075eb0032755221fe1489af60879ad81e37",
+        "apps/api/plane/bgtasks/webhook_task.py": "c6899f5e13a8dcc95f1c914653071125bb8b7128c6f045a0e576301bc551e7a5",
+        "apps/api/plane/celery.py": "140c6d8314099aa6db3763cf53859dfd005f7f54ae7380b2dcd3f36c5551499f",
+        "apps/api/plane/settings/storage.py": "eb2263994c946393604a1d853954165798d651e48d5f7929e311c565745af1c4",
+        "apps/api/plane/tests/unit/bg_tasks/test_copy_s3_objects.py": "7cab3382dfc70bb9612082192f2d010eb46abd06d8a523d01d9987e904a2f970",
+        "apps/api/plane/tests/unit/bg_tasks/test_ssrf_advisories.py": "c6a22e83336d1e5b106ab8f70cb8581000d816ef4152f84719c9c16fba2c3189",
+        "apps/api/plane/tests/unit/bg_tasks/test_url_security.py": "df0da234ffd5e119c2968de9bd21655a6fa499cb9c4c78924b77858120c53fca",
+        "apps/api/plane/tests/unit/bg_tasks/test_work_item_link_task.py": "f6e86ce6906a9ff5f57c9f18480faa568e4ddb4eb5b2b724d80d3c67563d83c4",
+        "apps/api/plane/tests/unit/utils/test_asset_authorization.py": "04e155b4f3090e0f60c5f7c0f27de66f966f8098d721f7a981ecf1f11ce1678c",
+        "apps/api/plane/tests/unit/utils/test_asset_copy_storage.py": "4599544cf5a7a11b4f5284d8bd2efd2f76dbf91283364dea968caaa1de3d8618",
+        "apps/api/plane/tests/unit/utils/test_avatar_storage.py": "7242b71a53d55fc3c28a91af21b8fa3412959bd5469eae58e6a5b0b5e94fcef8",
+        "apps/api/plane/tests/unit/utils/test_backend_entrypoint.py": "f1133aa8ae33e38f771212815299c4cef9441eeec313631c5569691b97a410c4",
+        "apps/api/plane/tests/unit/utils/test_exception_logging.py": "b87d4fbb0cac1362b4fd6bb6d99323522c673c853640a02a9978fb45b29262f1",
+        "apps/api/plane/tests/unit/utils/test_outbound_response_bounds.py": "6f0ab5411629a427a7030f89778fb593d557bc95ad7d86648c287cb619776a2f",
+        "apps/api/plane/tests/unit/utils/test_request_logging.py": "d9cef0a5059d56558adffbb1f89f8ba3f418b40bb53bc1f0b73df8e335feafa9",
+        "apps/api/plane/tests/unit/utils/test_runtime_health.py": "b5b415711ed18b5919fc4bd5533aed0bce35d48f6dda2652ace4b2bd80eeb800",
+        "apps/api/plane/tests/unit/utils/test_storage_configuration.py": "da35be3b651469857e1a8751ecdb030853e6fa7f6ff70094846045328ded495e",
+        "apps/api/plane/tests/unit/utils/test_worker_logging.py": "564862bdfc2489531218d14042603202d4051c8d16a8bc209e592de5211b001d",
+        "apps/api/plane/utils/asset_permissions.py": "ebf0a9cf1e60ce43f5d486a11f75eb988de4137b0006eb23bb644700f53f7194",
+        "apps/api/plane/utils/celery_health.py": "000180afd28a2eb28cab608fbd99765bb66cf6820fcfa8059b94260935ee52f0",
+        "apps/api/plane/utils/exception_logger.py": "2c277fd45dfb90932d87b4f374e33410eb2d73bdd5b8176a68976b4529f742da",
+        "apps/api/plane/utils/filters/filter_migrations.py": "31c5949a81ed5f24e946cb3c469ff8dfe8c37ab1cb72728c4f11348fc76fc1f3",
+        "apps/api/plane/utils/request_logging.py": "0b1afa32c7a666567c593d62e23301abf75d00f2b7c50db107f9b9c63d71ed5f",
+        "apps/api/plane/utils/runtime_health.py": "efc2ea854b49a18453ebea03decf7b7530ada2d14166d0a8ebb3a0991000d25a",
+        "apps/api/plane/utils/url_security.py": "662d633f3e01075f30a8aac22bcb1b09e4a0248c65ec77b3e45a4321d2fe0212",
+        "apps/api/plane/utils/worker_logging.py": "ec9935d662f2ab112393c548e1569a915a7887eed18038871459f3f2bd9de795",
+        "hardening/backend.Dockerfile": "3967218c28d5137aba49e22a8002cb6cacdb9dc4be2b5ed64cd83a76aa80b6a7",
+        "hardening/backend_entrypoint.py": "641fd82473449c9c1b16fd528a4c30700d91c0632e1d3054adc75b8001160e25",
+        "hardening/bandit_dispositions.json": "39c665750885cd0049947eab322b2f5279a787f1379af1cb8b6677c819e6c0d0",
+        "hardening/build_backend.py": "5e2d56fcdd48472cde4b7abb651005066c99ce072050ea5482299e1cba5121f0",
+        "hardening/qualify.py": "67154963c7a6955162fc3207e1a84190bdaa2ab08ca807b5dec55839e2ae9293",
+        "hardening/remote_runner.py": "6c1893528097c0f5552bffe553bbf5ce8f82bb9e457c033fbae1adb02df6333e",
+        "hardening/role_fixture.py": "4f955b238ee7fd2c5c7bd1f2adc6509ee6a63161d0013aaba29ad651b3864c83",
+        "hardening/run_restricted.py": "ae70219a23fb32a05331893150925d2d396b964cd5084198331caf6c566cb539",
+        "hardening/runtime_smoke.py": "31b47eaf0832c6b83920ed9030bd86f0d93f6be5fae0fad0619132a7463f61db",
+        "hardening/scan_backend.py": "93e880624df9369e19fbf0d06706a3a2cd8178475de67c921cf6047f8a1da3b4",
+        "hardening/source_snapshot.py": "77ad8e0e0eacc2635084876fe9ed56612df849d05c9146dbe46747e355b068b1",
+        "hardening/test_build_backend.py": "a1ce2ac828bf29e83e1febbde2a37d775ccebfda4eeaac656e78261cc6e183ce",
+        "hardening/test_operator_config.py": "1b2ab15a5160ddb2a374741c1767758b1c50352a8d9a407ac80b269f13eb8bf4",
+        "hardening/test_source_snapshot.py": "1df04a16b2fa99a1a8be0ae0b824e3f905aee68768af3e1906972587c3a05b2b",
+        "hardening/worker_receive.py": "201fc3ac23fa13648ce4dc66e6ba5c2e28cee4ec7dc9da24e57497c98d2e26f9",
+        "hardening/worker_smoke.py": "004e71ad94b77c3b5a1c1a17d932dc5955f2d2cb37daf37a1ddf3301334dface"
+      }
+    },
+    "intermediate_200b_qualification": {
+      "image": "200b0c6626a6590ca37378686ef58a295bf27ae90106ee4ad6e63c80904e51df",
+      "api": "plane-qualification-41f63f3a00b0",
+      "full_api": 1065,
+      "focused_overlapping": 549,
+      "http": "plane-qualification-139a0be17b36",
+      "worker": "plane-qualification-998dea799919",
+      "roles": "plane-qualification-fb0c40bc8c51",
+      "all_aggregate_exits": 0,
+      "source_binding_at_review": "745 API/5376 executable-configuration-dependency inputs matched; private binding retained",
+      "superseded_reason": "Final async-copy review adds execution-time source/target authorization and15 regression cases; intermediate results are not relabeled as final"
+    },
+    "tests": {
+      "full_api": {
+        "run": "plane-qualification-0f18236aa5b7",
+        "tests": 1080,
+        "new_asset_authorization_cases": 161,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0,
+        "aggregate_exit": 0,
+        "migrations": "all applied",
+        "overlapping_backports": 29,
+        "overlapping_focused": 564,
+        "warnings": {
+          "count": 530,
+          "summary": "1080 passed, 530 warnings in 462.23s (0:07:42)",
+          "scope": "Dependency/deprecation and missing collected-static fixture warnings; full log retained privately"
+        }
+      },
+      "additional_groups": {
+        "run": "plane-qualification-0f18236aa5b7",
+        "trust": 54,
+        "transport_compression_helpers": 103,
+        "operator_routing": 15,
+        "dependency_consistency": "passed",
+        "ruff": "passed",
+        "worker_reception": {
+          "passed": true,
+          "child_exit": 0,
+          "payload_leaked": false,
+          "control_states": {
+            "v2": "SUCCESS",
+            "v1": "SUCCESS",
+            "return": "SUCCESS",
+            "failure": "FAILURE",
+            "notification": "SUCCESS"
+          },
+          "required_events_visible": true,
+          "task_identities_visible": true,
+          "scope": "Actual Celery/audit code; real solo worker and memory broker; default v1/v2 payloads, unknown task, return, failure and actual notification error path; no database/network"
+        },
+        "scope": "Full API/backport/focused counts overlap; no additive unique-coverage claim"
+      },
+      "new_contracts": "161 real PostgreSQL/API cases including token/legacy upload/download/mutation, external-ID privacy, personal-parent laundering, typed legacy-upload rejection, asynchronous copy execution-time access/partial-copy/key-name/document-attribution checks, and: missing/inactive/foreign memberships, source and target scope, all10 entity types, invalid IDs, parent-only rows, profile/logo mutation authority, both upload routes, project siblings, staged covers/pages, private/deleted-link/global pages, guest/member/owner roles, comment authority, mixed bulk atomicity and legacy-source reassociation. S3 is mocked; a scoped local throttle cache isolates DB-only fixtures.",
+      "final_http": {
+        "run": "plane-qualification-01c3c43999bf",
+        "exit_code": 0,
+        "passed": true,
+        "checks": [
+          "production entrypoint healthy with readonly root and non-root UID",
+          "unset CORS origin configuration denies arbitrary credentialed browser origins",
+          "HTTP API token authentication and workspace isolation",
+          "HTTP issue create, HTML sanitization, ordinary content retention",
+          "production HTTP intake creator/admin permissions and provider-token omission",
+          "production session-authenticated denied writes preserve real Valkey cache; admin writes invalidate it",
+          "five malformed/oversized HTTP parser rejection controls",
+          "production server logs omit token, query, body and arbitrary path markers",
+          "explicit configured CORS origin succeeds and other origins remain denied"
+        ],
+        "image_source": "/code",
+        "limits": [
+          "Celery uses memory transport here; no live worker/RabbitMQ or S3/UI qualification"
+        ]
+      },
+      "final_worker": {
+        "run": "plane-qualification-f793cd017c19",
+        "exit_code": 0,
+        "passed": true,
+        "checks": [
+          "Production API producer sends JSON through real Valkey broker to real prefork Celery worker",
+          "Actual PostgreSQL metadata persistence, keyed token correlation, route/status and secret stripping",
+          "Legacy payload rejection and worker-side revalidation of dirty current-schema records",
+          "API and worker logs omit synthetic credentials and payload markers"
+        ],
+        "limits": [
+          "Valkey broker qualification does not qualify RabbitMQ transport",
+          "Synthetic data only; no S3, beat or VPS action"
+        ]
+      },
+      "final_roles": {
+        "run": "plane-qualification-35fd28178c8d",
+        "exit_code": 0,
+        "results": {
+          "legacy_migrator_alias": "passed real migrations without invoking the old shell script",
+          "api_health": "passed actual image health check in its own PID1 container",
+          "worker_health": "passed actual image health check in its own PID1 container",
+          "beat_health": "passed actual image health check in its own PID1 container",
+          "api_custom_port": 8123,
+          "scheduled_delivery": "DatabaseScheduler\u2192Valkey\u2192standalone prefork worker\u2192PostgreSQL",
+          "worker_unresponsive_and_recovery": "passed negative and positive RPC controls",
+          "beat_stale_and_recovery": "passed negative and positive scheduler-loop controls",
+          "scheduled_payload_log_privacy": "passed with default unmasked message representation",
+          "scope": "Synthetic fixtures only; Valkey transport, not RabbitMQ or production restore"
+        }
+      },
+      "javascript": {
+        "run": "plane-js-0dbe9cbfaa64",
+        "status": "Previous complete unchanged-source/dependency qualification retained; not rerun for backend-only changes. Final frontend images/browser/storage assembly remain open."
+      }
+    },
+    "security_scans": {
+      "bandit_raw_exit": 1,
+      "bandit_review": {
+        "raw_findings": 75,
+        "reviewed": 75,
+        "reviewed_unique": 71,
+        "unexpected": [],
+        "stale_dispositions": 0,
+        "passed": true
+      },
+      "dispositions": "75 raw/71 unique exact reviewed findings retained; no new disposition or blanket ignore",
+      "trivy": {
+        "secrets": 0,
+        "misconfigurations": {
+          "HIGH": 14,
+          "LOW": 10,
+          "MEDIUM": 2
+        },
+        "supported_backend_findings": []
+      },
+      "trivy_limits": "26 upstream reference-recipe findings remain; none in supported hardened Dockerfile. Scanner exit0 is not a finding-free claim.",
+      "native": {
+        "image": "8e0c7832768c647a5e5a7fd8e0cc907bbff312d9ef570c668622ad2f30727890",
+        "evidence": "security-scan-8e0c7832768c-68ca54/out",
+        "raw_matches": 209,
+        "advisory_ids": 96,
+        "critical": 0,
+        "high": 59,
+        "database_built": "2026-11-15T06:19:39Z",
+        "database_age_days_at_review": 2,
+        "database_archive_sha256": "96ada30f3287fd04be595a8f419df98efdf19955e7bfa28eae80ef7c5fe27eb7",
+        "raw_report_sha256": "3906a3cff45ee4bf788b2646dd3c78b47ea5e1dc1ebbdad69d2671835e6aaa81",
+        "effective_inventory_sha256": "b7cfbb00238ea51c1696f66325eaef35faa45f8dede333faa0efedcd399e9224",
+        "comparison": "Fresh exact-image scan; all209 package/version/type/severity/advisory tuples and effective native inventory match the previous artifact. No new suppression or claim of current intelligence/native reachability proof."
+      },
+      "intake_limits": "Existing exact screened inputs reused; no new acquisition or database refresh. ClamAV signatures2026-11-10 are seven days old; Grype data2026-11-15 is two days old. No independent binary rebuild/completed publisher-attestation/all-native-call-graph proof."
+    },
+    "failed_or_limited_checks": [
+      "Baseline737fe594bca9 on a91 with initial59 regressions:36 failed/426 passed plus one teardown error in focused. The error exposes an unchecked integer entity ID written as a missing UUID foreign key, detected by deferred constraint checks. Unit run stops at10 reproduced failures/33 passed. One test line-length lint failure retained.",
+      "First patched database run3cc8a2ca21b0:706 unit and462 overlapping focused pass; aggregate1 only for two line-length lint findings, corrected before final image. This snapshot predates bulk and expanded compatibility tests and is not final-image evidence.",
+      "Superseded4b8 image integrationb820fa929ac0/server1752b0209b73 deliberately stopped137 during migrations after manual review identified the parent-only bulk-source bypass. Neither is marked passed. Intermediate567 HTTPba15f568d93e passes; its API is superseded after the fixture diagnosis below. Intermediate200b passes all suites and service lanes before the later async-copy extension; final8e0c runs own current qualification.",
+      "Intermediate API44c5ba456f96 stalls while rendering an unconfigured Mock upload response. Its60second stack dump identifies the test fixture; this run and databasecfe7dad7f3aa are deliberately stopped137. The signer fixture now returns a concrete dictionary. Later9a API2b68e10e7c92/server3f9a2b679f78 are stopped137 during migrations to replace two incorrect legacy success-status expectations (204) and include two personal-file controls; no production-code change between9a and200b.",
+      "Intermediate200b concurrent HTTP14cb9e335739/worker45ff024c3f9f hit their240second migration fixture deadlines near the final steps, before application smoke checks. Intermediate same-image serial reruns qualify HTTP/worker; timing failures are retained rather than treated as application passes.",
+      "Superseded1e88 APId87884891881 is deliberately stopped137 during migrations to include the inactive-user worker check; the final actor lookup requires is_active=True. It is not marked passed.",
+      "Dependency/deprecation warnings, raw Bandit75/exit1,26 reference-recipe misconfigurations and209 native matches retained. Existing failed historical probes remain in prior review records."
+    ],
+    "maintenance_risks": [
+      "The shared resolver adds database lookups and must track upstream entity types, parent ownership, enterprise/global-page overrides, editor staging and alternate V2 routes. Previously accepted unauthorized requests now fail intentionally.",
+      "Permission checks do not lock membership or parent state across remote storage and database operations. A successful object copy followed by database failure can leave an orphan; no distributed rollback or real-storage recovery proof.",
+      "Public static image types retain existing anonymous reads. This is a scoped V2 review, not a complete authorization audit of every API version, background task or enterprise extension.",
+      "Previously published static copies are not revoked and production asset history is not inspected or repaired by these guards; production-data use remains deferred.",
+      "Native/trust/vendor reachability and production assembly remain conditional; no current-intelligence or vulnerability-free claim."
+    ],
+    "unqualified_release_gates": [
+      "Final hardened web/admin/space/live production images and exact production Compose/proxy assembly",
+      "Production RabbitMQ, actual S3 upload/download/recovery and representative production periodic jobs",
+      "Browser sign-in/admin/ordinary-user authorization, PDF/storage and two-browser realtime through the final proxy stack",
+      "Fresh full restore/migration from the actual prior deployment and rollback acceptance; production-data use remains deferred",
+      "Deployment-specific public/internal storage origins and URL-scheme compatibility",
+      "Conditional native/vendor findings, broad trust-policy compatibility and infrastructure update/reboot decisions"
+    ],
+    "cleanup": {
+      "receipt": "image-cleanup-5b8888c633f3.json",
+      "removed_image_configurations": 94,
+      "removed_image_ids": [
+        "0657e6836d0a83b77fc00381c0f22f0293d3a6dfd765b7a7c20e57d05f9eeef8",
+        "154e90bfeec24f36626127a9a78d866d4af1c6b0c6bb509fa2c9ea13db1701e3",
+        "1e88a45fab48ceacdac24ca28358ecc90c48cffc1ecdadc6d5ad3eff0855cb83",
+        "200b0c6626a6590ca37378686ef58a295bf27ae90106ee4ad6e63c80904e51df",
+        "4b8af25be2880d6672e1cd96e7694e2f758aeab083711258672c490b0ff618ad",
+        "567fd828f84714c35aa18cd86a2dfb2ef052fe07e7810db80f138bd1e5e1634c",
+        "9a6897b196872f437505cb44e9cfd3c43e6aac84c02b86bd13af92b607144e45",
+        "a91f5a6fe77b0b65e1add34ccf084c8ce85b213c60f797bf36c81bb8f8f97e2e",
+        "aef3bef94cc78910ff75e5300a3fb82ea30da6f03f276c51facce852a445986b",
+        "ff4505000d979519cbb283372bc96fdece5b2a92e0dcc21fe272623db35a6da6",
+        "1542830ade716747ce94d7b3398c4f72cb14028952dee18598fe33344af83b77",
+        "5325317574bb4ae0ad817eb9087672d104b27e5588014b85e0ba8eebc86c6ca3",
+        "718a0f2a1a7e259860354a99311ba82abe3ca85f70a6e1284af0f7b635ba3dbc",
+        "720f2ec19a1caa79e9237ea4c613da003e5611a93585143cbd2dbd316724c05a",
+        "764a826f382ae7898e2b757d9c391bda716277413868859bb00f3a13e7fb1a6d",
+        "771af55943ccd0693ab2e6512ddd83a2ffedfd47fd5af8f11b4b22119b19306f",
+        "8c086f96e9df2e72cdaf8905c40f1e2bc92cd08632810f43c8f7eeccd0da2971",
+        "b9bb1179c11f1f48e4758a50ddd209d0fc83e5b6d8f5e102cbf79b195c933a43",
+        "f53ec6dcefd897313a51ab53b3f9f7fdf2b67b96c4375adbff2e5bbfbcd3e53a",
+        "f8e19bf3e7d2f03247f49182d1f5378f6b09e84c2d774fc9d7bb58f548d61a88",
+        "33165528c720e54fb42a15d7bcf2c11c7b76f9be6ac68207cfa90f44bfa59aa0",
+        "35431a9bd5fee7e30079bac8e59c2e734d453574f87611a53b5d503f272fa79e",
+        "3dc1f2012bd0849ef18b1c1fdc4dc1c88fffa3a515b7c3c75052b730e4e3cdf2",
+        "819d10a299716d6744d3837248562bb00f8cbcd7ffcea5cbf55c85184d6cf151",
+        "a171019301d2d3425dd382d83fe067f36b5461e1e2d39b24f1ab9b350dee932f",
+        "c6033c9786579018d9818b47c59b8625deaa0e260bfdce5be8ec6905de086f54",
+        "d495fd7fdb550b054ba32e9a2f375b40b8554e2a53f4948f2ab2eba1c8b07185",
+        "e26a0891160706815aa01e010c6a97955d84741a41887432532f5a255e8bd746",
+        "e906d82457462bce351433f3ba8c4e9748d4fe4c39361cea57aec29e0affdd1d",
+        "fd01fe7cb6f4829fdbe5e74d6bb461d5c38f20abbac4eae674f6dd68307b77d2",
+        "129ee0e0033ec0e8393d2cde0c9b090a2f9b3a4f9aa1c156746b808e7d4b6fa7",
+        "1c29a83cfced11a996ee2edb78ee30393f567b6d65cc42f582a33132e7fbc3be",
+        "31adf350bbe25b2a4cda73e453169da817b28213f2228eceaa1519c0bc4a5751",
+        "3cb38d38bc62a48ceae27f72be7934b1939c5568d8c100ef03faefa4d6b4cf92",
+        "502656989e0feba8cc397d95efcb956a215ca6351c41044c7e119f00a1cd7ab4",
+        "56a6baecf2ec40080d57cf9ffccf74b381218d259ad8ca4fbacc135d47957aa3",
+        "93359af631f03a7c03aec8796be36a7b7e7477afa6ac92981ba2fd87ee319834",
+        "a45a88e7fb0745630d6822abda37b00b9112a971f8ab8ad8490fc34c4e99c837",
+        "b1f06a7ef763425ff88753b75cef17347927c473da5b3f38e0ece2cf7bd6c0d9",
+        "b824622eff337cf84ad9f862e3bfb9215e0df6a749d61542c87582a457114b92",
+        "178e5ab3e58dd7b902e17dda7f6f5b904779d045c4f8e922009267dbfcf901b5",
+        "35825afe21d42c0621bddbec39335b8232c8302ad6109b110d2a95f4f7a99ca5",
+        "82bdabdf3dc786a50005f3d8d184ea51c285dec286cb062affc62ee14e1de4dc",
+        "83755b6349eab5411bf656cf2da55e9e4cfb6fcabae559211509ba2b990bf2f4",
+        "8d4e3018ea6fdc64d1083086acfeee9ce742e2066066ccc72d0a992de3ba318f",
+        "afe62b37e10c1a4b5e609c651530d7d33c7a9943d4406c54026a35b58b5812b6",
+        "b3b4319e6f3a81c7cddbffde91406cfe56fc04def9b5b256ec0d2e4617edfb5d",
+        "b96e098e361a6aa5d72b528c6a013c750a071c29ff4a767d04f363190e870b4b",
+        "cb6d9c65171b96dda95f882367c9d2c8f518cd3197220f44ea7294d114a5e4af",
+        "0fc0891a2be69761fa27613655041caa6c729f7c44ceed03eff818d259fe2ece",
+        "3748fe9b69f49484e6c49935c378b803f2f52d5c611ba82c2d7c97dc8bf578e3",
+        "4429457188434024ddff6ef792063a8b003b1795ac5a72bedcc72ab16aa8ed9f",
+        "53f1bea7944553ae6d56f59d995ef72711812d51e18259dd8333c9488b52d977",
+        "57acabc5e51ad3afd66becfc0f69975cea42a070d8054edc4dab73c03bfcb150",
+        "5b9fd8ca73f3ab7979c654691d4e5a342b8de8f9122615ba88c8f4f9f5b2c07a",
+        "6f079c3afd2b9c13480726e674876e63001870951777dbdac0ebf1dfb5c6467b",
+        "acda9eeacdf5bc9780d7febf16e26342013b0e06f86d029bbf1a24c7b99a5e9b",
+        "c3d8e20dd39694dcc959528deb3112425a31261181beee94375c34df7da2a2c6",
+        "2fcfe7b5feb7a5a20326125a56c5b1eea0ca10e4f69dc8aa331116a83a6888cd",
+        "3b44fe15333f3c1765a0f29da64cf1f3c77005902024ca29cd22358408d48466",
+        "5b4eddf44f74f18a17f1f2425f1463848a3b0f70784a1037637e674d01967c10",
+        "6bbe544490ca74eb7d7c9a513ee4a4776469a8a33f06ac3b032e9c668f19ddce",
+        "6ef7a43d80a0d357d8788b0e04ed047535b703ee5e1c5ed4db5ebf7b24d8a837",
+        "d83f70b9d92ba37355a5b82ecf32e63ea72f7f1dc6de720c0d26afa5404f4e53",
+        "d9f7603a30ea1e1212fdb149fd5fae8f22411d316125c158a2e93fb7bb5cbe8f",
+        "e39ca9aba1260ec1963d849c1f9c5f2dd90986fff33b95af54953d9eb51dcdec",
+        "f3149ebc069f8bd5951eb08ac82600c5a896a13b28b60df70762f95e003440b7",
+        "1177dd15cd620bcdc1169f312bdd722684344f215a67acfbd2da091292058274",
+        "49c4b92300d624bb97a7e506081a07bc5c537f37d751fe751c1ccaff96d9d92c",
+        "5bb593fda0d227fe989b91312003e930728f277f597a3137f583c29e1582f557",
+        "6a4b1a6b5bf2e3269d9a8c1cdb68dfc9f4a1ea4aeb3f910e9461b76db39e4c80",
+        "789949a144380ac7cea7758086f6147eb904737535c2df4185f8c6e8361ac8b4",
+        "89ea58c6f9263ab099bc19b9a33f6eb351d9c767b843c0f1b57d0fcfc2cd24f2",
+        "94244e12b0bc63554220e0713efe0633ade7ea0b78ae79261168480f7be0c513",
+        "be6cab25eda6b70ec2c783d1f068e63bbe3cd423e7007744b32d761100053c00",
+        "c12d0740619a70bbc5e5b98de89e7211dde39e22888939c251983af654e03ce6",
+        "14751e8fd81e920bb46ec0f523bebd462c9d6e1b04de0e868573b7d2189fad52",
+        "1e130a56d9e937d76012a144b0b66aeb874bd3447e596891b07d586ced00c121",
+        "1fbaa4fcaa07ba604664436590a832b56cedc385a2e74e095c07e41d948acbe7",
+        "6429abb944ef190e43ca03b92dbcd50337dc9c73424ad84ee343df82dc664a4b",
+        "6c2fd82edb639b92b593ecb0714a91059fa6f148ef5fe6f1a8fd3576d6451b3f",
+        "82809739f8ee0fbfb9ee3596677d17c0ec6b8f139c5ed4e4655ed1939e9c52a0",
+        "c3a844b65e07aa98cc7b94ad710e141b9e6360158718f51934a01e8e81606c67",
+        "d5f0a5d3f275f4168c0de28692febb7695f294760798d08bed7b22632afd8952",
+        "d96bd080b13dbc3fc1a09c729748cf9343bc6f0a40a99a8b00386d20d58b9d34",
+        "2408416ae7adcf612247f94886aed64df3388828ff86d8aeece80b871c60b948",
+        "3139bc2d034fc31ae2e5214074b86f38f54fea52b65108777e17ea1e85fd5545",
+        "3e42377fc2109ecc4421fe036973230c6bdc906a2042cd53b4f23f6f4ba01178",
+        "622cc9d8fdf537b39a86b379585a7a0440ef54926012cf65e2e21be94162d7ca",
+        "6552fed52ac8254b51a98b3d6a4f462c1bbcbaeb31477f5eb1f14512920ac98f",
+        "8880c20b20127e95f27115735f1127aaa4dcf09774038be6557cebe7abba8887",
+        "b2c6ea91088983c25421824749946ef84e0ed6425d0d63e0def23d67ebfc7376",
+        "d67b9a84d0b6d3b3e954d4568205b0db1c539cebaf9ef6782437b1849c6f5271",
+        "d85118c4c15f56a0ddd67a1d25833476c83310506414fc3f00ad1ea9a1b39e54"
+      ],
+      "retained_candidate": "8e0c7832768c647a5e5a7fd8e0cc907bbff312d9ef570c668622ad2f30727890",
+      "protected_project_configurations": 17,
+      "retained_exceptions": "Current candidate/shared bases/ancestry and all referenced/unrelated images. Superseded candidates never deployed; no separate rollback artifact required.",
+      "observed_storage_delta_bytes": 324988928,
+      "filesystem_free_before": 262100410368,
+      "filesystem_free_after": 262425399296,
+      "measurement_limit": "Observed filesystem free-byte change; concurrent unrelated writes affect this value. Image virtual sizes are not summed. Exact per-task physical reclamation cannot be isolated on this live shared filesystem.",
+      "method": "Exclusive retention lock, ownership/ref/ancestry checks and rechecks, exact leaf-first non-forced no-prune removal. No volume/unrelated workload mutation; logs/manifests/scans preserved."
+    },
+    "vps_deployment": "Deferred; no VPS/production-data/Plane-item mutation"
   }
 }

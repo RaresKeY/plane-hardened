@@ -4,21 +4,15 @@
 
 # Python imports
 import logging
-import traceback
-
-# Django imports
-from django.conf import settings
+import re
 
 
 def log_exception(e, warning=False):
-    # Log the error
     logger = logging.getLogger("plane.exception")
-
-    if warning:
-        logger.warning(str(e))
-    else:
-        logger.exception(e)
-
-    if settings.DEBUG:
-        logger.debug(traceback.format_exc())
-    return
+    # Exceptions can contain request bodies, credentials, URLs and database
+    # values. Preserve a bounded category without rendering the object/cause.
+    category = type(e).__name__
+    if re.fullmatch(r"[A-Za-z_][A-Za-z0-9_]{0,63}", category) is None:
+        category = "Exception"
+    logger.log(logging.WARNING if warning else logging.ERROR, "Application operation failed",
+               extra={"exception_type": category})

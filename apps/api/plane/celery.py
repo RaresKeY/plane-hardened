@@ -9,12 +9,12 @@ from datetime import timedelta
 
 # Third party imports
 from celery import Celery
-from pythonjsonlogger.json import JsonFormatter
-from celery.signals import after_setup_logger, after_setup_task_logger
+from celery.signals import after_setup_logger, after_setup_task_logger, beat_init, worker_init, worker_process_init
 from celery.schedules import crontab, schedule
 
 # Module imports
 from plane.settings.redis import redis_instance
+from plane.utils.worker_logging import configure_worker_logging
 
 # Set the default Django settings module for the 'celery' program.
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "plane.settings.production")
@@ -98,18 +98,25 @@ app.conf.beat_schedule = {
 # Setup logging
 @after_setup_logger.connect
 def setup_loggers(logger, *args, **kwargs):
-    formatter = JsonFormatter('"%(levelname)s %(asctime)s %(module)s %(name)s %(message)s')
-    handler = logging.StreamHandler()
-    handler.setFormatter(fmt=formatter)
-    logger.addHandler(handler)
+    if not logger.handlers:
+        logger.addHandler(logging.StreamHandler())
+    configure_worker_logging(app.tasks)
 
 
 @after_setup_task_logger.connect
 def setup_task_loggers(logger, *args, **kwargs):
-    formatter = JsonFormatter('"%(levelname)s %(asctime)s %(module)s %(name)s %(message)s')
-    handler = logging.StreamHandler()
-    handler.setFormatter(fmt=formatter)
-    logger.addHandler(handler)
+    if not logger.handlers:
+        logger.addHandler(logging.StreamHandler())
+    configure_worker_logging(app.tasks)
+
+
+@worker_init.connect
+@worker_process_init.connect
+@beat_init.connect
+def finalize_worker_log_privacy(*args, **kwargs):
+    # Django loader initialization can replace application handlers after the
+    # initial Celery logging setup. Cover the final parent/child/scheduler sinks.
+    configure_worker_logging(app.tasks)
 
 
 # Load task modules from all registered Django app configs.

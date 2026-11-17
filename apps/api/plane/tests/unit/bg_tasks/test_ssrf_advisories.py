@@ -54,6 +54,7 @@ def _resp(status_code=200, headers=None, content=b"OK"):
     resp.status_code = status_code
     resp.headers = headers or {}
     resp.content = content
+    resp.iter_content.side_effect = lambda **_kwargs: iter([content])
     return resp
 
 

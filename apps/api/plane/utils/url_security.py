@@ -42,6 +42,14 @@ _REDIRECT_STATUSES = {301, 302, 303, 307, 308}
 # the original hostname and bypass the IP pinning entirely.
 _NO_PROXIES = {"http": None, "https": None}
 
+# Link previews and webhook receivers are remote-controlled. Bound decoded
+# bodies before Requests' eager buffering, including compressed responses.
+MAX_RESPONSE_BYTES = 2 * 1024 * 1024
+
+
+class ResponseTooLarge(requests.RequestException):
+    """A response exceeded the non-streaming client's decoded body budget."""
+
 
 class PinnedIPAdapter(HTTPAdapter):
     """
@@ -114,6 +122,7 @@ def _request_to_ip(method, scheme, hostname, ip, port, path, *, headers, timeout
     response (closing the response also closes the session), so a streamed body
     can be read with a real size cap; otherwise the session is closed eagerly.
     """
+    stream = kwargs.pop("stream", False)
     ip_obj = ipaddress.ip_address(ip)
     host_for_url = f"[{ip}]" if ip_obj.version == 6 else ip
     url = f"{scheme}://{host_for_url}:{port}{path}"
@@ -140,13 +149,28 @@ def _request_to_ip(method, scheme, hostname, ip, port, path, *, headers, timeout
             verify=True,
             proxies=_NO_PROXIES,
             auth=auth,
+            stream=True,
             **kwargs,
         )
+        if not stream:
+            try:
+                content = bytearray()
+                for chunk in response.iter_content(chunk_size=64 * 1024):
+                    if len(content) + len(chunk) > MAX_RESPONSE_BYTES:
+                        raise ResponseTooLarge("Outbound response exceeds size limit")
+                    content.extend(chunk)
+                # Preserve Response.content/text/json and repeat iteration after
+                # consuming the bounded decoded stream. Requests is pinned; its
+                # consumed-content contract is covered by real transport tests.
+                response._content = bytes(content)
+                response._content_consumed = True
+            finally:
+                response.close()
     except BaseException:
         session.close()
         raise
 
-    if kwargs.get("stream"):
+    if stream:
         # Defer closing the session until the response is closed, so the
         # streamed body remains readable. response.close() now also closes
         # the session.
@@ -194,6 +218,10 @@ def _fetch_validated_hop(method, url, *, allowed_ips, allowed_hosts, headers, ti
                 headers=headers, timeout=timeout, auth=auth, **kwargs,
             )
             return response, normalized_host
+        except ResponseTooLarge:
+            # Retrying every address can multiply the same oversized transfer.
+            # This is a response-policy failure, not a connection failure.
+            raise
         except requests.RequestException as exc:
             # Try the next resolved address (dual-stack / round-robin hosts).
             last_exc = exc
@@ -215,7 +243,8 @@ def pinned_fetch(
     """
     SSRF-safe single request. Resolves + validates the target host and pins the
     connection to a validated IP (defeating DNS rebinding). Does NOT follow
-    redirects.
+    redirects. Non-streaming responses have a decoded 2MiB body cap; streaming
+    callers own their body budget and must close the response.
 
     Raises:
         ValueError: if the URL is invalid or resolves to a blocked address.

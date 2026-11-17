@@ -22,8 +22,9 @@ WORKDIR /code
 COPY api /code
 COPY LICENSE.txt /usr/share/doc/plane/LICENSE.txt
 COPY backend_entrypoint.py /opt/plane-hardening/backend_entrypoint.py
+COPY runtime_health.py /opt/plane-hardening/runtime_health.py
 USER 1000:1000
 EXPOSE 8000
-HEALTHCHECK --interval=30s --timeout=5s --retries=3 CMD ["/opt/venv/bin/python", "-c", "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8000/',timeout=3).read(1024)"]
+HEALTHCHECK --interval=30s --timeout=5s --start-period=30s --retries=3 CMD ["/opt/venv/bin/python", "/opt/plane-hardening/backend_entrypoint.py", "health"]
 ENTRYPOINT ["/opt/venv/bin/python", "/opt/plane-hardening/backend_entrypoint.py"]
 CMD ["api"]

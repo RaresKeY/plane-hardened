@@ -188,7 +188,6 @@ class BaseViewSet(TimezoneMixin, ReadReplicaControlMixin, ModelViewSet, BasePagi
                     "Validation Error",
                     extra={
                         "error_code": "VALIDATION_ERROR",
-                        "error_message": str(e),
                     },
                 )
                 return Response(
@@ -201,7 +200,6 @@ class BaseViewSet(TimezoneMixin, ReadReplicaControlMixin, ModelViewSet, BasePagi
                     "Object Does Not Exist",
                     extra={
                         "error_code": "OBJECT_DOES_NOT_EXIST",
-                        "error_message": str(e),
                     },
                 )
                 return Response(
@@ -214,7 +212,6 @@ class BaseViewSet(TimezoneMixin, ReadReplicaControlMixin, ModelViewSet, BasePagi
                     "Key Error",
                     extra={
                         "error_code": "KEY_ERROR",
-                        "error_message": str(e),
                     },
                 )
                 return Response(

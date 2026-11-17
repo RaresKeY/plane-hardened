@@ -49,6 +49,7 @@ from plane.utils.order_queryset import ACTIVITY_ORDER_BY_ALLOWLIST, sanitize_ord
 from plane.authentication.utils.host import user_ip
 from plane.bgtasks.user_deactivation_email_task import user_deactivation_email
 from plane.utils.host import base_host
+from plane.utils.exception_logger import log_exception
 from plane.bgtasks.user_email_update_task import send_email_update_magic_code, send_email_update_confirmation
 from plane.authentication.rate_limit import EmailVerificationThrottle
 
@@ -167,7 +168,7 @@ class UserEndpoint(BaseViewSet):
                 status=status.HTTP_200_OK,
             )
         except Exception as e:
-            logger.error("Failed to generate verification code: %s", str(e), exc_info=True)
+            log_exception(e)
             return Response(
                 {"error": "Failed to generate verification code. Please try again."},
                 status=status.HTTP_400_BAD_REQUEST,
@@ -200,7 +201,7 @@ class UserEndpoint(BaseViewSet):
             cached_data = cache.get(cache_key)
 
             if not cached_data:
-                logger.warning("Cache key not found: %s. Code may have expired or was never generated.", cache_key)
+                logger.warning("Email verification code unavailable")
                 return Response(
                     {"error": "Verification code has expired or is invalid"},
                     status=status.HTTP_400_BAD_REQUEST,

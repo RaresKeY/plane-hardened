@@ -21,7 +21,7 @@ IMAGE = "2704858657c97e141cb2934dc6893e46c1094503bd7890536ab6eda295265dd0"
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("lane", choices=["tools", "python", "database", "integration", "server", "worker"])
+    parser.add_argument("lane", choices=["tools", "python", "database", "integration", "server", "worker", "roles"])
     parser.add_argument("--backend-image", help="Exact qualified backend image sha256, for the Python3.12 lane")
     args = parser.parse_args()
     operator = operator_config(parser)
@@ -44,7 +44,9 @@ def main():
         destination = operator.root + "/snapshots/" + run_id
         config["source_digest"] = stage(Path(__file__).resolve().parents[1], destination, ssh_base)
     remote = Path(__file__).with_name("remote_runner.py").read_text()
-    remote += "\nmain(" + repr(config) + ")\n"
+    if args.lane == "roles":
+        remote += "\n" + Path(__file__).with_name("role_fixture.py").read_text()
+    remote += "\nmain(" + repr(config) + (", run_role_fixture" if args.lane == "roles" else "") + ")\n"
     ssh = ssh_base + ["python3 -"]
     result = subprocess.run(ssh, input=remote, text=True, check=False)
     return result.returncode

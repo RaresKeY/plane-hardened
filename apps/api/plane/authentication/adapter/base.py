@@ -198,7 +198,9 @@ class Adapter:
             # Generate unique filename
             filename = f"{uuid.uuid4().hex}-user-avatar.{extension}"
 
-            storage = S3Storage(request=self.request)
+            # These are server-side upload/metadata operations, not browser
+            # signatures. Use the configured internal storage endpoint.
+            storage = S3Storage(is_server=True)
 
             # Create file-like object from the size-bounded buffer
             file_obj = BytesIO(content)

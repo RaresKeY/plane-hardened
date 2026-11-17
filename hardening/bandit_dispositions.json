@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "reviewed": "2026-11-15",
+  "reviewed": "2026-11-16",
   "scanner": "bandit1.9.4",
   "scope": "Exact findings and source bytes; not a rule/path/severity suppression. Re-review on change. Raw scanner output retained.",
   "findings": [
@@ -556,11 +556,11 @@
     {
       "test_id": "B110",
       "path": "apps/api/plane/bgtasks/notification_task.py",
-      "line": 298,
-      "code_sha256": "7e2dac4876d20e33040f48a85d21d8765eac4edc31414321a238b0e2bf346261",
-      "file_sha256": "e2d07b634594132ddf4ff359344b3e655a7c86dda717241cd20a620da441ebcc",
+      "line": 299,
+      "code_sha256": "6be51d3be8e495d77f47ca9d2629f23674f8e8faffb2556497bae1c5a458671b",
+      "file_sha256": "37743df07f0a446c3265e1c5e1756075eb0032755221fe1489af60879ad81e37",
       "disposition": "reviewed non-blocking in named context",
-      "reason": "Suppressed optional activity/notification bookkeeping error, not an authentication or permission check. Observability/data-consistency debt remains; blanket exception logging could leak record values."
+      "reason": "Suppressed optional activity/notification bookkeeping error, not an authentication or permission check. Observability/data-consistency debt remains; blanket exception logging could leak record values. Re-reviewed after adding the shared exception helper import and replacing the outer raw stdout error; this inner optional-bookkeeping suppression is unchanged."
     },
     {
       "test_id": "B311",
@@ -669,6 +669,15 @@
       "file_sha256": "6176f54aa18a27cbe956f4fc015626070fa8f9d0ce591166348a4c23809fd806",
       "disposition": "reviewed non-blocking in named context",
       "reason": "Display-name export fallback returns an empty string; does not grant access or skip an authorization decision."
+    },
+    {
+      "test_id": "B108",
+      "path": "apps/api/plane/utils/runtime_health.py",
+      "line": 12,
+      "code_sha256": "3fca4ab644c936078d33b7ddfa8e87e507d185104f5dcad11d2e9cc5c5928be7",
+      "file_sha256": "efc2ea854b49a18453ebea03decf7b7530ada2d14166d0a8ebb3a0991000d25a",
+      "disposition": "reviewed non-blocking in named context",
+      "reason": "Fixed directory is inside the isolated container tmpfs, never a host/home mount. Runtime state contains only role/PID/start identity/port/node and scheduler monotonic time, no secrets. Directory rejects symlinks, foreign ownership and group/other permissions; files use unique exclusive0600 temporary creation and atomic replacement. Tests cover permissions, symlink/public-directory refusal, failed-write cleanup, bounded reads and stale process/heartbeat rejection."
     }
   ]
 }
